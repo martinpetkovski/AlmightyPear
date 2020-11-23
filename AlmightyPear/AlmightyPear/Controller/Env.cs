@@ -1,4 +1,5 @@
-﻿using AlmightyPear.Model;
+﻿using AlmightyPear.Controls;
+using AlmightyPear.Model;
 using System;
 using System.Threading;
 

@@ -49,6 +49,7 @@
             <fa:ImageAwesome Grid.Column="1" Icon="Search" Foreground="#555" Height="24" Width="24" Margin="20,3" />
         </Grid>
         <controls:BookmarksTreeViewControl Grid.Row="1"
+                                           FontSize="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:BookmarksViewControl}},Path=ContentTextSize}"
                                            VerticalAlignment="Stretch"
                                            VerticalContentAlignment="Stretch"
                                            MaxHeight="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:BookmarksViewControl}}, Path=MaxContentHeight}"

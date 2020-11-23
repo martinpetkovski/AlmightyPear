@@ -1,4 +1,5 @@
-﻿using AlmightyPear.Model;
+﻿using AlmightyPear.Controls;
+using AlmightyPear.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,12 +10,21 @@ namespace AlmightyPear.Controller
 {
     class BinController
     {
-        private Dictionary<string, BookmarkModel> EditedBookmarks { get; set; }
+        private Dictionary<string, BookmarkModel> _editedBookmarks;
+        private Dictionary<string, BookmarkModel> EditedBookmarks
+        {
+            get
+            {
+                if (_editedBookmarks == null)
+                    _editedBookmarks = new Dictionary<string, BookmarkModel>();
+
+                return _editedBookmarks;
+            }
+        }
 
 
         public BinController()
         {
-            EditedBookmarks = new Dictionary<string, BookmarkModel>();
         }
 
         public void Deinitalize()
@@ -193,12 +203,13 @@ namespace AlmightyPear.Controller
             return retVal;
         }
 
-        public void MarkBookmarkForEdit(BookmarkModel bookmark)
+        private void MarkBookmarkForEdit(BookmarkModel bookmark)
         {
             if (!EditedBookmarks.ContainsKey(bookmark.ID))
             {
                 EditedBookmarks.Add(bookmark.ID, bookmark);
             }
+            Env.BinData.BookmarksViewCaption = ""; // trigger change
         }
         
         public async void SaveEditedBookmarksAsync()
@@ -209,6 +220,15 @@ namespace AlmightyPear.Controller
             }
 
             EditedBookmarks.Clear();
+            Env.BinData.BookmarksViewCaption = ""; // trigger change
+        }
+
+        public bool HasEditedBookmarks()
+        {
+            if (EditedBookmarks != null)
+                return EditedBookmarks.Count > 0;
+            else
+                return false;
         }
 
     }

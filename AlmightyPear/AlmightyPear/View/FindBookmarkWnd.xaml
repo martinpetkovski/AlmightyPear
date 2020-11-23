@@ -11,7 +11,7 @@
         xmlns:behaviors="clr-namespace:WPFTextBoxAutoComplete;assembly=WPFTextBoxAutoComplete"
         xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
         mc:Ignorable="d"
-        Title="Find Bookmark" 
+        Title="{Binding Path=BinData.BookmarksViewCaption}" 
         WindowStyle="None"
         Background="#111"
         AllowsTransparency="True"
@@ -30,6 +30,9 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
+    <Window.DataContext>
+        <StaticResourceExtension ResourceKey="Env"/>
+    </Window.DataContext>
     <controls:BookmarksViewControl 
         x:Name="ctrl_filter" 
         FilterEvent="Ctrl_filter_FilterEvent" 

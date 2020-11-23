@@ -42,9 +42,9 @@
         </Grid>
         <Border Grid.Row="1" Background="{StaticResource GradInsetSide}">
             <TabControl  TabStripPlacement="Left">
-                <TabItem Header="Bookmarks View">
+                <TabItem Header="{Binding Source={StaticResource Env}, Path=BinData.BookmarksViewCaption}">
                     <Grid>
-                        <controls:BookmarksViewControl MaxContentHeight="10000"></controls:BookmarksViewControl>
+                        <controls:BookmarksViewControl MaxContentHeight="10000" ContentTextSize="16"></controls:BookmarksViewControl>
                     </Grid>
                 </TabItem>
                 <TabItem Header="Create Bookmark">

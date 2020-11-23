@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AlmightyPear.Controller;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -54,6 +55,21 @@ namespace AlmightyPear.Model
         public void Deinitialize()
         {
             RootBin = null;
+        }
+
+        public string BookmarksViewCaption
+        {
+            get
+            {
+                if (Env.BinController.HasEditedBookmarks())
+                    return "Bookmarks View (*)";
+                else
+                    return "Bookmarks View";
+            }
+            set
+            {
+                OnPropertyChanged();
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

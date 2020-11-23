@@ -56,7 +56,7 @@
                                 HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                                 ToolTip="{Binding Path=Path}">
                         <TextBox TabIndex="0" Visibility="Collapsed" Name="tb_rename" KeyDown="Tb_rename_KeyDown" ></TextBox>
-                        <TextBlock Name="lbl_name" Text="{Binding Path=Name}"  FontSize="10" >
+                        <TextBlock Name="lbl_name" Text="{Binding Path=Name}"  FontSize="{Binding RelativeSource={RelativeSource AncestorType=local:BookmarksTreeViewControl}, Path=FontSize}" >
                             <TextBlock.LayoutTransform>
                                 <RotateTransform Angle="-70"></RotateTransform>
                             </TextBlock.LayoutTransform>
@@ -96,14 +96,15 @@
                         Name="btn_BookmarkAction"
                         Padding="8"
                         Margin="0"
-                        Content="{Binding Converter={StaticResource BookmarkCaptionConverter}}"
                         ToolTip="{Binding Path=Content}" 
-                        FontSize="10" 
-                        Width="220" 
-                        MaxHeight="30"
+                        FontSize="{Binding RelativeSource={RelativeSource AncestorType=local:BookmarksTreeViewControl}, Path=FontSize}"
+                        MaxWidth="220" 
                         BorderThickness="1"
                         HorizontalContentAlignment="Left"
                         Click="Btn_BookmarkAction_Click">
+                        <Button.Content>
+                            <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Converter={StaticResource BookmarkCaptionConverter}}"></TextBlock>
+                        </Button.Content>
                         <Button.BorderBrush>
                             <MultiBinding Converter="{StaticResource BookmarkSelectedConverter}" ConverterParameter="Brush">
                                 <Binding ElementName="rootControl" Path="Model.SelectedBinItems" UpdateSourceTrigger="PropertyChanged"></Binding>

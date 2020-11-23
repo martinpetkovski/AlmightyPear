@@ -30,13 +30,6 @@ namespace AlmightyPear.Converters
             retVal = retVal.TrimStart(' ', '\n', '\t');
             retVal = retVal.TrimEnd(' ', '\n', '\t');
 
-            if (retVal.Length > 40)
-            {
-                retVal = retVal.Substring(0, 40);
-
-                retVal += "...";
-            }
-
             return retVal;
         }
 

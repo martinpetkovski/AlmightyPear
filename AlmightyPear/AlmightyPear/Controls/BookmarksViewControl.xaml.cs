@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -22,6 +23,16 @@ namespace AlmightyPear.Controls
     /// </summary>
     public partial class BookmarksViewControl : UserControl
     {
+        protected class BookmarksViewModel : INotifyPropertyChanged
+        {
+            public event PropertyChangedEventHandler PropertyChanged;
+            protected void OnPropertyChanged([CallerMemberName] string name = null)
+            {
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+            }
+        }
+
+
         [Browsable(true)]
         [Category("Action")]
         [Description("Invoked when user clicks button")]
@@ -38,6 +49,19 @@ namespace AlmightyPear.Controls
         {
             get { return (int)GetValue(MaxContentHeightProperty); }
             set { SetValue(MaxContentHeightProperty, value); }
+        }
+
+        public static readonly DependencyProperty ContentTextSizeProperty =
+            DependencyProperty.Register(
+            "ContentTextSize", typeof(int),
+            typeof(BookmarksViewControl), 
+            new PropertyMetadata(10)
+        );
+
+        public int ContentTextSize
+        {
+            get { return (int)GetValue(ContentTextSizeProperty); }
+            set { SetValue(ContentTextSizeProperty, value); }
         }
 
         public BookmarksViewControl()

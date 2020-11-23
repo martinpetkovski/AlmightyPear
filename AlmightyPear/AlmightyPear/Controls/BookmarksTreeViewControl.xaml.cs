@@ -13,61 +13,63 @@ using System.Windows.Media;
 
 namespace AlmightyPear.Controls
 {
-    public class BookmarksTreeViewControlModel : INotifyPropertyChanged
-    {
-        private List<IBinItem> _selectedBinItems;
-        public List<IBinItem> SelectedBinItems
-        {
-            get
-            {
-                return _selectedBinItems;
-            }
-            set
-            {
-                _selectedBinItems = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public void SelectItem(IBinItem item, bool add = false)
-        {
-            if (SelectedBinItems.Contains(item))
-                SelectedBinItems.Remove(item);
-            else
-            {
-                if (!add)
-                    SelectedBinItems.Clear();
-
-                SelectedBinItems.Add(item);
-            }
-            OnPropertyChanged("SelectedBinItems");
-        }
-
-        public void ClearSelection()
-        {
-            SelectedBinItems.Clear();
-            OnPropertyChanged("SelectedBinItems");
-        }
-
-        public bool HasSelected()
-        {
-            return SelectedBinItems.Count > 0;
-        }
-
-        public BookmarksTreeViewControlModel()
-        {
-            _selectedBinItems = new List<IBinItem>();
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged([CallerMemberName] string name = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-        }
-    }
+    
 
     public partial class BookmarksTreeViewControl : UserControl
     {
+        protected class BookmarksTreeViewControlModel : INotifyPropertyChanged
+        {
+            private List<IBinItem> _selectedBinItems;
+            public List<IBinItem> SelectedBinItems
+            {
+                get
+                {
+                    return _selectedBinItems;
+                }
+                set
+                {
+                    _selectedBinItems = value;
+                    OnPropertyChanged();
+                }
+            }
+
+            public void SelectItem(IBinItem item, bool add = false)
+            {
+                if (SelectedBinItems.Contains(item))
+                    SelectedBinItems.Remove(item);
+                else
+                {
+                    if (!add)
+                        SelectedBinItems.Clear();
+
+                    SelectedBinItems.Add(item);
+                }
+                OnPropertyChanged("SelectedBinItems");
+            }
+
+            public void ClearSelection()
+            {
+                SelectedBinItems.Clear();
+                OnPropertyChanged("SelectedBinItems");
+            }
+
+            public bool HasSelected()
+            {
+                return SelectedBinItems.Count > 0;
+            }
+
+            public BookmarksTreeViewControlModel()
+            {
+                _selectedBinItems = new List<IBinItem>();
+            }
+
+            public event PropertyChangedEventHandler PropertyChanged;
+            protected void OnPropertyChanged([CallerMemberName] string name = null)
+            {
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+            }
+        }
+
         public static readonly DependencyProperty BinProperty =
             DependencyProperty.Register(
             "Bin", typeof(BinModel),
@@ -110,6 +112,7 @@ namespace AlmightyPear.Controls
             Model = new BookmarksTreeViewControlModel();
         }
 
+
         enum EEditTextboxAction
         {
             Rename, //Unused
@@ -117,7 +120,7 @@ namespace AlmightyPear.Controls
         }
 
         private EEditTextboxAction _editTextboxAction;
-        public BookmarksTreeViewControlModel Model { get; set; }
+        protected BookmarksTreeViewControlModel Model { get; set; }
 
         private void OpenLink(string url)
         {

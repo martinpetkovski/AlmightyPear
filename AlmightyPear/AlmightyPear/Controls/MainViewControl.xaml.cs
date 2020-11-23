@@ -1,5 +1,7 @@
 ﻿using AlmightyPear.Controller;
 using AlmightyPear.Model;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -7,6 +9,19 @@ namespace AlmightyPear.Controls
 {
     public partial class MainViewControl : UserControl
     {
+        private MainViewModel _mainViewData;
+
+        protected class MainViewModel : INotifyPropertyChanged
+        {
+            public event PropertyChangedEventHandler PropertyChanged;
+            protected void OnPropertyChanged([CallerMemberName] string name = null)
+            {
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+            }
+        }
+
+        protected MainViewModel MainViewData { get => _mainViewData; set => _mainViewData = value; }
+
         public MainViewControl()
         {
             InitializeComponent();

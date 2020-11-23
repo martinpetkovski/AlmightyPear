@@ -53,8 +53,6 @@ namespace AlmightyPear.Controls
         {
             string selectedText = Env.GetClipboardText();
 
-            Thread.Sleep(10);
-
             txt_selection.Text = selectedText;
 
         }

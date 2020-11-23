@@ -5,6 +5,8 @@ using AlmightyPear.View;
 using MahApps.Metro.Controls;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows;
 using System.Windows.Forms;
@@ -14,6 +16,12 @@ namespace AlmightyPear
 {
     public partial class MainWindow : MetroWindow
     {
+        [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
+        private static extern IntPtr GetForegroundWindow();
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        private static extern int GetWindowThreadProcessId(IntPtr handle, out int processId);
+
         public enum EHotWnd : int
         {
             CreateBookmark = 0,
@@ -34,13 +42,28 @@ namespace AlmightyPear
 
         public Dictionary<Type, Window> ChildWindows { get; set; }
 
+        public static bool IsApplicationActivated()
+        {
+            var activatedHandle = GetForegroundWindow();
+            if (activatedHandle == IntPtr.Zero)
+            {
+                return false;
+            }
+
+            var procId = Process.GetCurrentProcess().Id;
+            int activeProcId;
+            GetWindowThreadProcessId(activatedHandle, out activeProcId);
+
+            return activeProcId == procId;
+        }
 
         private void ToggleHotWnd(object sender, HotKeyEventArgs e)
         {
             CreateBookmarkWnd createBookmarkWnd = (CreateBookmarkWnd)ChildWindows[typeof(CreateBookmarkWnd)];
             FindBookmarkWnd findBookmarkWnd = (FindBookmarkWnd)ChildWindows[typeof(FindBookmarkWnd)];
 
-            if (!createBookmarkWnd.IsVisible && !findBookmarkWnd.IsVisible)
+            if ((!createBookmarkWnd.IsVisible && !findBookmarkWnd.IsVisible)
+                || !IsApplicationActivated())
             {
                 CurrentHotWnd = (int)EHotWnd.CreateBookmark;
                 _flip = false;
@@ -60,8 +83,6 @@ namespace AlmightyPear
 
             string clipboardText = Env.GetClipboardText();
 
-            Thread.Sleep(10);
-
             if (clipboardText != "" && !_flip)
             {
                 CurrentHotWnd = (int)EHotWnd.CreateBookmark;
@@ -72,7 +93,7 @@ namespace AlmightyPear
                 IncrementHotWnd();
             }
 
-            Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
+            Dispatcher.Invoke(DispatcherPriority.Normal, new Action(() =>
             {
                 if (CurrentHotWnd == (int)EHotWnd.CreateBookmark) createBookmarkWnd.Fire();
                 else if (CurrentHotWnd == (int)EHotWnd.FindBookmark) findBookmarkWnd.Fire();

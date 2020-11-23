@@ -1,5 +1,4 @@
-﻿using AlmightyPear.Controls;
-using AlmightyPear.Model;
+﻿using AlmightyPear.Model;
 using System;
 using System.Threading;
 
@@ -37,36 +36,33 @@ namespace AlmightyPear.Controller
             MainWindow = mainWindow;
         }
 
-
+        private static int clipboardDelay = 10;
         // UTILS
         public static string GetClipboardText()
         {
-            try
-            {
-                string clipboardData = null;
-                Exception threadEx = null;
-                Thread staThread = new Thread(
-                    delegate ()
-                    {
-                        try
-                        {
-                            clipboardData = System.Windows.Clipboard.GetText(System.Windows.TextDataFormat.Text);
-                        }
 
-                        catch (Exception ex)
-                        {
-                            threadEx = ex;
-                        }
-                    });
-                staThread.SetApartmentState(ApartmentState.STA);
-                staThread.Start();
-                staThread.Join();
-                return clipboardData;
-            }
-            catch (Exception exception)
-            {
-                return string.Empty;
-            }
+            string clipboardData = null;
+            Exception threadEx = null;
+            Thread staThread = new Thread(
+                delegate ()
+                {
+                    try
+                    {
+                        clipboardData = System.Windows.Clipboard.GetText(System.Windows.TextDataFormat.Text);
+                    }
+
+                    catch (Exception ex)
+                    {
+                        threadEx = ex;
+                    }
+                });
+            staThread.SetApartmentState(ApartmentState.STA);
+            staThread.Start();
+            staThread.Join();
+
+            Thread.Sleep(clipboardDelay);
+
+            return clipboardData;
         }
 
         public static void ClearClipboard()
@@ -88,6 +84,8 @@ namespace AlmightyPear.Controller
             staThread.SetApartmentState(ApartmentState.STA);
             staThread.Start();
             staThread.Join();
+
+            Thread.Sleep(clipboardDelay);
         }
 
         public static void CopyToClipboard(string text)
@@ -109,6 +107,9 @@ namespace AlmightyPear.Controller
             staThread.SetApartmentState(ApartmentState.STA);
             staThread.Start();
             staThread.Join();
+
+
+            Thread.Sleep(clipboardDelay);
         }
     }
 }

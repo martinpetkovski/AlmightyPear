@@ -17,7 +17,7 @@ namespace AlmightyPear.Controls
 
     public partial class BookmarksTreeViewControl : UserControl
     {
-        protected class BookmarksTreeViewControlModel : INotifyPropertyChanged
+        public class BookmarksTreeViewControlModel : INotifyPropertyChanged
         {
             private List<IBinItem> _selectedBinItems;
             public List<IBinItem> SelectedBinItems
@@ -120,7 +120,7 @@ namespace AlmightyPear.Controls
         }
 
         private EEditTextboxAction _editTextboxAction;
-        protected BookmarksTreeViewControlModel Model { get; set; }
+        public BookmarksTreeViewControlModel Model { get; set; }
 
         private void OpenLink(string url)
         {

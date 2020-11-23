@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Threading;
 
 namespace AlmightyPear.Controller
 {
@@ -51,11 +52,14 @@ namespace AlmightyPear.Controller
                 else path += Env.PathSeparator + bin;
 
                 IBinItem nextBin = null;
-                bool exists = parentBin.BinItems.TryGetValue(bin, out nextBin);
-                if (!exists)
+                lock (parentBin.BinItems)
                 {
-                    nextBin = new BinModel(bin, path);
-                    parentBin.AddItemToBin(bin, nextBin);
+                    bool exists = parentBin.BinItems.TryGetValue(bin, out nextBin);
+                    if (!exists)
+                    {
+                        nextBin = new BinModel(bin, path);
+                        parentBin.AddItemToBin(bin, nextBin);
+                    }
                 }
 
                 BinModel nextBinModel = (BinModel)nextBin;
@@ -74,10 +78,10 @@ namespace AlmightyPear.Controller
             Env.BinData.BinsByDepth.Clear();
             Env.BinData.RootBin = new BinModel("root", "");
 
-            foreach (KeyValuePair<string, BookmarkModel> bookmark in Env.UserData.Bookmarks)
-            {
-                AddBookmark(bookmark.Value);
-            }
+            Parallel.ForEach(Env.UserData.Bookmarks, (bookmark) =>
+           {
+               AddBookmark(bookmark.Value);
+           });
         }
 
         public void DeleteBookmark(BookmarkModel bookmark)
@@ -212,12 +216,20 @@ namespace AlmightyPear.Controller
             Env.BinData.BookmarksViewCaption = ""; // trigger change
         }
         
-        public async void SaveEditedBookmarksAsync()
+        public void SaveEditedBookmarks(Action<double, string> progress = null)
         {
-            foreach(KeyValuePair<string, BookmarkModel> bookmark in EditedBookmarks)
+            int i = 0;
+            Parallel.ForEach(EditedBookmarks, async (bookmark) =>
             {
                 await Env.FirebaseController.UpdateBookmarkAsync(bookmark.Value);
-            }
+                i++;
+
+                //Dispatcher.CurrentDispatcher.Invoke(DispatcherPriority.Background,
+                //    new Action(() =>
+                //{
+                //    progress?.Invoke((double)i / EditedBookmarks.Count, bookmark.Value.Path);
+                //}));
+            });
 
             EditedBookmarks.Clear();
             Env.BinData.BookmarksViewCaption = ""; // trigger change

@@ -194,8 +194,14 @@ namespace AlmightyPear.Model
             return dtDateTime;
         }
 
-        public int FilterScore(FilterToken filter)
+        public int FilterScore(FilterToken filter, ref Dictionary<string, int> pathScores)
         {
+            int existScore = 0;
+            if (pathScores.TryGetValue(ID, out existScore))
+            {
+                return existScore;
+            }
+
             string filterString = filter.ToString();
             if (filterString == "")
                 return 100;
@@ -260,6 +266,7 @@ namespace AlmightyPear.Model
                     score = 100;
             }
 
+            pathScores.Add(ID, score);
             return score;
         }
     }

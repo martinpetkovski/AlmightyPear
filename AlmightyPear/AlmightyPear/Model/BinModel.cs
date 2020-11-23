@@ -34,21 +34,24 @@ namespace AlmightyPear.Model
         public void AddItemToBin(string key, IBinItem value)
         {
             IBinItem nextBin;
-            bool exists = BinItems.TryGetValue(key, out nextBin);
-            if (exists && nextBin is BinModel)
+            lock (BinItems)
             {
-                BinModel nextBinModel = (BinModel)nextBin;
-
-                foreach (KeyValuePair<string, IBinItem> binItem in nextBinModel.BinItems)
+                bool exists = BinItems.TryGetValue(key, out nextBin);
+                if (exists && nextBin is BinModel)
                 {
-                    nextBinModel.AddItemToBin(binItem.Key, binItem.Value);
+                    BinModel nextBinModel = (BinModel)nextBin;
+
+                    foreach (KeyValuePair<string, IBinItem> binItem in nextBinModel.BinItems)
+                    {
+                        nextBinModel.AddItemToBin(binItem.Key, binItem.Value);
+                    }
                 }
-            }
-            else
-            {
-                _childBinItems.Add(key, value);
-                OnPropertyChanged("BinItems");
-                OnPropertyChanged("BinItemsCollection");
+                else
+                {
+                    _childBinItems.Add(key, value);
+                    OnPropertyChanged("BinItems");
+                    OnPropertyChanged("BinItemsCollection");
+                }
             }
 
         }
@@ -97,8 +100,14 @@ namespace AlmightyPear.Model
 
         }
 
-        public int FilterScore(FilterToken filter)
+        public int FilterScore(FilterToken filter, ref Dictionary<string, int> pathScores)
         {
+            int existScore = 0;
+            if (pathScores.TryGetValue(Path, out existScore))
+            {
+                return existScore;
+            }
+
             string filterString = filter.ToString();
             if (filterString == "")
                 return 100;
@@ -110,24 +119,25 @@ namespace AlmightyPear.Model
                 score = BinModel.FilterPath(Path, filterString, Env.PathSeparator);
             }
 
-            if(filter.TokenType == FilterToken.FilterTokenType.Any)
+            if (filter.TokenType == FilterToken.FilterTokenType.Any)
             {
                 score = BinModel.FilterPath(Path, filterString, Env.PathSeparator);
                 score = Math.Max(score, BinModel.FilterPath(Path, filterString, ' '));
             }
 
-            foreach (KeyValuePair<string, IBinItem> binItem in BinItems)
+            foreach (var binItem in BinItems)
             {
                 if (binItem.Value is BookmarkModel)
                 {
-                    score = Math.Max(score, ((BookmarkModel)binItem.Value).FilterScore(filter));
+                    score = Math.Max(score, ((BookmarkModel)binItem.Value).FilterScore(filter, ref pathScores));
                 }
                 else if (binItem.Value is BinModel)
                 {
-                    score = Math.Max(score, ((BinModel)binItem.Value).FilterScore(filter));
+                    score = Math.Max(score, ((BinModel)binItem.Value).FilterScore(filter, ref pathScores));
                 }
-            }
+            };
 
+            pathScores.Add(Path, score);
             return score;
         }
 

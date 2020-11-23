@@ -30,7 +30,8 @@
         PreviewMouseWheel="ScrollViewer_PreviewMouseWheel">
         <TreeView Grid.Column="0" 
                   Name="tv_main"
-                  VirtualizingStackPanel.IsVirtualizing="True" 
+                  VirtualizingPanel.IsVirtualizing="True"
+                  VirtualizingPanel.VirtualizationMode="Recycling"
                   Background="{StaticResource SolidDarkMono}"
                   Margin="0"
                   Padding="0">

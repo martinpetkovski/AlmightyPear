@@ -34,7 +34,7 @@
                 <TextBlock Text="{Binding Source={StaticResource Env}, Path=UserData.Email}"></TextBlock>
             </StackPanel>
             <StackPanel Grid.Column="1" Orientation="Horizontal">
-                <Button Name="btn_SaveAll" Click="Btn_SaveAll_ClickAsync"  Padding="5" BorderBrush="#333" VerticalAlignment="Center">Save All</Button>
+                <controls:SaveAllControl CreateBookmarkControl="{x:Reference ctrl_CreateBookmark}"></controls:SaveAllControl>
                 <Button Name="btn_LogOut" Click="Btn_LogOut_Click" Margin="10,0,0,0" Padding="5" BorderBrush="#333" VerticalAlignment="Center">Log out</Button>
             </StackPanel>
             <Image Grid.Column="2" Source="../Resources/Textures/logo.png" Height="48" Margin="10"/>

@@ -32,12 +32,5 @@ namespace AlmightyPear.Controls
             Env.FirebaseController.LogOutUser();
             Env.MainWindowData.WindowState = MainWindowModel.EMainWindowState.SignIn;
         }
-
-        private async void Btn_SaveAll_ClickAsync(object sender, RoutedEventArgs e)
-        {
-            Env.ClearClipboard();
-            Env.BinController.SaveEditedBookmarksAsync();
-            await ctrl_CreateBookmark.CreateAsync();
-        }
     }
 }

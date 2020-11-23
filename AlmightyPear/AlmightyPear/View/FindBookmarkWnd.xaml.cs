@@ -65,7 +65,7 @@ namespace AlmightyPear.View
             if (ea.Key == Key.Escape)
             {
                 Env.ClearClipboard();
-                Env.BinController.SaveEditedBookmarksAsync();
+                Env.BinController.SaveEditedBookmarks();
                 Hide();
             }
         }

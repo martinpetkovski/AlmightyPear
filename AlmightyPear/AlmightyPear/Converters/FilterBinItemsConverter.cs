@@ -25,6 +25,10 @@ namespace AlmightyPear.Converters
                 oFilter is string)
                 {
                     string currentFilter = (string)oFilter;
+
+                    //if (currentFilter.Length <= 2)
+                    //    return new ObservableCollection<IBinItem>();
+
                     string[] filterTokens = currentFilter.Split(' ');
                     List<FilterToken> tokenMods = new List<FilterToken>();
 
@@ -41,13 +45,14 @@ namespace AlmightyPear.Converters
                         }
                     }
 
+                    Dictionary<string, int> PathScores = new Dictionary<string, int>();
                     ObservableCollection<IBinItem> binItems = (ObservableCollection<IBinItem>)oBinItems;
                     IEnumerable<IBinItem> orderedBinItems = binItems.Where(x => true);
                     foreach (FilterToken token in tokenMods)
                     {
                         orderedBinItems = orderedBinItems
-                                            .Where(x => x.FilterScore(token) > 75)
-                                            .OrderByDescending(x => x.FilterScore(token))
+                                            .Where(x => x.FilterScore(token, ref PathScores) > 75)
+                                            .OrderByDescending(x => x.FilterScore(token, ref PathScores))
                                             .ThenBy(x => x.PathDepth);
                     }
 

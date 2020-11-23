@@ -66,6 +66,6 @@ namespace AlmightyPear.Model
     {
         string Path { get; set; }
         int PathDepth { get; }
-        int FilterScore(FilterToken token);
+        int FilterScore(FilterToken token, ref Dictionary<string, int> pathScores);
     }
 }

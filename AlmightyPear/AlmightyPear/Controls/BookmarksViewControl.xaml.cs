@@ -73,5 +73,10 @@ namespace AlmightyPear.Controls
         {
             FilterEvent?.Invoke(sender, e);
         }
+
+        private void Btn_clearFilter_Click(object sender, RoutedEventArgs e)
+        {
+            tb_filter.Clear();
+        }
     }
 }

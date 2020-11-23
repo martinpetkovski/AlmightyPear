@@ -1,0 +1,16 @@
+﻿<Application x:Class="AlmightyPear.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:AlmightyPear"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <FontFamily x:Key="Montserrat">pack://application:,,,/Fonts/#Montserrat</FontFamily>
+        <FontFamily x:Key="Quicksand">pack://application:,,,/Fonts/#Quicksand</FontFamily>
+        <FontFamily x:Key="ProximaNova">pack://application:,,,/Fonts/#ProximaNova</FontFamily>
+
+        <Style TargetType="{x:Type Window}">
+            <Setter Property="Background" Value="#111"></Setter>
+            <Setter Property="FontFamily" Value="{StaticResource Quicksand}"></Setter>
+        </Style>
+    </Application.Resources>
+</Application>

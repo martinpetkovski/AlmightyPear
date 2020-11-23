@@ -1,0 +1,10 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:AlmightyPear.Resources.Styles">
+    <Color x:Key="ColLightest">#000</Color>
+    <Color x:Key="ColDarkest">#FFF</Color>
+    <Color x:Key="ColDarkMono">#EFEFEF</Color>
+    <Color x:Key="ColLoMidMono">#DFDFDF</Color>
+    <Color x:Key="ColHiMidMono">#CFCFCF</Color>
+    <Color x:Key="ColLightMono">#999999</Color>
+</ResourceDictionary>

@@ -34,7 +34,7 @@ namespace AlmightyPear.Controls
         private async void Btn_SaveAll_ClickAsync(object sender, RoutedEventArgs e)
         {
             Env.ClearClipboard();
-            Env.BinController.SaveEditedBookmarks(UpdateProgress);
+            await Env.BinController.SaveEditedBookmarksAsync(this, UpdateProgress);
             pb_SaveProgress.Value = 0;
 
             await CreateBookmarkControl.CreateAsync();

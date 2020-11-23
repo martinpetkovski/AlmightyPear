@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Threading;
 
 namespace AlmightyPear.Controller
@@ -216,23 +217,34 @@ namespace AlmightyPear.Controller
             Env.BinData.BookmarksViewCaption = ""; // trigger change
         }
         
-        public void SaveEditedBookmarks(Action<double, string> progress = null)
+        public async Task SaveEditedBookmarksAsync(Control instigatorControl = null, Action<double, string> progress = null)
         {
+            int totalEdited = EditedBookmarks.Count;
+
+            var tasks = EditedBookmarks.Select(bookmark => Env.FirebaseController.UpdateBookmarkAsync(bookmark.Value)).ToArray();
+            Task whenAllTask = Task.WhenAll(tasks);
+
             int i = 0;
-            Parallel.ForEach(EditedBookmarks, async (bookmark) =>
+            for (;;)
             {
-                await Env.FirebaseController.UpdateBookmarkAsync(bookmark.Value);
+                var timer = Task.Delay(100); 
+                await Task.WhenAny(whenAllTask, timer);
+                if (whenAllTask.IsCompleted)
+                {
+                    EditedBookmarks.Clear();
+                    Env.BinData.BookmarksViewCaption = "";
+                    return;
+                }
                 i++;
-
-                //Dispatcher.CurrentDispatcher.Invoke(DispatcherPriority.Background,
-                //    new Action(() =>
-                //{
-                //    progress?.Invoke((double)i / EditedBookmarks.Count, bookmark.Value.Path);
-                //}));
-            });
-
-            EditedBookmarks.Clear();
-            Env.BinData.BookmarksViewCaption = ""; // trigger change
+                if (instigatorControl != null)
+                {
+                    instigatorControl.Dispatcher.Invoke(DispatcherPriority.Background,
+                        new Action(() =>
+                    {
+                        progress?.Invoke((double)i / totalEdited, "");
+                    }));
+                }
+            }
         }
 
         public bool HasEditedBookmarks()

@@ -58,14 +58,14 @@ namespace AlmightyPear.View
 
         }
 
-        private void Ctrl_filter_FilterEvent(object sender, EventArgs e)
+        private async void Ctrl_filter_FilterEventAsync(object sender, EventArgs e)
         {
             System.Windows.Input.KeyEventArgs ea = (System.Windows.Input.KeyEventArgs)e;
 
             if (ea.Key == Key.Escape)
             {
                 Env.ClearClipboard();
-                Env.BinController.SaveEditedBookmarks();
+                await Env.BinController.SaveEditedBookmarksAsync();
                 Hide();
             }
         }

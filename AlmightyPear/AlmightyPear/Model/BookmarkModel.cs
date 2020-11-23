@@ -7,6 +7,7 @@ using System.Net;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace AlmightyPear.Model
 {
@@ -112,8 +113,7 @@ namespace AlmightyPear.Model
             set
             {
                 _content = value;
-                Thread typeThread = new Thread(new ThreadStart(RefreshType));
-                typeThread.Start();
+                Task.Run((Action)RefreshType);
                 OnPropertyChanged();
                 OnPropertyChanged("Type");
             }

@@ -35,7 +35,7 @@
     </Window.DataContext>
     <controls:BookmarksViewControl 
         x:Name="ctrl_filter" 
-        FilterEvent="Ctrl_filter_FilterEvent" 
+        FilterEvent="Ctrl_filter_FilterEventAsync" 
         MaxContentHeight="300"
         Margin="10"></controls:BookmarksViewControl>
 </Window>

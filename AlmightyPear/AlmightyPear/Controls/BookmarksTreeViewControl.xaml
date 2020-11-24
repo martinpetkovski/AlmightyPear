@@ -80,7 +80,7 @@
                                         </StackPanel>
                                     </MenuItem.Header>
                                 </MenuItem>
-                                <MenuItem Name="mi_delete" Click="Mi_delete_Click">
+                                <MenuItem Name="mi_delete" Click="Mi_delete_ClickAsync">
                                     <MenuItem.Header>
                                         <StackPanel Orientation="Horizontal">
                                             <fa:ImageAwesome Icon="Xing" Foreground="Red" Height="12" Width="12" Margin="5,0" />
@@ -139,7 +139,7 @@
                                         </StackPanel>
                                     </MenuItem.Header>
                                 </MenuItem>
-                                <MenuItem Name="mi_BookmarkDelete" Click="Mi_BookmarkDelete_Click">
+                                <MenuItem Name="mi_BookmarkDelete" Click="Mi_BookmarkDelete_ClickAsync">
                                     <MenuItem.Header>
                                         <StackPanel Orientation="Horizontal">
                                             <fa:ImageAwesome Icon="Xing" Foreground="Red" Height="12" Width="12" Margin="5,0" />

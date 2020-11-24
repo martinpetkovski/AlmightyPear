@@ -192,10 +192,14 @@ namespace AlmightyPear.Controls
             _editTextboxAction = EEditTextboxAction.Rename;
         }
 
-        private void Mi_delete_Click(object sender, RoutedEventArgs e)
+        private async void Mi_delete_ClickAsync(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult result = MessageBox.Show("You are about to delete this bin along with all containing bookmarks. \nThis action is irreversible. \nAre you sure you want to continue?", "Delete Bin", MessageBoxButton.YesNo, MessageBoxImage.Question);
-            if (result == MessageBoxResult.Yes)
+            int result = await View.MessageBox.FireAsync("Delete Bin", 
+                "You are about to delete this bin along with all containing bookmarks. " +
+                "\nThis action is irreversible. " +
+                "\nAre you sure you want to continue?", 
+                new List<string>() { "Yes", "No" });
+            if (result == 0)
             {
                 Env.BinController.DeleteBin((BinModel)((MenuItem)sender).DataContext);
             }
@@ -262,12 +266,18 @@ namespace AlmightyPear.Controls
             wnd.Show();
         }
 
-        private void Mi_BookmarkDelete_Click(object sender, RoutedEventArgs e)
+        private async void Mi_BookmarkDelete_ClickAsync(object sender, RoutedEventArgs e)
         {
             BookmarkModel bookmark = (BookmarkModel)((MenuItem)sender).DataContext;
 
-            MessageBoxResult result = MessageBox.Show("You are about to delete this bookmark. \nThis action is irreversible. \nAre you sure you want to continue?", "Delete Bookmark", MessageBoxButton.YesNo, MessageBoxImage.Question);
-            if (result == MessageBoxResult.Yes)
+            int result = await View.MessageBox.FireAsync(
+                "Delete Bookmark",
+                "You are about to delete this bookmark. " +
+                "\nThis action is irreversible. " +
+                "\nAre you sure you want to continue?", 
+                new List<string>() { "Yes", "No" });
+
+            if (result == 0)
             {
                 Env.BinController.DeleteBookmark(bookmark);
             }

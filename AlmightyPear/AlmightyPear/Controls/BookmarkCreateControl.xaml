@@ -53,7 +53,7 @@
             FontSize="16"
             WordWrap="True"
             ShowLineNumbers="True"
-            LineNumbersForeground="White"
+            LineNumbersForeground="#555"
             ></avalonEdit:TextEditor>
     </Grid>
 </UserControl>

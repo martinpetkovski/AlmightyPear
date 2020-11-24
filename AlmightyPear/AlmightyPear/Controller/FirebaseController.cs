@@ -53,7 +53,7 @@ namespace AlmightyPear.Controller
         public async Task<bool> AuthenticateUserAsync()
         {
             var authProvider = new FirebaseAuthProvider(new Firebase.Auth.FirebaseConfig(_apiKey));
-            var link = await authProvider.GetUserAsync(_token);
+            var link = await authProvider.GetUserAsync(_token); 
 
             if (link.LocalId != "")
             {

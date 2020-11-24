@@ -100,6 +100,7 @@
                         ToolTip="{Binding Path=Content}" 
                         FontSize="{Binding RelativeSource={RelativeSource AncestorType=local:BookmarksTreeViewControl}, Path=FontSize}"
                         MaxWidth="220" 
+                        MaxHeight="72"
                         BorderThickness="1"
                         HorizontalContentAlignment="Left"
                         Click="Btn_BookmarkAction_Click">

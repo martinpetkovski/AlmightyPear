@@ -63,6 +63,8 @@ namespace AlmightyPear.View
             Height = finalH;
             Left = finalX;
             Top = finalY;
+
+            tb_content.Text = Bookmark.Content;
         }
 
         private void Btn_cancel_Click(object sender, RoutedEventArgs e)

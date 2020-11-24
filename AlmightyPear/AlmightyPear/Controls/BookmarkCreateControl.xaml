@@ -54,6 +54,7 @@
             WordWrap="True"
             ShowLineNumbers="True"
             LineNumbersForeground="#555"
+            KeyDown="Txt_selection_KeyDown"
             ></avalonEdit:TextEditor>
     </Grid>
 </UserControl>

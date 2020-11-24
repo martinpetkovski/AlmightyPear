@@ -27,6 +27,11 @@
         <GradientStop Color="{StaticResource ColLoMidMono}" Offset="1.0" />
     </LinearGradientBrush>
 
+    <LinearGradientBrush x:Key="GradOutsetGreen" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Color="#080" Offset="0.0" />
+        <GradientStop Color="#020" Offset="1.0" />
+    </LinearGradientBrush>
+
     <LinearGradientBrush x:Key="GradInsetSide" StartPoint="0,0" EndPoint="1,0">
         <GradientStop Color="{StaticResource ColLoMidMono}" Offset="0.0" />
         <GradientStop Color="{StaticResource ColHiMidMono}" Offset="1.0" />

@@ -17,6 +17,5 @@
                 Padding="5" 
                 BorderBrush="#333" 
                 VerticalAlignment="Center">Save All</Button>
-        <ProgressBar Grid.Column="1" Name="pb_SaveProgress" Width="200" Height="30" Minimum="0" Maximum="1"></ProgressBar>
     </Grid>
 </UserControl>

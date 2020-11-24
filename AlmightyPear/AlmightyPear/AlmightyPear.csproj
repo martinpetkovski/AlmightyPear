@@ -216,6 +216,9 @@
     <Compile Include="View\CreateBookmarkWnd.xaml.cs">
       <DependentUpon>CreateBookmarkWnd.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\ProgressBarWnd.xaml.cs">
+      <DependentUpon>ProgressBarWnd.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\MessageBox.xaml.cs">
       <DependentUpon>MessageBox.xaml</DependentUpon>
     </Compile>
@@ -298,6 +301,10 @@
     <Page Include="View\CreateBookmarkWnd.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ProgressBarWnd.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\MessageBox.xaml">
       <SubType>Designer</SubType>

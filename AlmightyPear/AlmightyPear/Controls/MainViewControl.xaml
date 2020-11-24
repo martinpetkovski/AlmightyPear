@@ -47,7 +47,7 @@
                         <controls:BookmarksViewControl MaxContentHeight="10000" ContentTextSize="16"></controls:BookmarksViewControl>
                     </Grid>
                 </TabItem>
-                <TabItem Header="Create Bookmark">
+                <TabItem Header="{Binding Source={StaticResource Env}, Path=BinData.BookmarksCreateCaption}">
                     <controls:BookmarkCreateControl x:Name="ctrl_CreateBookmark"></controls:BookmarkCreateControl>
                 </TabItem>
                 <TabItem Header="Profile"></TabItem>

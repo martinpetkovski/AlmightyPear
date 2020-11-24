@@ -1,4 +1,5 @@
 ﻿using AlmightyPear.Controller;
+using AlmightyPear.View;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -26,16 +27,11 @@ namespace AlmightyPear.Controls
             InitializeComponent();
         }
 
-        public void UpdateProgress(double progress, string status)
-        {
-            pb_SaveProgress.Value = progress;
-        }
-
         private async void Btn_SaveAll_ClickAsync(object sender, RoutedEventArgs e)
         {
             Env.ClearClipboard();
-            await Env.BinController.SaveEditedBookmarksAsync(this, UpdateProgress);
-            pb_SaveProgress.Value = 0;
+            ProgressBarWnd.FireAsync();
+            await Env.BinController.SaveEditedBookmarksAsync(ProgressBarWnd.Instance, ProgressBarWnd.UpdateProgress);
 
             await CreateBookmarkControl.CreateAsync();
         }

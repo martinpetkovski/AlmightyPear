@@ -219,6 +219,12 @@ namespace AlmightyPear.Controller
         
         public async Task SaveEditedBookmarksAsync(Control instigatorControl = null, Action<double, string> progress = null)
         {
+            if (EditedBookmarks.Count == 0)
+            {
+                progress?.Invoke(1, "");
+                return;
+            }
+
             int totalEdited = EditedBookmarks.Count;
 
             var tasks = EditedBookmarks.Select(bookmark => Env.FirebaseController.UpdateBookmarkAsync(bookmark.Value)).ToArray();

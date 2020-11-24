@@ -8,8 +8,9 @@
         xmlns:controller="clr-namespace:AlmightyPear.Controller"
         xmlns:controls="clr-namespace:AlmightyPear.Controls"
         xmlns:behaviors="clr-namespace:WPFTextBoxAutoComplete;assembly=WPFTextBoxAutoComplete"
+        Title="{Binding Path=BinData.BookmarksViewCaption}" 
         mc:Ignorable="d"
-        Title="Create Bookmark" Height="200" Width="800"
+        Height="200" Width="800"
         WindowStyle="None"
         Background="#111"
         AllowsTransparency="True"
@@ -17,6 +18,17 @@
         BorderBrush="#444"
         BorderThickness="1"
         ResizeMode="NoResize">
+    <Window.Resources>
+        <ResourceDictionary>
+            <controller:Env x:Key="Env"/>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="..\Resources\Styles\BasicTheme.xaml"></ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Window.DataContext>
+        <StaticResourceExtension ResourceKey="Env"/>
+    </Window.DataContext>
     <controls:BookmarkCreateControl 
         x:Name="ctrl_bookmarkCreate" 
         InputEvent="Ctrl_bookmarkCreate_InputEventAsync"

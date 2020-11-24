@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AlmightyPear.Controls"
              xmlns:fa="http://schemas.fontawesome.io/icons/"
+             xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
              xmlns:controller="clr-namespace:AlmightyPear.Controller"
              xmlns:converters="clr-namespace:AlmightyPear.Converters"
              xmlns:behaviors="clr-namespace:WPFTextBoxAutoComplete;assembly=WPFTextBoxAutoComplete"
@@ -43,8 +44,16 @@
                 ></TextBox>
             <fa:ImageAwesome Grid.Column="1" Icon="FolderOpen" Foreground="#333" Height="32" Width="32" Margin="20,3" />
         </Grid>
-        <ScrollViewer Grid.Row="1" Margin="0,10,0,0">
-            <TextBox Name="txt_selection" Foreground="White" FontSize="16" TextWrapping="Wrap"></TextBox>
-        </ScrollViewer>
+        <avalonEdit:TextEditor 
+            Grid.Row="1" 
+            Margin="0,10,0,0" 
+            Name="txt_selection" 
+            Foreground="White" 
+            Background="{StaticResource GradInset}" 
+            FontSize="16"
+            WordWrap="True"
+            ShowLineNumbers="True"
+            LineNumbersForeground="White"
+            ></avalonEdit:TextEditor>
     </Grid>
 </UserControl>

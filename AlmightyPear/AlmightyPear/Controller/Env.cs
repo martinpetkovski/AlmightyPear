@@ -1,4 +1,5 @@
 ﻿using AlmightyPear.Model;
+using MahApps.Metro.Controls;
 using System;
 using System.Threading;
 
@@ -16,6 +17,7 @@ namespace AlmightyPear.Controller
         // functional
         public static FirebaseController FirebaseController { get; private set; }
         public static MainWindow MainWindow { get; private set; }
+        public static MetroWindow MetroMainWindow { get { return (MetroWindow)MainWindow; } }
         public static BinController BinController { get; private set; }
 
         public static void Initialize(MainWindow mainWindow)

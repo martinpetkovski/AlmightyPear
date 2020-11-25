@@ -72,6 +72,10 @@ namespace AlmightyPear.Controls
         private void Tb_filter_KeyDown(object sender, KeyEventArgs e)
         {
             FilterEvent?.Invoke(sender, e);
+            if (e.Key == Key.Escape)
+            {
+                tb_filter.Clear();
+            }
         }
 
         private void Btn_clearFilter_Click(object sender, RoutedEventArgs e)

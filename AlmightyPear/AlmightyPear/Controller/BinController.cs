@@ -13,7 +13,7 @@ namespace AlmightyPear.Controller
     class BinController
     {
         private Dictionary<string, BookmarkModel> _editedBookmarks;
-        private Dictionary<string, BookmarkModel> EditedBookmarks
+        public Dictionary<string, BookmarkModel> EditedBookmarks
         {
             get
             {

@@ -72,19 +72,19 @@ namespace AlmightyPear.Model
             }
         }
 
-        bool _hasCreatedBookmarks;
+        public bool HasCreatedBookmarks; // fixme martinp: move somewhere else
         public string BookmarksCreateCaption
         {
             get
             {
-                if (_hasCreatedBookmarks)
+                if (HasCreatedBookmarks)
                     return "Create Bookmark (*)";
                 else
                     return "Create Bookmark";
             }
             set
             {
-                _hasCreatedBookmarks = bool.Parse(value);
+                HasCreatedBookmarks = bool.Parse(value);
                 OnPropertyChanged();
             }
         }

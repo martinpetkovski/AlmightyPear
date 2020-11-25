@@ -134,7 +134,7 @@ namespace AlmightyPear.Model
             return score;
         }
 
-        public async void RecalculatePathsAsync()
+        public void RecalculatePaths()
         {
             foreach (KeyValuePair<string, IBinItem> binItem in BinItems)
             {
@@ -142,13 +142,13 @@ namespace AlmightyPear.Model
                 {
                     BinModel model = ((BinModel)binItem.Value);
                     model.Path = Path + Env.PathSeparator + model.Name;
-                    model.RecalculatePathsAsync();
+                    model.RecalculatePaths();
                 }
                 else if (binItem.Value is BookmarkModel)
                 {
                     BookmarkModel model = ((BookmarkModel)binItem.Value);
                     model.Path = Path;
-                    await Env.FirebaseController.UpdateBookmarkAsync(model);
+                    Env.BinController.MarkBookmarkForEdit(model);
                 }
             }
         }

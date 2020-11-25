@@ -153,7 +153,7 @@ namespace AlmightyPear.Controller
             {
                 BinModel model = (BinModel)item;
                 model.Name = model.Path.Substring(model.Path.LastIndexOf(Env.PathSeparator) + 1, model.Path.Length - model.Path.LastIndexOf(':') - 1);
-                model.RecalculatePathsAsync();
+                model.RecalculatePaths();
             }
             else if (item is BookmarkModel)
             {
@@ -219,7 +219,7 @@ namespace AlmightyPear.Controller
             return retVal;
         }
 
-        private void MarkBookmarkForEdit(BookmarkModel bookmark)
+        public void MarkBookmarkForEdit(BookmarkModel bookmark)
         {
             if (!EditedBookmarks.ContainsKey(bookmark.ID))
             {

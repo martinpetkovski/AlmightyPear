@@ -10,8 +10,8 @@
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         mc:Ignorable="d"
         Title="Checkmeg PRE-ALPHA"
-        Icon="Resources\Textures\logo_icon.ico"
         BorderThickness="1"
+        TitleBarHeight="48"
         MinHeight="800"
         MinWidth="800">
     <Window.Resources>
@@ -24,7 +24,31 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
-    
+    <mah:MetroWindow.LeftWindowCommands>
+        <mah:WindowCommands>
+            <Menu Grid.Column="2" Background="Transparent" Foreground="White">
+                <MenuItem>
+                    <MenuItem.Header>
+                        <Image  Source="Resources/Textures/logo.png" Height="36"/>
+                    </MenuItem.Header>
+                    <MenuItem Header="Save All..." Name="mi_SaveAll" Click="Mi_SaveAll_ClickAsync"></MenuItem>
+                    <MenuItem Header="Clear Temp Bin" Name="mi_ClearTempBin" Click="Mi_ClearTempBin_Click"></MenuItem>
+                    <Separator></Separator>
+                    <MenuItem Header="Log out" Name="mi_LogOut" Click="Mi_LogOut_Click"></MenuItem>
+                </MenuItem>
+            </Menu>
+        </mah:WindowCommands>
+    </mah:MetroWindow.LeftWindowCommands>
+
+    <mah:MetroWindow.RightWindowCommands>
+        <mah:WindowCommands>
+            <StackPanel Orientation="Horizontal"  HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,0,30,0" >
+                <!--<TextBlock Text="Logged in as:  "></TextBlock>-->
+                <TextBlock Text="{Binding Source={StaticResource Env}, Path=UserData.Email}"></TextBlock>
+            </StackPanel>
+        </mah:WindowCommands>
+    </mah:MetroWindow.RightWindowCommands>
+
     <ContentControl>
         <ContentControl.Style>
             <Style TargetType="{x:Type ContentControl}">
@@ -55,7 +79,7 @@
                                                         Path=MainWindowData.WindowState}" Value="BookmarksView">
                         <Setter Property="Content">
                             <Setter.Value>
-                                <controls:MainViewControl></controls:MainViewControl>
+                                <controls:MainViewControl x:Name="ctrl_mainView"></controls:MainViewControl>
                             </Setter.Value>
                         </Setter>
                     </DataTrigger>

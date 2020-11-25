@@ -35,10 +35,14 @@ namespace AlmightyPear.Controls
 
         public async Task CreateAsync()
         {
-            if (tb_category.Text.Length == 0 || txt_selection.Text.Length == 0)
+            if (txt_selection.Text.Length == 0)
                 return;
 
-            await Env.FirebaseController.CreateBookmarkAsync(tb_category.Text, txt_selection.Text);
+            string bin = tb_category.Text;
+            if (bin.Length == 0)
+                bin = "TEMP";
+
+            await Env.FirebaseController.CreateBookmarkAsync(bin, txt_selection.Text);
             Env.ClearClipboard();
             Env.BinData.BookmarksCreateCaption = false.ToString();
         }

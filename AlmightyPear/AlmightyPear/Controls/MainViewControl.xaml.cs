@@ -32,5 +32,10 @@ namespace AlmightyPear.Controls
             Env.FirebaseController.LogOutUser();
             Env.MainWindowData.WindowState = MainWindowModel.EMainWindowState.SignIn;
         }
+
+        private void Btn_ClearTempBin_Click(object sender, RoutedEventArgs e)
+        {
+            Env.BinController.DeleteBin(Env.BinController.GetBin(Env.TempBinPath));
+        }
     }
 }

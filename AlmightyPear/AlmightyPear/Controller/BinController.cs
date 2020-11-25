@@ -134,15 +134,18 @@ namespace AlmightyPear.Controller
         public void DeleteBin(BinModel item)
         {
             Dictionary<string, IBinItem> binItems = GetItemsAndChildren(item);
-            foreach (KeyValuePair<string, IBinItem> binItem in binItems)
+            if (binItems != null)
             {
-                if (binItem.Value is BookmarkModel)
+                foreach (KeyValuePair<string, IBinItem> binItem in binItems)
                 {
-                    DeleteBookmark((BookmarkModel)binItem.Value);
+                    if (binItem.Value is BookmarkModel)
+                    {
+                        DeleteBookmark((BookmarkModel)binItem.Value);
+                    }
                 }
-            }
 
-            GenerateBinTree();
+                GenerateBinTree();
+            }
         }
 
         public void ChangePath(IBinItem item, string path)
@@ -208,12 +211,16 @@ namespace AlmightyPear.Controller
 
         public Dictionary<string, IBinItem> GetItemsAndChildren(BinModel item)
         {
-            Dictionary<string, IBinItem> retVal = item.BinItems;
-            foreach (IBinItem binModel in item.BinItemsCollection)
+            Dictionary<string, IBinItem> retVal = null;
+            if (item != null)
             {
-                if (binModel is BinModel)
+                retVal = item.BinItems;
+                foreach (IBinItem binModel in item.BinItemsCollection)
                 {
-                    retVal = retVal.Concat(GetItemsAndChildren((BinModel)binModel)).ToDictionary(p => p.Key, p => p.Value);
+                    if (binModel is BinModel)
+                    {
+                        retVal = retVal.Concat(GetItemsAndChildren((BinModel)binModel)).ToDictionary(p => p.Key, p => p.Value);
+                    }
                 }
             }
             return retVal;

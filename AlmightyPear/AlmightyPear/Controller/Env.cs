@@ -9,6 +9,7 @@ namespace AlmightyPear.Controller
     {
         // global
         public static char PathSeparator = ':';
+        public static string TempBinPath = "TEMP";
         // data
         public static EnvModel EnvModel { get; private set; }
         public static MainWindowModel MainWindowData { get; private set; }

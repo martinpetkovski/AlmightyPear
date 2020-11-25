@@ -40,7 +40,7 @@ namespace AlmightyPear.Controls
 
             string bin = tb_category.Text;
             if (bin.Length == 0)
-                bin = "TEMP";
+                bin = Env.TempBinPath;
 
             await Env.FirebaseController.CreateBookmarkAsync(bin, txt_selection.Text);
             Env.ClearClipboard();

@@ -436,7 +436,7 @@
     <Style TargetType="{x:Type TabItem}">
         <Setter Property="Background" Value="{StaticResource GradOutset}"/>
         <Setter Property="Foreground" Value="{StaticResource SolidLightest}"/>
-        <Setter Property="BorderBrush" Value="{StaticResource SolidHiMidMono}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource SolidDarkMono}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="FontSize" Value="18" />
         <Setter Property="Padding" Value="10" />

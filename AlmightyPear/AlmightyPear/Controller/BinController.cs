@@ -235,6 +235,12 @@ namespace AlmightyPear.Controller
             Env.BinData.BookmarksViewCaption = ""; // trigger change
         }
 
+        public void ClearBookmarksForEdit()
+        {
+            EditedBookmarks.Clear();
+            Env.BinData.BookmarksViewCaption = ""; // trigger change
+        }
+
         public async Task SaveEditedBookmarksAsync(Control instigatorControl = null, Action<double, string> progress = null)
         {
             if (EditedBookmarks.Count == 0)

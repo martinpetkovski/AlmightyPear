@@ -32,6 +32,7 @@
                         <Image  Source="Resources/Textures/logo.png" Height="36"/>
                     </MenuItem.Header>
                     <MenuItem Header="Save All..." Name="mi_SaveAll" Click="Mi_SaveAll_ClickAsync"></MenuItem>
+                    <MenuItem Header="Full Reload" Name="mi_FullReload" Click="Mi_FullReload_ClickAsync"></MenuItem>
                     <MenuItem Header="Clear Temp Bin" Name="mi_ClearTempBin" Click="Mi_ClearTempBin_Click"></MenuItem>
                     <Separator></Separator>
                     <MenuItem Header="Log out" Name="mi_LogOut" Click="Mi_LogOut_Click"></MenuItem>

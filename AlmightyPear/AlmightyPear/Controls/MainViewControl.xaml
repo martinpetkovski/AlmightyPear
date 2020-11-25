@@ -20,7 +20,7 @@
     </UserControl.Resources>
     <Border Grid.Row="1" Background="{StaticResource GradInsetSide}">
         <TabControl  TabStripPlacement="Left">
-            <TabItem Header="{Binding Source={StaticResource Env}, Path=BinData.BookmarksViewCaption}">
+            <TabItem Header="{Binding Source={StaticResource Env}, Path=BinData.BookmarksViewCaption}" Width="250">
                 <Grid>
                     <controls:BookmarksViewControl MaxContentHeight="10000" ContentTextSize="16"></controls:BookmarksViewControl>
                 </Grid>

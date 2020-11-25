@@ -124,6 +124,11 @@ namespace AlmightyPear.Controller
 
         public async Task GetBookmarksByUserAsync()
         {
+            if(Env.UserData.Bookmarks != null && Env.UserData.Bookmarks.Count > 0)
+            {
+                Env.UserData.Bookmarks.Clear();
+            }
+
             string userId = Env.UserData.ID;
             FirebaseResponse response = await _client.GetAsync("bookmarks/" + userId + "/");
             try

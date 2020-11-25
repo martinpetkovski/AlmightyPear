@@ -191,5 +191,12 @@ namespace AlmightyPear
             Env.FirebaseController.LogOutUser();
             Env.MainWindowData.WindowState = MainWindowModel.EMainWindowState.SignIn;
         }
+
+        private async void Mi_FullReload_ClickAsync(object sender, RoutedEventArgs e)
+        {
+            await Env.FirebaseController.GetBookmarksByUserAsync();
+            Env.BinController.GenerateBinTree();
+            Env.BinController.ClearBookmarksForEdit();
+        }
     }
 }

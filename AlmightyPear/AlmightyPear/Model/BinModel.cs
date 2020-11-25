@@ -56,13 +56,6 @@ namespace AlmightyPear.Model
 
         }
 
-        public void RemoveItemFromBin(string key)
-        {
-            _childBinItems.Remove(key);
-            OnPropertyChanged("BinItems");
-            OnPropertyChanged("BinItemsCollection");
-        }
-
         public void Nuke()
         {
             _childBinItems.Clear();

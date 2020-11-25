@@ -88,6 +88,23 @@
                                         </StackPanel>
                                     </MenuItem.Header>
                                 </MenuItem>
+                                <Separator></Separator>
+                                <MenuItem Name="mi_selectItems" Click="Mi_selectItems_Click">
+                                    <MenuItem.Header>
+                                        <StackPanel Orientation="Horizontal">
+                                            <fa:ImageAwesome Icon="CircleThin"  Height="12" Width="12" Margin="5,0" />
+                                            <TextBlock Text="Select Items"></TextBlock>
+                                        </StackPanel>
+                                    </MenuItem.Header>
+                                </MenuItem>
+                                <MenuItem Name="mi_selectItemsChildren" Click="Mi_selectItemsChildren_Click">
+                                    <MenuItem.Header>
+                                        <StackPanel Orientation="Horizontal">
+                                            <fa:ImageAwesome Icon="CircleThin" Height="12" Width="12" Margin="5,0" />
+                                            <TextBlock Text="Select Items + Children"></TextBlock>
+                                        </StackPanel>
+                                    </MenuItem.Header>
+                                </MenuItem>
                             </ContextMenu>
                         </StackPanel.ContextMenu>
                     </StackPanel>

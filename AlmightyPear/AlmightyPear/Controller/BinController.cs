@@ -1,9 +1,7 @@
-﻿using AlmightyPear.Controls;
-using AlmightyPear.Model;
+﻿using AlmightyPear.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Threading;
@@ -94,13 +92,13 @@ namespace AlmightyPear.Controller
 
         public void DeleteBookmarksFromBin(BinModel bin)
         {
-            foreach(KeyValuePair<string, IBinItem> item in bin.BinItems)
+            foreach (KeyValuePair<string, IBinItem> item in bin.BinItems)
             {
-                if(item.Value is BinModel)
+                if (item.Value is BinModel)
                 {
                     DeleteBookmarksFromBin((BinModel)item.Value);
                 }
-                else if(item.Value is BookmarkModel)
+                else if (item.Value is BookmarkModel)
                 {
                     BookmarkModel bookmark = (BookmarkModel)item.Value;
                     DeleteBookmark(bookmark);
@@ -111,9 +109,9 @@ namespace AlmightyPear.Controller
         public bool PurgeBinTree(BinModel parentBin)
         {
             bool shouldNuke = true;
-            foreach(KeyValuePair<string,IBinItem> binItem in parentBin.BinItems)
+            foreach (KeyValuePair<string, IBinItem> binItem in parentBin.BinItems)
             {
-                if(binItem.Value is BookmarkModel)
+                if (binItem.Value is BookmarkModel)
                 {
                     shouldNuke = false;
                     break;
@@ -135,23 +133,12 @@ namespace AlmightyPear.Controller
 
         public void DeleteBin(BinModel item)
         {
-            List<string> bins = GetBinsFromPath(item.Path);
-
-            BinModel parentBin = Env.BinData.RootBin;
-
-            foreach (string bin in bins)
+            Dictionary<string, IBinItem> binItems = GetItemsAndChildren(item);
+            foreach (KeyValuePair<string, IBinItem> binItem in binItems)
             {
-                IBinItem nextBin = null;
-                bool exists = parentBin.BinItems.TryGetValue(bin, out nextBin);
-                if (exists)
+                if (binItem.Value is BookmarkModel)
                 {
-                    if (bin == bins.Last())
-                    {
-                        DeleteBookmarksFromBin((BinModel)nextBin);
-                        parentBin.RemoveItemFromBin(bin);
-                        break;
-                    }
-                    parentBin = (BinModel)nextBin;
+                    DeleteBookmark((BookmarkModel)binItem.Value);
                 }
             }
 
@@ -168,7 +155,7 @@ namespace AlmightyPear.Controller
                 model.Name = model.Path.Substring(model.Path.LastIndexOf(Env.PathSeparator) + 1, model.Path.Length - model.Path.LastIndexOf(':') - 1);
                 model.RecalculatePathsAsync();
             }
-            else if(item is BookmarkModel)
+            else if (item is BookmarkModel)
             {
                 MarkBookmarkForEdit((BookmarkModel)item);
             }
@@ -176,21 +163,21 @@ namespace AlmightyPear.Controller
             GenerateBinTree();
         }
 
-        public Dictionary<string, IBinItem> GetItems(string path)
+        public BinModel GetBin(string path)
         {
-            Dictionary<string, IBinItem> retVal = null;
+            BinModel retVal = null;
             List<string> bins = GetBinsFromPath(path);
 
             bool found = false;
             BinModel currentBin = Env.BinData.RootBin;
-            foreach(string currentBinName in bins)
+            foreach (string currentBinName in bins)
             {
                 IBinItem binItem;
                 found = currentBin.BinItems.TryGetValue(currentBinName, out binItem);
-                if(found)
+                if (found)
                 {
                     currentBin = (BinModel)binItem;
-                    if(currentBin == null)
+                    if (currentBin == null)
                     {
                         found = false;
                     }
@@ -200,11 +187,35 @@ namespace AlmightyPear.Controller
                     break;
             }
 
-            if(found)
+            if (found)
             {
-                retVal = currentBin.BinItems;
+                retVal = currentBin;
             }
 
+            return retVal;
+        }
+
+        public Dictionary<string, IBinItem> GetBinItems(string path)
+        {
+            BinModel bin = GetBin(path);
+            if (bin != null)
+            {
+                return bin.BinItems;
+            }
+
+            return null;
+        }
+
+        public Dictionary<string, IBinItem> GetItemsAndChildren(BinModel item)
+        {
+            Dictionary<string, IBinItem> retVal = item.BinItems;
+            foreach (IBinItem binModel in item.BinItemsCollection)
+            {
+                if (binModel is BinModel)
+                {
+                    retVal = retVal.Concat(GetItemsAndChildren((BinModel)binModel)).ToDictionary(p => p.Key, p => p.Value);
+                }
+            }
             return retVal;
         }
 
@@ -216,7 +227,7 @@ namespace AlmightyPear.Controller
             }
             Env.BinData.BookmarksViewCaption = ""; // trigger change
         }
-        
+
         public async Task SaveEditedBookmarksAsync(Control instigatorControl = null, Action<double, string> progress = null)
         {
             if (EditedBookmarks.Count == 0)
@@ -231,9 +242,9 @@ namespace AlmightyPear.Controller
             Task whenAllTask = Task.WhenAll(tasks);
 
             int i = 0;
-            for (;;)
+            for (; ; )
             {
-                var timer = Task.Delay(100); 
+                var timer = Task.Delay(100);
                 await Task.WhenAny(whenAllTask, timer);
                 if (whenAllTask.IsCompleted)
                 {

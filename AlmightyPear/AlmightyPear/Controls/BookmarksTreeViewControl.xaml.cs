@@ -33,7 +33,7 @@ namespace AlmightyPear.Controls
                 }
             }
 
-            public void SelectItem(IBinItem item, bool add = false)
+            public void ToggleSelectItem(IBinItem item, bool add = false)
             {
                 if (SelectedBinItems.Contains(item))
                     SelectedBinItems.Remove(item);
@@ -44,6 +44,14 @@ namespace AlmightyPear.Controls
 
                     SelectedBinItems.Add(item);
                 }
+                OnPropertyChanged("SelectedBinItems");
+            }
+
+            public void SelectItem(IBinItem item)
+            {
+                if (!SelectedBinItems.Contains(item))
+                    SelectedBinItems.Add(item);
+
                 OnPropertyChanged("SelectedBinItems");
             }
 
@@ -217,11 +225,11 @@ namespace AlmightyPear.Controls
             {
                 if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift))
                 {
-                    Model.SelectItem(bookmark, true);
+                    Model.ToggleSelectItem(bookmark, true);
                 }
                 else
                 {
-                    Model.SelectItem(bookmark);
+                    Model.ToggleSelectItem(bookmark);
                 }
             }
             else if (Keyboard.IsKeyDown(Key.LeftAlt) || Keyboard.IsKeyDown(Key.RightAlt))
@@ -342,15 +350,40 @@ namespace AlmightyPear.Controls
 
         private void RootControl_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            if(e.Key == Key.Escape)
+            if (e.Key == Key.Escape)
             {
                 Model.ClearSelection();
             }
         }
 
-        public void ExecTop()
+        private void Mi_selectItems_Click(object sender, RoutedEventArgs e)
         {
-            
+            Model.ClearSelection();
+            IBinItem sourceBin = (IBinItem)((MenuItem)sender).DataContext;
+
+            if (sourceBin != null)
+            {
+                var pathChildren = Env.BinController.GetBinItems(sourceBin.Path);
+                foreach (var item in pathChildren)
+                {
+                    Model.SelectItem(item.Value);
+                }
+            }
+        }
+
+        private void Mi_selectItemsChildren_Click(object sender, RoutedEventArgs e)
+        {
+            Model.ClearSelection();
+            IBinItem sourceBin = (IBinItem)((MenuItem)sender).DataContext;
+
+            if (sourceBin != null && sourceBin is BinModel)
+            {
+                var pathChildren = Env.BinController.GetItemsAndChildren((BinModel)sourceBin);
+                foreach (var item in pathChildren)
+                {
+                    Model.SelectItem(item.Value);
+                }
+            }
         }
     }
 }

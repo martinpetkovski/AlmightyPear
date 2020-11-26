@@ -285,5 +285,17 @@ namespace AlmightyPear.Controller
                 return false;
         }
 
+        public void ClearTempBin()
+        {
+            Env.BinController.DeleteBin(Env.BinController.GetBin(Env.TempBinPath));
+        }
+
+        public async Task ReloadAllAsync()
+        {
+            await Env.FirebaseController.GetBookmarksByUserAsync();
+            Env.BinController.GenerateBinTree();
+            Env.BinController.ClearBookmarksForEdit();
+        }
+
     }
 }

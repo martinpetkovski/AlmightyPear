@@ -10,10 +10,12 @@ namespace AlmightyPear.Model
 {
     class UserModel : INotifyPropertyChanged
     {
-        public void Initialize(string id, string email)
+        public void Initialize(string id, string email, string displayName, string photoUrl)
         {
             Email = email;
             ID = id;
+            DisplayName = displayName;
+            PhotoUrl = photoUrl;
             IsLoggedIn = true;
         }
 
@@ -53,6 +55,34 @@ namespace AlmightyPear.Model
             private set
             {
                 _id = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _displayName;
+        public string DisplayName
+        {
+            get
+            {
+                return _displayName;
+            }
+            set
+            {
+                _displayName = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _photoUrl;
+        public string PhotoUrl
+        {
+            get
+            {
+                return _photoUrl;
+            }
+            set
+            {
+                _photoUrl = value;
                 OnPropertyChanged();
             }
         }

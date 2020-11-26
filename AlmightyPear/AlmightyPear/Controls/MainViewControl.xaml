@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:AlmightyPear.Controls"
              xmlns:controller="clr-namespace:AlmightyPear.Controller"
              xmlns:controls="clr-namespace:AlmightyPear.Controls"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:model="clr-namespace:AlmightyPear.Model"
              xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
              mc:Ignorable="d" 
@@ -19,7 +20,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <Border Grid.Row="1" Background="{StaticResource GradInsetSide}">
-        <TabControl  TabStripPlacement="Left">
+        <mah:MetroAnimatedTabControl TabStripPlacement="Left" Background="{StaticResource SolidDarkMono}">
             <TabItem Header="{Binding Source={StaticResource Env}, Path=BinData.BookmarksViewCaption}" Width="250">
                 <Grid>
                     <controls:BookmarksViewControl MaxContentHeight="10000" ContentTextSize="16"></controls:BookmarksViewControl>
@@ -29,8 +30,47 @@
                 <controls:BookmarkCreateControl x:Name="ctrl_CreateBookmark"></controls:BookmarkCreateControl>
             </TabItem>
             <TabItem Header="Profile">
-                <controls:ResetPasswordControl></controls:ResetPasswordControl>
+                <ScrollViewer>
+                    <StackPanel Orientation="Vertical">
+                        <GroupBox Header="Actions">
+                            <WrapPanel Orientation="Horizontal">
+                                <Button HorizontalAlignment="Right" 
+                                    Padding="20" 
+                                    Name="btn_saveAll" Click="Btn_saveAll_Click"
+                                    BorderBrush="#333">Save All... </Button>
+                                <Button HorizontalAlignment="Right" 
+                                    Padding="20" 
+                                        Name="btn_fullReload" Click="Btn_fullReload_Click"
+                                    BorderBrush="#333">Full Reload</Button>
+                                <Button HorizontalAlignment="Right" 
+                                    Padding="20" 
+                                        Name ="btn_clearTempBin" Click="Btn_clearTempBin_Click"
+                                    BorderBrush="#600">Clear Temp Bin</Button>
+                                <Button HorizontalAlignment="Right" 
+                                    Padding="20" 
+                                        Name="btn_logOut" Click="Btn_logOut_Click"
+                                    BorderBrush="#333">Log Out</Button>
+                            </WrapPanel>
+                        </GroupBox>
+                        <GroupBox Header="Profile Settings">
+                            <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Width="400">
+                                <TextBlock  Foreground="White">display name</TextBlock>
+                                <TextBox Name="tb_displayName" Text="{Binding Source={StaticResource Env}, Path=UserData.DispalyName}"></TextBox>
+                                <TextBlock  Foreground="White">picture url</TextBlock>
+                                <TextBox Name="tb_profilePicture" Text="{Binding Source={StaticResource Env}, Path=UserData.PhotoUrl}"></TextBox>
+                                <Button HorizontalAlignment="Right" 
+                                    Padding="20" Margin="0,20,0,0" 
+                                        Name="btn_updateProfile"
+                                        Click="Btn_updateProfile_Click"
+                                    BorderBrush="#333">Update Profile</Button>
+                            </StackPanel>
+                        </GroupBox>
+                        <GroupBox Header="Password Reset">
+                            <controls:ResetPasswordControl HorizontalAlignment="Left"></controls:ResetPasswordControl>
+                        </GroupBox>
+                    </StackPanel>
+                </ScrollViewer>
             </TabItem>
-        </TabControl>
+        </mah:MetroAnimatedTabControl>
     </Border>
 </UserControl>

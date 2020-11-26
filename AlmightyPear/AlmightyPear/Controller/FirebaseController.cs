@@ -39,7 +39,7 @@ namespace AlmightyPear.Controller
 
             if (auth.User.LocalId != "")
             {
-                Env.UserData.Initialize(auth.User.LocalId, auth.User.Email);
+                Env.UserData.Initialize(auth.User.LocalId, auth.User.Email, auth.User.DisplayName, auth.User.PhotoUrl);
 
                 _token = auth.FirebaseToken;
 
@@ -58,7 +58,7 @@ namespace AlmightyPear.Controller
 
             if (link.LocalId != "")
             {
-                Env.UserData.Initialize(link.LocalId, link.Email);
+                Env.UserData.Initialize(link.LocalId, link.Email, link.DisplayName, link.PhotoUrl);
                 return true;
             }
             else
@@ -92,6 +92,14 @@ namespace AlmightyPear.Controller
                 return "Password changed!";
             else
                 return "Error changing password.";
+        }
+
+        public async void UpdateProfileAsync(string displayName, string photoUrl)
+        {
+            var authProvider = new FirebaseAuthProvider(new Firebase.Auth.FirebaseConfig(_apiKey));
+            FirebaseAuthLink link = await authProvider.UpdateProfileAsync(_token, displayName, photoUrl);
+            Env.UserData.DisplayName = link.User.DisplayName;
+            Env.UserData.PhotoUrl = link.User.PhotoUrl;
         }
 
         public void LogOutUser()

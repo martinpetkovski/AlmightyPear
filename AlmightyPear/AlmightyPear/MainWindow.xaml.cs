@@ -138,7 +138,7 @@ namespace AlmightyPear
 
         }
 
-        private async void Mi_SaveAll_ClickAsync(object sender, RoutedEventArgs e)
+        public async void Mi_SaveAll_ClickAsync(object sender, RoutedEventArgs e)
         {
             if (Env.BinController.HasEditedBookmarks() || Env.BinData.HasCreatedBookmarks)
             {
@@ -181,22 +181,20 @@ namespace AlmightyPear
             }
         }
 
-        private void Mi_ClearTempBin_Click(object sender, RoutedEventArgs e)
+        public void Mi_ClearTempBin_Click(object sender, RoutedEventArgs e)
         {
-            Env.BinController.DeleteBin(Env.BinController.GetBin(Env.TempBinPath));
+            Env.BinController.ClearTempBin();
         }
 
-        private void Mi_LogOut_Click(object sender, RoutedEventArgs e)
+        public void Mi_LogOut_Click(object sender, RoutedEventArgs e)
         {
             Env.FirebaseController.LogOutUser();
             Env.MainWindowData.WindowState = MainWindowModel.EMainWindowState.SignIn;
         }
 
-        private async void Mi_FullReload_ClickAsync(object sender, RoutedEventArgs e)
+        public async void Mi_FullReload_ClickAsync(object sender, RoutedEventArgs e)
         {
-            await Env.FirebaseController.GetBookmarksByUserAsync();
-            Env.BinController.GenerateBinTree();
-            Env.BinController.ClearBookmarksForEdit();
+            await Env.BinController.ReloadAllAsync();
         }
     }
 }

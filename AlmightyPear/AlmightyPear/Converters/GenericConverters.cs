@@ -3,7 +3,7 @@ using AlmightyPear.Model;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Windows.Controls;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
 
@@ -94,7 +94,7 @@ namespace AlmightyPear.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if(value is string)
+            if (value is string)
             {
                 string path = (string)value;
                 int depth = path.Split(Env.PathSeparator).Length;
@@ -107,6 +107,28 @@ namespace AlmightyPear.Converters
             }
 
             return null;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    class EmailToVisibilityConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is string)
+            {
+                string email = (string)value;
+                if (email == "")
+                    return Visibility.Visible;
+                else
+                    return Visibility.Collapsed;
+            }
+
+            return Visibility.Collapsed;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

@@ -28,7 +28,9 @@
             <TabItem Header="{Binding Source={StaticResource Env}, Path=BinData.BookmarksCreateCaption}">
                 <controls:BookmarkCreateControl x:Name="ctrl_CreateBookmark"></controls:BookmarkCreateControl>
             </TabItem>
-            <TabItem Header="Profile"></TabItem>
+            <TabItem Header="Profile">
+                <controls:ResetPasswordControl></controls:ResetPasswordControl>
+            </TabItem>
         </TabControl>
     </Border>
 </UserControl>

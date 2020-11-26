@@ -26,6 +26,7 @@ namespace AlmightyPear.Controls
 
             if (msg != "")
             {
+                Env.MainWindowData.WindowState = Model.MainWindowModel.EMainWindowState.SignIn;
                 txt_messagebox.Text = msg;
             }
             else

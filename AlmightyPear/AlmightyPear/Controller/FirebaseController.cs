@@ -7,7 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace AlmightyPear.Controller
@@ -35,7 +34,9 @@ namespace AlmightyPear.Controller
         public async Task<bool> AuthenticateUserAsync(string email, string password)
         {
             var authProvider = new FirebaseAuthProvider(new Firebase.Auth.FirebaseConfig(_apiKey));
-            var auth = await authProvider.SignInWithEmailAndPasswordAsync(email, password);
+            FirebaseAuthLink auth;
+            auth = await authProvider.SignInWithEmailAndPasswordAsync(email, password);
+
             if (auth.User.LocalId != "")
             {
                 Env.UserData.Initialize(auth.User.LocalId, auth.User.Email);
@@ -53,7 +54,7 @@ namespace AlmightyPear.Controller
         public async Task<bool> AuthenticateUserAsync()
         {
             var authProvider = new FirebaseAuthProvider(new Firebase.Auth.FirebaseConfig(_apiKey));
-            var link = await authProvider.GetUserAsync(_token); 
+            var link = await authProvider.GetUserAsync(_token);
 
             if (link.LocalId != "")
             {
@@ -66,20 +67,29 @@ namespace AlmightyPear.Controller
             }
         }
 
-        public async Task<string> ChangePasswordAsync(string oldPassword, string password, string repeatPassword)
+        public async Task<string> ChangePasswordAsync(string email, string oldPassword, string password, string repeatPassword)
         {
-            bool authSuccess = await AuthenticateUserAsync(Env.UserData.Email, oldPassword);
+            bool authSuccess = false;
+            try
+            {
+                authSuccess = await AuthenticateUserAsync(email, oldPassword);
+            }
+            catch (Exception e)
+            {
+                return "Entered wrong email and/or password";
+            }
+
             if (!authSuccess)
                 return "Entered wrong password";
 
-            if ( password != repeatPassword)
+            if (password != repeatPassword)
                 return "Passwords do not match";
 
             var authProvider = new FirebaseAuthProvider(new FirebaseConfig(_apiKey));
             var link = authProvider.ChangeUserPassword(_token, password);
 
-            if (link.Status == TaskStatus.RanToCompletion)
-                return "";
+            if (link.Status == TaskStatus.WaitingForActivation)
+                return "Password changed!";
             else
                 return "Error changing password.";
         }
@@ -100,7 +110,7 @@ namespace AlmightyPear.Controller
             bookmarkData.TimeModified = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
 
             SetResponse response = await _client.SetAsync("bookmarks/" + Env.UserData.ID + "/" + bookmarkData.ID, bookmarkData);
-            if(response.StatusCode == System.Net.HttpStatusCode.OK)
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 Env.UserData.Bookmarks.Add(bookmarkData.ID, bookmarkData);
                 Env.BinController.AddBookmark(bookmarkData);
@@ -124,7 +134,7 @@ namespace AlmightyPear.Controller
 
         public async Task GetBookmarksByUserAsync()
         {
-            if(Env.UserData.Bookmarks != null && Env.UserData.Bookmarks.Count > 0)
+            if (Env.UserData.Bookmarks != null && Env.UserData.Bookmarks.Count > 0)
             {
                 Env.UserData.Bookmarks.Clear();
             }
@@ -135,7 +145,7 @@ namespace AlmightyPear.Controller
             {
                 Env.UserData.Bookmarks = response.ResultAs<Dictionary<string, BookmarkModel>>();
             }
-            catch(Newtonsoft.Json.JsonSerializationException e)
+            catch (Newtonsoft.Json.JsonSerializationException e)
             {
                 Debug.Write(e.Message);
             }
@@ -160,7 +170,7 @@ namespace AlmightyPear.Controller
         public void DeleteToken()
         {
             string path = AppDomain.CurrentDomain.BaseDirectory + "sgnittes.apf";
-            if(File.Exists(path))
+            if (File.Exists(path))
             {
                 File.Delete(path);
             }
@@ -227,7 +237,10 @@ namespace AlmightyPear.Controller
                     }
                 }
                 else
+                {
+                    retVal = " ";
                     isOk = false;
+                }
 
             }
             catch (FirebaseAuthException ex)

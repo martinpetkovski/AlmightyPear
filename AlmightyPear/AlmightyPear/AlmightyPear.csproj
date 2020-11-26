@@ -194,6 +194,9 @@
     <Compile Include="Controls\LoadingControl.xaml.cs">
       <DependentUpon>LoadingControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ResetPasswordControl.xaml.cs">
+      <DependentUpon>ResetPasswordControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\SaveAllControl.xaml.cs">
       <DependentUpon>SaveAllControl.xaml</DependentUpon>
     </Compile>
@@ -247,6 +250,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\MainViewControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ResetPasswordControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

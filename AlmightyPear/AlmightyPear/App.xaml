@@ -2,15 +2,26 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:AlmightyPear"
+             xmlns:controller="clr-namespace:AlmightyPear.Controller"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <FontFamily x:Key="Montserrat">pack://application:,,,/Fonts/#Montserrat</FontFamily>
-        <FontFamily x:Key="Quicksand">pack://application:,,,/Fonts/#Quicksand</FontFamily>
-        <FontFamily x:Key="ProximaNova">pack://application:,,,/Fonts/#ProximaNova</FontFamily>
+        <ResourceDictionary>
+            <FontFamily x:Key="Montserrat">pack://application:,,,/Fonts/#Montserrat</FontFamily>
+            <FontFamily x:Key="Quicksand">pack://application:,,,/Fonts/#Quicksand</FontFamily>
+            <FontFamily x:Key="ProximaNova">pack://application:,,,/Fonts/#ProximaNova</FontFamily>
 
-        <Style TargetType="{x:Type Window}">
-            <Setter Property="Background" Value="#111"></Setter>
-            <Setter Property="FontFamily" Value="{StaticResource Quicksand}"></Setter>
-        </Style>
+            <Style TargetType="{x:Type Window}">
+                <Setter Property="Background" Value="#111"></Setter>
+                <Setter Property="FontFamily" Value="{StaticResource Quicksand}"></Setter>
+            </Style>
+
+            <controller:Env x:Key="Env"/>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                <ResourceDictionary Source="Resources\Styles\MetroDarkGrey.xaml" />
+                <ResourceDictionary x:Name="CoreTheme" Source="Resources\Styles\CoreTheme.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="Resources\Styles\BasicTheme.xaml"></ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

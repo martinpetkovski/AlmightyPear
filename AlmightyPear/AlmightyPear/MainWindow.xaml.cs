@@ -9,10 +9,13 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Media;
 using System.Windows.Threading;
+using XamlCSS.WPF;
+using static AlmightyPear.Utils.ThemeManager;
 using MessageBox = AlmightyPear.View.MessageBox;
 
 namespace AlmightyPear
@@ -103,8 +106,9 @@ namespace AlmightyPear
             }));
         }
 
-        public async void ExecSignInAsync()
+        public async Task ExecSignInAsync()
         {
+            
             string outstr = await Env.FirebaseController.SignInUserAsync();
             if(outstr != "")
             {
@@ -116,13 +120,22 @@ namespace AlmightyPear
             }
         }
 
-        public MainWindow()
+        private async Task InitializeThemesAsync()
         {
+            await ThemeManager.CreateBasicThemesAsync();
+            await Env.FirebaseController.GetThemesAsync();
+            ThemeManager.SetTheme("BasicDark");
+        }
 
+        public async Task InitializeAsync()
+        {
+            Css.Initialize();
             Env.Initialize(this);
             Env.MainWindowData.WindowState = MainWindowModel.EMainWindowState.Loading;
 
+            await InitializeThemesAsync();
             InitializeComponent();
+
             Style = (Style)FindResource(typeof(Window));
             MinimizeToTray.Enable(this);
 
@@ -133,9 +146,13 @@ namespace AlmightyPear
             ChildWindows[typeof(CreateBookmarkWnd)] = new CreateBookmarkWnd();
             ChildWindows[typeof(FindBookmarkWnd)] = new FindBookmarkWnd();
 
+            await ExecSignInAsync();
+            
+        }
 
-            ExecSignInAsync();
-
+        public MainWindow()
+        {
+            InitializeAsync();
         }
 
         public async void Mi_SaveAll_ClickAsync(object sender, RoutedEventArgs e)
@@ -195,6 +212,16 @@ namespace AlmightyPear
         public async void Mi_FullReload_ClickAsync(object sender, RoutedEventArgs e)
         {
             await Env.BinController.ReloadAllAsync();
+        }
+
+        private void Mi_Quit_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Application.Current.Shutdown();
+        }
+
+        private void Mi_minimize_Click(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
         }
     }
 }

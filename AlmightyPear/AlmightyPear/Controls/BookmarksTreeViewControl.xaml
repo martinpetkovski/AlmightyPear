@@ -17,10 +17,6 @@
             <converters:FilterBinItemsConverter x:Key="FilterBinItemsConverter" />
             <converters:BookmarkCaptionConverter x:Key="BookmarkCaptionConverter" />
             <converters:BookmarkSelectedConverter x:Key="BookmarkSelectedConverter" />
-            <controller:Env x:Key="Env"/>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="..\Resources\Styles\BasicTheme.xaml"></ResourceDictionary>
-            </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
     <ScrollViewer 
@@ -32,7 +28,7 @@
                   Name="tv_main"
                   VirtualizingPanel.IsVirtualizing="True"
                   VirtualizingPanel.VirtualizationMode="Recycling"
-                  Background="{StaticResource SolidDarkMono}"
+                  Background="{DynamicResource mg.solid.10}"
                   Margin="0"
                   Padding="0">
             <TreeView.ItemsSource>
@@ -57,7 +53,10 @@
                                 HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                                 ToolTip="{Binding Path=Path}">
                         <TextBox TabIndex="0" Visibility="Collapsed" Name="tb_rename" KeyDown="Tb_rename_KeyDown" ></TextBox>
-                        <TextBlock Name="lbl_name" Text="{Binding Path=Name}"  FontSize="{Binding RelativeSource={RelativeSource AncestorType=local:BookmarksTreeViewControl}, Path=FontSize}" >
+                        <TextBlock Name="lbl_name"
+                                   Foreground="{DynamicResource mg.solid.100}"
+                                   Text="{Binding Path=Name}"  
+                                   FontSize="{Binding RelativeSource={RelativeSource AncestorType=local:BookmarksTreeViewControl}, Path=FontSize}" >
                             <TextBlock.LayoutTransform>
                                 <RotateTransform Angle="-70"></RotateTransform>
                             </TextBlock.LayoutTransform>
@@ -67,7 +66,7 @@
                                 <MenuItem Name="mi_changePath" Click="Mi_changePath_Click">
                                     <MenuItem.Header>
                                         <StackPanel Orientation="Horizontal">
-                                            <fa:ImageAwesome Icon="Exchange" Foreground="White" Height="12" Width="12" Margin="5,0" />
+                                            <fa:ImageAwesome Icon="Exchange" Foreground="{DynamicResource mg.solid.100}" Height="12" Width="12" Margin="5,0" />
                                             <TextBlock Text="Change Path"></TextBlock>
                                         </StackPanel>
                                     </MenuItem.Header>
@@ -75,7 +74,7 @@
                                 <MenuItem Name="mi_copyPath" Click="Mi_copyPath_Click">
                                     <MenuItem.Header>
                                         <StackPanel Orientation="Horizontal">
-                                            <fa:ImageAwesome Icon="Copy" Foreground="White" Height="12" Width="12" Margin="5,0" />
+                                            <fa:ImageAwesome Icon="Copy" Foreground="{DynamicResource mg.solid.100}" Height="12" Width="12" Margin="5,0" />
                                             <TextBlock Text="Copy Path"></TextBlock>
                                         </StackPanel>
                                     </MenuItem.Header>
@@ -92,7 +91,7 @@
                                 <MenuItem Name="mi_selectItems" Click="Mi_selectItems_Click">
                                     <MenuItem.Header>
                                         <StackPanel Orientation="Horizontal">
-                                            <fa:ImageAwesome Icon="CircleThin" Foreground="White" Height="12" Width="12" Margin="5,0" />
+                                            <fa:ImageAwesome Icon="CircleThin" Foreground="{DynamicResource mg.solid.100}" Height="12" Width="12" Margin="5,0" />
                                             <TextBlock Text="Select Items"></TextBlock>
                                         </StackPanel>
                                     </MenuItem.Header>
@@ -100,7 +99,7 @@
                                 <MenuItem Name="mi_selectItemsChildren" Click="Mi_selectItemsChildren_Click">
                                     <MenuItem.Header>
                                         <StackPanel Orientation="Horizontal">
-                                            <fa:ImageAwesome Icon="CircleThin" Foreground="White" Height="12" Width="12" Margin="5,0" />
+                                            <fa:ImageAwesome Icon="CircleThin" Foreground="{DynamicResource mg.solid.100}" Height="12" Width="12" Margin="5,0" />
                                             <TextBlock Text="Select Items + Children"></TextBlock>
                                         </StackPanel>
                                     </MenuItem.Header>
@@ -138,7 +137,7 @@
                                 <MenuItem Name="mi_BookmarkDetails" Click="Mi_BookmarkDetails_Click">
                                     <MenuItem.Header>
                                         <StackPanel Orientation="Horizontal">
-                                            <fa:ImageAwesome Icon="FileText" Foreground="White" Height="12" Width="12" Margin="5,0" />
+                                            <fa:ImageAwesome Icon="FileText" Foreground="{DynamicResource mg.solid.100}" Height="12" Width="12" Margin="5,0" />
                                             <TextBlock Text="Details..."></TextBlock>
                                         </StackPanel>
                                     </MenuItem.Header>
@@ -146,7 +145,7 @@
                                 <MenuItem Name="mi_ExecuteBookmarkAction" Click="Mi_ExecuteBookmarkAction_Click">
                                     <MenuItem.Header>
                                         <StackPanel Orientation="Horizontal">
-                                            <fa:ImageAwesome Icon="Copy" Foreground="White" Height="12" Width="12" Margin="5,0" />
+                                            <fa:ImageAwesome Icon="Copy" Foreground="{DynamicResource mg.solid.100}" Height="12" Width="12" Margin="5,0" />
                                             <TextBlock Text="Copy"></TextBlock>
                                         </StackPanel>
                                     </MenuItem.Header>
@@ -154,7 +153,7 @@
                                 <MenuItem Name="mi_CopyAdditive" Click="Mi_CopyAdditive_Click">
                                     <MenuItem.Header>
                                         <StackPanel Orientation="Horizontal">
-                                            <fa:ImageAwesome Icon="Plus" Foreground="White" Height="12" Width="12" Margin="5,0" />
+                                            <fa:ImageAwesome Icon="Plus" Foreground="{DynamicResource mg.solid.100}" Height="12" Width="12" Margin="5,0" />
                                             <TextBlock Text="Copy Additive"></TextBlock>
                                         </StackPanel>
                                     </MenuItem.Header>
@@ -180,7 +179,7 @@
                                 <MenuItem Name="mi_GoogleSearch" Click="QueryNet" CommandParameter="https://www.google.com/search?q=">
                                     <MenuItem.Header>
                                         <StackPanel Orientation="Horizontal">
-                                            <fa:ImageAwesome Icon="Google" Foreground="White" Height="12" Width="12" Margin="5,0" />
+                                            <fa:ImageAwesome Icon="Google" Foreground="{DynamicResource mg.solid.100}" Height="12" Width="12" Margin="5,0" />
                                             <TextBlock Text="Google..."></TextBlock>
                                         </StackPanel>
                                     </MenuItem.Header>
@@ -188,7 +187,7 @@
                                 <MenuItem Name="mi_YoutubeSearch" Click="QueryNet" CommandParameter="https://www.youtube.com/results?search_query=">
                                     <MenuItem.Header>
                                         <StackPanel Orientation="Horizontal">
-                                            <fa:ImageAwesome Icon="YoutubePlay" Foreground="White" Height="12" Width="12" Margin="5,0" />
+                                            <fa:ImageAwesome Icon="YoutubePlay" Foreground="{DynamicResource mg.solid.100}" Height="12" Width="12" Margin="5,0" />
                                             <TextBlock Text="Youtube..."></TextBlock>
                                         </StackPanel>
                                     </MenuItem.Header>
@@ -196,7 +195,7 @@
                                 <MenuItem Name="mi_WikipediaSearch" Click="QueryNet" CommandParameter="https://en.wikipedia.org/w/index.php?search=">
                                     <MenuItem.Header>
                                         <StackPanel Orientation="Horizontal">
-                                            <fa:ImageAwesome Icon="WikipediaW" Foreground="White" Height="12" Width="12" Margin="5,0" />
+                                            <fa:ImageAwesome Icon="WikipediaW" Foreground="{DynamicResource mg.solid.100}" Height="12" Width="12" Margin="5,0" />
                                             <TextBlock Text="Wikipedia..."></TextBlock>
                                         </StackPanel>
                                     </MenuItem.Header>
@@ -204,7 +203,7 @@
                                 <MenuItem Name="mi_LetterboxdSearch" Click="QueryNet" CommandParameter="https://letterboxd.com/search/">
                                     <MenuItem.Header>
                                         <StackPanel Orientation="Horizontal">
-                                            <fa:ImageAwesome Icon="FileMovieOutline" Foreground="White" Height="12" Width="12" Margin="5,0" />
+                                            <fa:ImageAwesome Icon="FileMovieOutline" Foreground="{DynamicResource mg.solid.100}" Height="12" Width="12" Margin="5,0" />
                                             <TextBlock Text="Letterboxd..."></TextBlock>
                                         </StackPanel>
                                     </MenuItem.Header>

@@ -1,5 +1,6 @@
 ﻿using AlmightyPear.Controller;
 using AlmightyPear.Model;
+using AlmightyPear.Utils;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
@@ -29,7 +30,7 @@ namespace AlmightyPear.Controls
 
         private void Btn_updateProfile_Click(object sender, RoutedEventArgs e)
         {
-            Env.FirebaseController.UpdateProfileAsync(tb_displayName.Text, tb_profilePicture.Text);
+            Env.FirebaseController.UpdateProfileAsync(tb_displayName.Text, "");
         }
 
         private void Btn_saveAll_Click(object sender, RoutedEventArgs e)
@@ -50,6 +51,11 @@ namespace AlmightyPear.Controls
         private void Btn_logOut_Click(object sender, RoutedEventArgs e)
         {
             Env.MainWindow.Mi_LogOut_Click(sender, e);
+        }
+
+        private void Cb_themes_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ThemeManager.SetTheme((ThemeManager.Theme)(e.AddedItems[0]));
         }
     }
 }

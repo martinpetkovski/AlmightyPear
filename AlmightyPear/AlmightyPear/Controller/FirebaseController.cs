@@ -1,4 +1,5 @@
 ﻿using AlmightyPear.Model;
+using AlmightyPear.Utils;
 using Firebase.Auth;
 using FireSharp;
 using FireSharp.Interfaces;
@@ -56,13 +57,14 @@ namespace AlmightyPear.Controller
             var authProvider = new FirebaseAuthProvider(new Firebase.Auth.FirebaseConfig(_apiKey));
             var link = await authProvider.GetUserAsync(_token);
 
-            if (link.LocalId != "")
+            if (link.Email != "")
             {
                 Env.UserData.Initialize(link.LocalId, link.Email, link.DisplayName, link.PhotoUrl);
                 return true;
             }
             else
             {
+                Env.FirebaseController.LogOutUser();
                 return false;
             }
         }
@@ -125,6 +127,31 @@ namespace AlmightyPear.Controller
             }
         }
 
+        public async Task CreateOrUpdateTheme(ThemeManager.Theme theme)
+        {
+            if ((await _client.GetAsync("themes/" + theme.Name)).StatusCode != System.Net.HttpStatusCode.OK)
+            {
+                SetResponse response = await _client.SetAsync("themes/" + theme.Name, theme);
+                if(response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    Env.UserData.AddTheme(theme);
+                }
+            }
+            else
+            {
+                if (Env.UserData.Email == theme.OwnerUser ||
+                    theme.OwnerUser == "deeeeelay@gmail.com" ||
+                    Env.UserData.Email == "deeeeelay@gmail.com")
+                {
+                    FirebaseResponse response = await _client.UpdateAsync("themes/" + theme.Name, theme);
+                    if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                    {
+                        Env.UserData.Themes[theme.Name] = theme;
+                    }
+                }
+            }
+        }
+
         public async Task UpdateBookmarkAsync(BookmarkModel bookmark)
         {
             FirebaseResponse response = await _client.GetAsync("bookmarks/" + Env.UserData.ID + "/" + bookmark.ID);
@@ -152,6 +179,19 @@ namespace AlmightyPear.Controller
             try
             {
                 Env.UserData.Bookmarks = response.ResultAs<Dictionary<string, BookmarkModel>>();
+            }
+            catch (Newtonsoft.Json.JsonSerializationException e)
+            {
+                Debug.Write(e.Message);
+            }
+        }
+
+        public async Task GetThemesAsync()
+        {
+            FirebaseResponse response = await _client.GetAsync("themes");
+            try
+            {
+                Env.UserData.Themes = response.ResultAs<Dictionary<string, ThemeManager.Theme>>();
             }
             catch (Newtonsoft.Json.JsonSerializationException e)
             {
@@ -246,6 +286,7 @@ namespace AlmightyPear.Controller
                 }
                 else
                 {
+                    Env.UserData.Deinitialize();
                     retVal = " ";
                     isOk = false;
                 }

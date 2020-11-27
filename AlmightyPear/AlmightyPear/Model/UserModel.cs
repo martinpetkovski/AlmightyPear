@@ -1,10 +1,8 @@
-﻿using System;
+﻿using AlmightyPear.Utils;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AlmightyPear.Model
 {
@@ -16,7 +14,6 @@ namespace AlmightyPear.Model
             ID = id;
             DisplayName = displayName;
             PhotoUrl = photoUrl;
-            IsLoggedIn = true;
         }
 
         public void Deinitialize()
@@ -28,7 +25,6 @@ namespace AlmightyPear.Model
                 Bookmarks.Clear();
                 Bookmarks = null;
             }
-            IsLoggedIn = false;
         }
 
         private string _email;
@@ -56,10 +52,11 @@ namespace AlmightyPear.Model
             {
                 _id = value;
                 OnPropertyChanged();
+                OnPropertyChanged("IsLoggedIn");
             }
         }
 
-        private string _displayName;
+        private string _displayName = "";
         public string DisplayName
         {
             get
@@ -73,7 +70,7 @@ namespace AlmightyPear.Model
             }
         }
 
-        private string _photoUrl;
+        private string _photoUrl = "https://static3.depositphotos.com/1000635/120/i/600/depositphotos_1208368-stock-photo-white-paper-seamless-background.jpg";
         public string PhotoUrl
         {
             get
@@ -87,17 +84,11 @@ namespace AlmightyPear.Model
             }
         }
 
-        private bool _isLoggedIn = false;
         public bool IsLoggedIn
         {
             get
             {
-                return _isLoggedIn;
-            }
-            private set
-            {
-                _isLoggedIn = value;
-                OnPropertyChanged();
+                return ID != "";
             }
         }
 
@@ -113,6 +104,37 @@ namespace AlmightyPear.Model
                 _bookmarks = value;
                 OnPropertyChanged();
             }
+        }
+
+        private Dictionary<string, ThemeManager.Theme> _themes;
+        public Dictionary<string, ThemeManager.Theme> Themes
+        {
+            get
+            {
+                if (_themes == null)
+                    _themes = new Dictionary<string, ThemeManager.Theme>();
+                return _themes;
+            }
+            set
+            {
+                _themes = value;
+                OnPropertyChanged();
+                OnPropertyChanged("ThemesList");
+            }
+        }
+
+        public List<ThemeManager.Theme> ThemesList
+        {
+            get
+            {
+                return Themes.Values.ToList();
+            }
+        }
+
+        public void AddTheme(ThemeManager.Theme theme)
+        {
+            Themes.Add(theme.Name, theme);
+            OnPropertyChanged("Themes");
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

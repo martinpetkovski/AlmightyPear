@@ -6,10 +6,10 @@
              xmlns:fa="http://schemas.fontawesome.io/icons/"
              xmlns:local="clr-namespace:AlmightyPear.Controls"
              mc:Ignorable="d" 
+             Background="{DynamicResource mg.solid.10}"
              d:DesignHeight="450" d:DesignWidth="800">
-    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-        
-        <fa:ImageAwesome Icon="Spinner" Spin="True" SpinDuration="2" Foreground="White" Height="60" Width="60" Margin="40,0" />
+    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Background="Transparent">
+        <fa:ImageAwesome Icon="Spinner" Spin="True" SpinDuration="2" Foreground="{DynamicResource mg.solid.100}" Height="60" Width="60" Margin="40,0" />
         <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="60">Loading...</TextBlock>
     </StackPanel>
 </UserControl>

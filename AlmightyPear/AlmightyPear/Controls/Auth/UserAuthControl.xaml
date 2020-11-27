@@ -5,23 +5,23 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AlmightyPear.Controls"
              mc:Ignorable="d" 
-             FocusManager.FocusedElement="{Binding ElementName=tb_email}" >
-    <Grid>
+             FocusManager.FocusedElement="{x:Reference Name=tb_email}" >
+    <Grid Background="{DynamicResource mg.solid.10}">
         <StackPanel Orientation="Vertical" Margin="0,50,0,0" MaxWidth="600">
 
-            <Image Source="../../Resources/Textures/logo.png" Height="256"></Image>
-            <TextBlock FontSize="60" Foreground="White" 
+            <Image Source="..\..\Resources\Textures\logo.png" Height="256"></Image>
+            <TextBlock FontSize="60" 
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
                         Margin="0,50,0,50">Checkmeg</TextBlock>
 
-            <TextBlock Margin="0,0,0,10" Foreground="White">e-mail</TextBlock>
+            <TextBlock Margin="0,0,0,10">e-mail</TextBlock>
             <TextBox x:Name="tb_email" TabIndex="1" KeyDown="Tb_email_KeyDown"></TextBox>
-            <TextBlock Margin="0,30,30,10" Foreground="White">password</TextBlock>
+            <TextBlock Margin="0,30,30,10">password</TextBlock>
             <PasswordBox x:Name="tb_password" TabIndex="2" KeyDown="Tb_password_KeyDown"></PasswordBox>
             <StackPanel Orientation="Horizontal" Margin="0,20">
                 <CheckBox Name="cb_RememberMe"></CheckBox>
-                <TextBlock Margin="10,0" Foreground="White">remember me</TextBlock>
+                <TextBlock Margin="10,0">remember me</TextBlock>
             </StackPanel>
             <WrapPanel Orientation="Horizontal" Margin="0,0" HorizontalAlignment="Center">
                 <Button Name="btn_signin" 
@@ -29,8 +29,6 @@
                         IsDefault="True"  
                         Padding="10" 
                         BorderBrush="#333" >SIGN-IN</Button>
-                <!--<Button Name="btn_register" Click="Btn_register_Click" Margin="0,0,20,0" Padding="10">REGISTER</Button>
-                <Button Name="btn_forgotpassword" IsEnabled="False" Padding="10">FORGOT PASSWORD?</Button>-->
             </WrapPanel>
             <TextBlock Name="txt_messagebox" HorizontalAlignment="Center"></TextBlock>
         </StackPanel>

@@ -18,14 +18,6 @@
         BorderBrush="#444"
         BorderThickness="1"
         ResizeMode="NoResize">
-    <Window.Resources>
-        <ResourceDictionary>
-            <controller:Env x:Key="Env"/>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="..\Resources\Styles\BasicTheme.xaml"></ResourceDictionary>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </Window.Resources>
     <Window.DataContext>
         <StaticResourceExtension ResourceKey="Env"/>
     </Window.DataContext>

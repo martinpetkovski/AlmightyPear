@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AlmightyPear"
         xmlns:controls="clr-namespace:AlmightyPear.Controls"
-        xmlns:controller="clr-namespace:AlmightyPear.Controller"
+                 xmlns:converters="clr-namespace:AlmightyPear.Converters"
         xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         mc:Ignorable="d"
@@ -14,38 +14,40 @@
         TitleBarHeight="48"
         MinHeight="800"
         MinWidth="800">
-    <Window.Resources>
+    <mah:MetroWindow.Resources>
         <ResourceDictionary>
-            <controller:Env x:Key="Env"/>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
-                <ResourceDictionary Source="Resources\Styles\MetroDarkGrey.xaml" />
-                <ResourceDictionary Source="Resources\Styles\BasicTheme.xaml"></ResourceDictionary>
-            </ResourceDictionary.MergedDictionaries>
+            <converters:IsLoggedInToStateConverter x:Key="IsLoggedInToStateConverter"/>
         </ResourceDictionary>
-    </Window.Resources>
+    </mah:MetroWindow.Resources>
     <mah:MetroWindow.LeftWindowCommands>
         <mah:WindowCommands>
-            <Menu Grid.Column="2" Background="Transparent" Foreground="White">
-                <MenuItem>
+            <Menu Grid.Column="2" Foreground="White" IsEnabled="{Binding Source={StaticResource Env}, Path=UserData.IsLoggedIn, Converter={StaticResource IsLoggedInToStateConverter}}">
+                <MenuItem Background="Transparent">
                     <MenuItem.Header>
-                        <Image  Source="Resources/Textures/logo.png" Height="36"/>
+                        <Image  Source="Resources\Textures\logo.png" Height="36"/>
                     </MenuItem.Header>
                     <MenuItem Header="Save All..." Name="mi_SaveAll" Click="Mi_SaveAll_ClickAsync"></MenuItem>
                     <MenuItem Header="Full Reload" Name="mi_FullReload" Click="Mi_FullReload_ClickAsync"></MenuItem>
                     <MenuItem Header="Clear Temp Bin" Name="mi_ClearTempBin" Click="Mi_ClearTempBin_Click"></MenuItem>
                     <Separator></Separator>
+                    <MenuItem Header="Minimize to tray" Name="mi_minimize" Click="Mi_minimize_Click"></MenuItem>
                     <MenuItem Header="Log out" Name="mi_LogOut" Click="Mi_LogOut_Click"></MenuItem>
+                    <MenuItem Header="Quit" Name="mi_Quit" Click="Mi_Quit_Click"></MenuItem>
                 </MenuItem>
             </Menu>
         </mah:WindowCommands>
     </mah:MetroWindow.LeftWindowCommands>
 
     <mah:MetroWindow.RightWindowCommands>
-        <mah:WindowCommands>
-            <StackPanel Orientation="Horizontal"  HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,0,30,0" >
+        <mah:WindowCommands Visibility="{Binding Source={StaticResource Env}, Path=UserData.IsLoggedIn, Converter={StaticResource IsLoggedInToStateConverter}, ConverterParameter=False}">
+            <StackPanel 
+                Orientation="Horizontal"  
+                HorizontalAlignment="Left" 
+                VerticalAlignment="Center" 
+                Margin="0,0,30,0"
+                >
                 <!--<TextBlock Text="Logged in as:  "></TextBlock>-->
-                <Image Height="32" Source="{Binding Source={StaticResource Env}, Path=UserData.PhotoUrl}" Margin="0,0,10,0"></Image>
+                <!--<Image Height="32" Source="{Binding Source={StaticResource Env}, Path=UserData.PhotoUrl}" Margin="0,0,10,0"></Image>-->
                 <TextBlock Text="{Binding Source={StaticResource Env}, Path=UserData.DisplayName}" VerticalAlignment="Center"></TextBlock>
                 <TextBlock Text="  ●  " VerticalAlignment="Center"></TextBlock>
                 <TextBlock Text="{Binding Source={StaticResource Env}, Path=UserData.Email}" VerticalAlignment="Center"></TextBlock>

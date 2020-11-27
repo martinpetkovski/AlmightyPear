@@ -9,20 +9,11 @@
         ResizeMode="NoResize"
         WindowStyle="SingleBorderWindow"
         Icon="..\Resources\Textures\logo_icon.ico"
-        Background="#111"
+        Background="{DynamicResource mg.solid.20}"
         BorderBrush="#333"
         BorderThickness="1"
         Title="Progress" Height="100" Width="600">
-    <Window.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
-                <ResourceDictionary Source="..\Resources\Styles\MetroDarkGrey.xaml" />
-                <ResourceDictionary Source="..\Resources\Styles\BasicTheme.xaml"></ResourceDictionary>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </Window.Resources>
-    <Grid Background="{StaticResource SolidLoMidMono}" Margin="10">
-        <mah:MetroProgressBar  Name="pb_Progress" Minimum="0" Maximum="1" Background="{StaticResource GradInset}" Foreground="{StaticResource GradOutsetGreen}" Value="0.5"/>
+    <Grid Background="{DynamicResource mg.solid.20}" Margin="10">
+        <mah:MetroProgressBar  Name="pb_Progress" Minimum="0" Maximum="1" Background="{DynamicResource GradInset}" Foreground="{StaticResource GradOutsetGreen}" Value="0.5"/>
     </Grid>
 </mah:MetroWindow>

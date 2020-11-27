@@ -408,22 +408,36 @@ namespace AlmightyPear.Controls
         private static BinPreviewWnd imagePreview = null;
         private void Btn_BookmarkAction_MouseEnter(object sender, MouseEventArgs e)
         {
-            BookmarkModel bookmark = (BookmarkModel)((Button)sender).DataContext;
-            if (bookmark.Type == "image")
+            if (sender is Button)
             {
-                imagePreview = new BinPreviewWnd(bookmark.Content);
-                imagePreview.Show();
-                Env.MainWindow.Activate();
+                Button btn = (Button)sender;
+                if (btn.DataContext is BookmarkModel)
+                {
+                    BookmarkModel bookmark = (BookmarkModel)btn.DataContext;
+                    if (bookmark.Type == "image")
+                    {
+                        imagePreview = new BinPreviewWnd(bookmark.Content);
+                        imagePreview.Show();
+                        Env.MainWindow.Activate();
+                    }
+                }
             }
         }
 
         private void Btn_BookmarkAction_MouseLeave(object sender, MouseEventArgs e)
         {
-            BookmarkModel bookmark = (BookmarkModel)((Button)sender).DataContext;
-            if (imagePreview != null)
+            if (sender is Button)
             {
-                imagePreview.Hide();
-                imagePreview = null;
+                Button btn = (Button)sender;
+                if (btn.DataContext is BookmarkModel)
+                {
+                    BookmarkModel bookmark = (BookmarkModel)btn.DataContext;
+                    if (imagePreview != null)
+                    {
+                        imagePreview.Hide();
+                        imagePreview = null;
+                    }
+                }
             }
         }
 

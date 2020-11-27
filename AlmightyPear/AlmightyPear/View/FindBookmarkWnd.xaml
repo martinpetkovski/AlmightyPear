@@ -23,11 +23,7 @@
         ResizeMode="NoResize">
     <Window.Resources>
         <ResourceDictionary>
-            <controller:Env x:Key="Env"/>
             <converters:BinDepthListConverter x:Key="BinDepthListConverter"/>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="..\Resources\Styles\BasicTheme.xaml"></ResourceDictionary>
-            </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
     <Window.DataContext>

@@ -13,21 +13,14 @@
         BorderBrush="#333"
         BorderThickness="1"
         Title="MessageBox" Height="200" Width="400">
-    <Window.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
-                <ResourceDictionary Source="..\Resources\Styles\MetroDarkGrey.xaml" />
-                <ResourceDictionary Source="..\Resources\Styles\BasicTheme.xaml"></ResourceDictionary>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </Window.Resources>
-    <Grid Background="{StaticResource SolidLoMidMono}" Margin="10">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="auto"></RowDefinition>
-        </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Name="txt_message" FontSize="16" TextWrapping="Wrap"></TextBlock>
-        <StackPanel Grid.Row="1" Name="sp_buttonContainer" Orientation="Horizontal" HorizontalAlignment="Right"></StackPanel>
-    </Grid>
+    <Border Background="{DynamicResource mg.solid.20}" Padding="20">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Name="txt_message" FontSize="16" TextWrapping="Wrap"></TextBlock>
+            <StackPanel Grid.Row="1" Name="sp_buttonContainer" Orientation="Horizontal" HorizontalAlignment="Right"></StackPanel>
+        </Grid>
+    </Border>
 </mah:MetroWindow>

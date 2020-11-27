@@ -152,6 +152,7 @@
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Windows" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Presentation" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -171,6 +172,12 @@
     </Reference>
     <Reference Include="WPFTextBoxAutoComplete, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\WPFTextBoxAutoComplete.1.0.5\lib\net40\WPFTextBoxAutoComplete.dll</HintPath>
+    </Reference>
+    <Reference Include="XamlCSS, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\XamlCSS.2.2.0\lib\net461\XamlCSS.dll</HintPath>
+    </Reference>
+    <Reference Include="XamlCSS.WPF, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\XamlCSS.WPF.2.2.0\lib\net471\XamlCSS.WPF.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -209,6 +216,7 @@
     <Compile Include="Model\BinModel.cs" />
     <Compile Include="Utils\HotKeyManager.cs" />
     <Compile Include="Utils\MinimizeToTray.cs" />
+    <Compile Include="Utils\ThemeManager.cs" />
     <Compile Include="Utils\WpfScreen.cs" />
     <Compile Include="View\BookmarkDetailsWnd.xaml.cs">
       <DependentUpon>BookmarkDetailsWnd.xaml</DependentUpon>
@@ -288,13 +296,9 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Resources\Styles\DarkTheme.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="Resources\Styles\CoreTheme.xaml">
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Resources\Styles\LightTheme.xaml">
       <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Resources\Styles\MetroDarkGrey.xaml">
       <SubType>Designer</SubType>

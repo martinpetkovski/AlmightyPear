@@ -115,17 +115,32 @@ namespace AlmightyPear.Converters
         }
     }
 
-    class EmailToVisibilityConverter : IValueConverter
+    class IsLoggedInToStateConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is string)
+            bool isLoggedIn = false;
+            if (value is bool)
+                isLoggedIn = (bool)value;
+            else
+                isLoggedIn = Env.UserData.IsLoggedIn;
+
+            bool invert = false;
+            if (parameter != null && parameter is string)
             {
-                string email = (string)value;
-                if (email == "")
-                    return Visibility.Visible;
-                else
-                    return Visibility.Collapsed;
+                bool.TryParse((string)parameter, out invert);
+            }
+
+            if (targetType == typeof(Visibility))
+            {
+                bool isVisible = isLoggedIn;
+                isVisible = invert ? !isVisible : isVisible;
+                return isVisible ? Visibility.Visible : Visibility.Collapsed;
+            }
+
+            if (targetType == typeof(bool))
+            {
+                return invert ? !isLoggedIn : isLoggedIn;
             }
 
             return Visibility.Collapsed;

@@ -11,16 +11,8 @@
              xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <UserControl.Resources>
-        <ResourceDictionary>
-            <controller:Env x:Key="Env"/>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="..\Resources\Styles\BasicTheme.xaml"></ResourceDictionary>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </UserControl.Resources>
-    <Border Grid.Row="1" Background="{StaticResource GradInsetSide}">
-        <mah:MetroAnimatedTabControl TabStripPlacement="Left" Background="{StaticResource SolidDarkMono}">
+    <Border Grid.Row="1" Background="{DynamicResource GradInsetSide}">
+        <mah:MetroAnimatedTabControl TabStripPlacement="Left" Background="{DynamicResource mg.solid.10}">
             <TabItem Header="{Binding Source={StaticResource Env}, Path=BinData.BookmarksViewCaption}" Width="250">
                 <Grid>
                     <controls:BookmarksViewControl MaxContentHeight="10000" ContentTextSize="16"></controls:BookmarksViewControl>
@@ -32,7 +24,7 @@
             <TabItem Header="Profile">
                 <ScrollViewer>
                     <StackPanel Orientation="Vertical">
-                        <GroupBox Header="Actions">
+                        <!--<GroupBox Header="Actions">
                             <WrapPanel Orientation="Horizontal">
                                 <Button HorizontalAlignment="Right" 
                                     Padding="20" 
@@ -51,13 +43,23 @@
                                         Name="btn_logOut" Click="Btn_logOut_Click"
                                     BorderBrush="#333">Log Out</Button>
                             </WrapPanel>
-                        </GroupBox>
+                        </GroupBox>-->
                         <GroupBox Header="Profile Settings">
                             <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Width="400">
-                                <TextBlock  Foreground="White">display name</TextBlock>
-                                <TextBox Name="tb_displayName" Text="{Binding Source={StaticResource Env}, Path=UserData.DispalyName}"></TextBox>
-                                <TextBlock  Foreground="White">picture url</TextBlock>
-                                <TextBox Name="tb_profilePicture" Text="{Binding Source={StaticResource Env}, Path=UserData.PhotoUrl}"></TextBox>
+                                <TextBlock>display name</TextBlock>
+                                <TextBox Name="tb_displayName" Text="{Binding Source={StaticResource Env}, Path=UserData.DisplayName, Mode=OneWay}"></TextBox>
+                                <!--<TextBlock>picture url</TextBlock>
+                                <TextBox Name="tb_profilePicture" Text="{Binding Source={StaticResource Env}, Path=UserData.PhotoUrl, Mode=OneWay}"></TextBox>-->
+                                <TextBlock>theme</TextBlock>
+                                <ComboBox Name="cb_themes" 
+                                    ItemsSource="{Binding Source={StaticResource Env}, Path=UserData.ThemesList}"
+                                          SelectionChanged="Cb_themes_SelectionChanged">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Path=Name}"></TextBlock>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
                                 <Button HorizontalAlignment="Right" 
                                     Padding="20" Margin="0,20,0,0" 
                                         Name="btn_updateProfile"

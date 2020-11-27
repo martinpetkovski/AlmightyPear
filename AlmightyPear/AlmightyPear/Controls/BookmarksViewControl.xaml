@@ -6,6 +6,7 @@
              xmlns:controller="clr-namespace:AlmightyPear.Controller"
              xmlns:controls="clr-namespace:AlmightyPear.Controls"
              xmlns:converters="clr-namespace:AlmightyPear.Converters"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:fa="http://schemas.fontawesome.io/icons/"
              xmlns:behaviors="clr-namespace:WPFTextBoxAutoComplete;assembly=WPFTextBoxAutoComplete"
              xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
@@ -48,17 +49,17 @@
                 <fa:ImageAwesome Icon="Remove" Foreground="#600" Height="12" Width="12" />
             </Button>
         </Grid>
+
         <controls:BookmarksTreeViewControl Grid.Row="1"
-                                           FontSize="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:BookmarksViewControl}},Path=ContentTextSize}"
-                                           VerticalAlignment="Stretch"
-                                           VerticalContentAlignment="Stretch"
-                                           MaxHeight="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:BookmarksViewControl}}, Path=MaxContentHeight}"
-                                           x:Name="ctrl_BookmarksTreeView"
-                                           Bin="{Binding Source={StaticResource Env}, Path=BinData.RootBin}"
-                                           Filter="{Binding ElementName=tb_filter, Path=Text}"
-                                           FilterTextBox="{x:Reference Name=tb_filter}">
+                                               FontSize="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:BookmarksViewControl}},Path=ContentTextSize}"
+                                               VerticalAlignment="Stretch"
+                                               VerticalContentAlignment="Stretch"
+                                               MaxHeight="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:BookmarksViewControl}}, Path=MaxContentHeight}"
+                                               x:Name="ctrl_BookmarksTreeView"
+                                               Bin="{Binding Source={StaticResource Env}, Path=BinData.RootBin}"
+                                               Filter="{Binding ElementName=tb_filter, Path=Text}"
+                                               FilterTextBox="{x:Reference Name=tb_filter}">
 
         </controls:BookmarksTreeViewControl>
-
     </Grid>
 </UserControl>

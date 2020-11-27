@@ -1,4 +1,5 @@
 ﻿using AlmightyPear.Controller;
+using MahApps.Metro.Controls;
 using System;
 using System.Runtime.InteropServices;
 using System.Windows;
@@ -7,7 +8,7 @@ using System.Windows.Input;
 
 namespace AlmightyPear.View
 {
-    public partial class FindBookmarkWnd : Window
+    public partial class FindBookmarkWnd : MetroWindow
     {
 
         [DllImport("user32.dll")]
@@ -53,6 +54,7 @@ namespace AlmightyPear.View
             Left = finalX;
             Top = finalY;
 
+            mah_contentControl.Reload();
             Show();
             Activate();
 

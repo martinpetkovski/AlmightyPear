@@ -1,4 +1,4 @@
-﻿<Window x:Class="AlmightyPear.View.FindBookmarkWnd"
+﻿<mah:MetroWindow x:Class="AlmightyPear.View.FindBookmarkWnd"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -8,17 +8,19 @@
         xmlns:controls="clr-namespace:AlmightyPear.Controls"
         xmlns:converters="clr-namespace:AlmightyPear.Converters"
         xmlns:fa="http://schemas.fontawesome.io/icons/"
+        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:behaviors="clr-namespace:WPFTextBoxAutoComplete;assembly=WPFTextBoxAutoComplete"
         xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
         mc:Ignorable="d"
         Title="{Binding Path=BinData.BookmarksViewCaption}" 
         WindowStyle="None"
-        Background="#111"
+        TitleBarHeight="0"
+        Background="{DynamicResource mg.solid.10}"
         AllowsTransparency="True"
         ShowInTaskbar="False"
         SizeToContent="Height"
         MaxHeight="400"
-        BorderBrush="#444"
+        BorderBrush="#333"
         BorderThickness="1"
         ResizeMode="NoResize">
     <Window.Resources>
@@ -29,9 +31,11 @@
     <Window.DataContext>
         <StaticResourceExtension ResourceKey="Env"/>
     </Window.DataContext>
-    <controls:BookmarksViewControl 
-        x:Name="ctrl_filter" 
-        FilterEvent="Ctrl_filter_FilterEventAsync" 
-        MaxContentHeight="300"
-        Margin="10"></controls:BookmarksViewControl>
-</Window>
+    <mah:MetroContentControl Name="mah_contentControl">
+        <controls:BookmarksViewControl 
+            x:Name="ctrl_filter" 
+            FilterEvent="Ctrl_filter_FilterEventAsync" 
+            MaxContentHeight="300"
+            Margin="10"></controls:BookmarksViewControl>
+    </mah:MetroContentControl>
+</mah:MetroWindow>

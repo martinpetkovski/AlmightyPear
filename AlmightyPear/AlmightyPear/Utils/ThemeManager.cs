@@ -123,49 +123,72 @@ namespace AlmightyPear.Utils
 
         public static Theme GetBasicDarkTheme()
         {
-            Theme basicDark = new Theme();
-            basicDark.Name = "BasicDark";
-            basicDark.OwnerUser = "deeeeelay@gmail.com";
-            basicDark.Mono0 = "#FF000000";
-            basicDark.Mono10 = "#FF090909";
-            basicDark.Mono20 = "#FF111111";
-            basicDark.Mono40 = "#FF222222";
-            basicDark.Mono70 = "#FF333333";
-            basicDark.Mono100 = "#FFFFFFFF";
+            Theme t = new Theme();
+            t.Name = "BasicDark";
+            t.OwnerUser = "deeeeelay@gmail.com";
+            t.Mono0 = "#FF000000";
+            t.Mono10 = "#FF090909";
+            t.Mono20 = "#FF111111";
+            t.Mono40 = "#FF222222";
+            t.Mono70 = "#FF333333";
+            t.Mono100 = "#FFFFFFFF";
 
-            return basicDark;
+            return t;
         }
 
         public static Theme GetBasicRedTheme()
         {
-            Theme basicDark = new Theme();
-            basicDark.Name = "BasicRed";
-            basicDark.OwnerUser = "deeeeelay@gmail.com";
-            basicDark.Mono0 = "#FF000000";
-            basicDark.Mono10 = "#FF190909";
-            basicDark.Mono20 = "#FF221111";
-            basicDark.Mono40 = "#FF332222";
-            basicDark.Mono70 = "#FF443333";
-            basicDark.Mono100 = "#FFFFFFFF";
+            Theme t = new Theme();
+            t.Name = "BasicRed";
+            t.OwnerUser = "deeeeelay@gmail.com";
+            t.Mono0 = "#FF000000";
+            t.Mono10 = "#FF332222";
+            t.Mono20 = "#FF443333";
+            t.Mono40 = "#FF775555";
+            t.Mono70 = "#FFAA9999";
+            t.Mono100 = "#FFFFFFFF";
 
-            return basicDark;
+            return t;
+        }
+
+        public static Theme GetBasicBlueTheme()
+        {
+            Theme t = new Theme();
+            t.Name = "BasicBlue";
+            t.OwnerUser = "deeeeelay@gmail.com";
+            t.Mono0 = "#FF000000";
+            t.Mono10 = "#FF000011";
+            t.Mono20 = "#FF0e102b";
+            t.Mono40 = "#FF082845";
+            t.Mono70 = "#FFEEEEFF";
+            t.Mono100 = "#FFFFFFFF";
+
+            return t;
+        }
+
+        public static Theme GetBasicLightTheme()
+        {
+            Theme t = new Theme();
+            t.Name = "BasicLight";
+            t.OwnerUser = "deeeeelay@gmail.com";
+            t.Mono0 = "#FFFFFFFF";
+            t.Mono10 = "#FFCFCFCF";
+            t.Mono20 = "#FFE0E0E0";
+            t.Mono40 = "#FFF6F6F6";
+            t.Mono70 = "#FFF5F5F5";
+            t.Mono100 = "#FF000000";
+
+            return t;
         }
 
         public static async Task CreateBasicThemesAsync()
         {
-            Theme basicLight = new Theme();
-            basicLight.Name = "BasicLight";
-            basicLight.OwnerUser = "deeeeelay@gmail.com";
-            basicLight.Mono0 = "#FFFFFFFF";
-            basicLight.Mono10 = "#FFBABABA";
-            basicLight.Mono20 = "#FFCFCFCF";
-            basicLight.Mono40 = "#FFDFDFDF";
-            basicLight.Mono70 = "#FFEFEFEF";
-            basicLight.Mono100 = "#FF000000";
+            
 
             await Env.FirebaseController.CreateOrUpdateTheme(GetBasicDarkTheme());
-            await Env.FirebaseController.CreateOrUpdateTheme(basicLight);
+            await Env.FirebaseController.CreateOrUpdateTheme(GetBasicLightTheme());
             await Env.FirebaseController.CreateOrUpdateTheme(GetBasicRedTheme());
+            await Env.FirebaseController.CreateOrUpdateTheme(GetBasicBlueTheme());
         }
     }
 }

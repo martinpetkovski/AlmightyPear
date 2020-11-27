@@ -92,7 +92,7 @@
                                 <MenuItem Name="mi_selectItems" Click="Mi_selectItems_Click">
                                     <MenuItem.Header>
                                         <StackPanel Orientation="Horizontal">
-                                            <fa:ImageAwesome Icon="CircleThin"  Height="12" Width="12" Margin="5,0" />
+                                            <fa:ImageAwesome Icon="CircleThin" Foreground="White" Height="12" Width="12" Margin="5,0" />
                                             <TextBlock Text="Select Items"></TextBlock>
                                         </StackPanel>
                                     </MenuItem.Header>
@@ -100,7 +100,7 @@
                                 <MenuItem Name="mi_selectItemsChildren" Click="Mi_selectItemsChildren_Click">
                                     <MenuItem.Header>
                                         <StackPanel Orientation="Horizontal">
-                                            <fa:ImageAwesome Icon="CircleThin" Height="12" Width="12" Margin="5,0" />
+                                            <fa:ImageAwesome Icon="CircleThin" Foreground="White" Height="12" Width="12" Margin="5,0" />
                                             <TextBlock Text="Select Items + Children"></TextBlock>
                                         </StackPanel>
                                     </MenuItem.Header>
@@ -120,6 +120,9 @@
                         MaxHeight="72"
                         BorderThickness="1"
                         HorizontalContentAlignment="Left"
+                        MouseEnter="Btn_BookmarkAction_MouseEnter"
+                        MouseLeave="Btn_BookmarkAction_MouseLeave"
+                        MouseMove="Btn_BookmarkAction_MouseMove"
                         Click="Btn_BookmarkAction_Click">
                         <Button.Content>
                             <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Converter={StaticResource BookmarkCaptionConverter}}"></TextBlock>

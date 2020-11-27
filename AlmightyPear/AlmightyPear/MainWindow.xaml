@@ -47,7 +47,7 @@
                 <!--<TextBlock Text="Logged in as:  "></TextBlock>-->
                 <Image Height="32" Source="{Binding Source={StaticResource Env}, Path=UserData.PhotoUrl}" Margin="0,0,10,0"></Image>
                 <TextBlock Text="{Binding Source={StaticResource Env}, Path=UserData.DisplayName}" VerticalAlignment="Center"></TextBlock>
-                <TextBlock Text="  -  " VerticalAlignment="Center"></TextBlock>
+                <TextBlock Text="  ●  " VerticalAlignment="Center"></TextBlock>
                 <TextBlock Text="{Binding Source={StaticResource Env}, Path=UserData.Email}" VerticalAlignment="Center"></TextBlock>
             </StackPanel>
         </mah:WindowCommands>

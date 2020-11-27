@@ -44,13 +44,20 @@ namespace AlmightyPear.Model
 
             if (result)
             {
-                Type = "link";
-                Caption = GetWebsiteTitle(Content);
-                return;
+                if (Content.Contains(".png") || Content.Contains(".jpg"))
+                {
+                    Type = "image";
+                }
+                else
+                {
+                    Type = "link";
+                    Caption = GetWebsiteTitle(Content);
+                }
             }
-
-            //fallback to text
-            Type = "text";
+            else
+            {
+                Type = "text";
+            }
         }
 
 

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -17,6 +18,24 @@ namespace AlmightyPear.Controls
 
     public partial class BookmarksTreeViewControl : UserControl
     {
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool GetCursorPos(ref Win32Point pt);
+
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct Win32Point
+        {
+            public Int32 X;
+            public Int32 Y;
+        };
+        public static Point GetMousePosition()
+        {
+            var w32Mouse = new Win32Point();
+            GetCursorPos(ref w32Mouse);
+
+            return new Point(w32Mouse.X, w32Mouse.Y);
+        }
+
         public class BookmarksTreeViewControlModel : INotifyPropertyChanged
         {
             private List<IBinItem> _selectedBinItems;
@@ -383,6 +402,38 @@ namespace AlmightyPear.Controls
                 {
                     Model.SelectItem(item.Value);
                 }
+            }
+        }
+
+        private static BinPreviewWnd imagePreview = null;
+        private void Btn_BookmarkAction_MouseEnter(object sender, MouseEventArgs e)
+        {
+            BookmarkModel bookmark = (BookmarkModel)((Button)sender).DataContext;
+            if (bookmark.Type == "image")
+            {
+                imagePreview = new BinPreviewWnd(bookmark.Content);
+                imagePreview.Show();
+                Env.MainWindow.Activate();
+            }
+        }
+
+        private void Btn_BookmarkAction_MouseLeave(object sender, MouseEventArgs e)
+        {
+            BookmarkModel bookmark = (BookmarkModel)((Button)sender).DataContext;
+            if (imagePreview != null)
+            {
+                imagePreview.Hide();
+                imagePreview = null;
+            }
+        }
+
+        private void Btn_BookmarkAction_MouseMove(object sender, MouseEventArgs e)
+        {
+            if(imagePreview != null)
+            {
+                Point pos = GetMousePosition();
+                imagePreview.Top = pos.Y + 10;
+                imagePreview.Left = pos.X + 10;
             }
         }
     }

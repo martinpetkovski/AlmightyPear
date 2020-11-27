@@ -108,7 +108,6 @@ namespace AlmightyPear
 
         public async Task ExecSignInAsync()
         {
-            
             string outstr = await Env.FirebaseController.SignInUserAsync();
             if(outstr != "")
             {
@@ -118,6 +117,7 @@ namespace AlmightyPear
             {
                 Env.MainWindowData.WindowState = MainWindowModel.EMainWindowState.BookmarksView;
             }
+            mah_contentControl.Reload();
         }
 
         private async Task InitializeThemesAsync()
@@ -129,12 +129,11 @@ namespace AlmightyPear
 
         public async Task InitializeAsync()
         {
-            Css.Initialize();
             Env.Initialize(this);
             Env.MainWindowData.WindowState = MainWindowModel.EMainWindowState.Loading;
 
-            await InitializeThemesAsync();
             InitializeComponent();
+            await InitializeThemesAsync();
 
             Style = (Style)FindResource(typeof(Window));
             MinimizeToTray.Enable(this);
@@ -147,7 +146,7 @@ namespace AlmightyPear
             ChildWindows[typeof(FindBookmarkWnd)] = new FindBookmarkWnd();
 
             await ExecSignInAsync();
-            
+
         }
 
         public MainWindow()
@@ -207,6 +206,7 @@ namespace AlmightyPear
         {
             Env.FirebaseController.LogOutUser();
             Env.MainWindowData.WindowState = MainWindowModel.EMainWindowState.SignIn;
+            ThemeManager.SetTheme("BasicDark");
         }
 
         public async void Mi_FullReload_ClickAsync(object sender, RoutedEventArgs e)

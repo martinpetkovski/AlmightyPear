@@ -55,7 +55,7 @@
         </mah:WindowCommands>
     </mah:MetroWindow.RightWindowCommands>
 
-    <ContentControl>
+    <mah:MetroContentControl Name="mah_contentControl">
         <ContentControl.Style>
             <Style TargetType="{x:Type ContentControl}">
                 <Style.Triggers>
@@ -102,5 +102,5 @@
                 </Style.Triggers>
             </Style>
         </ContentControl.Style>
-    </ContentControl>
+    </mah:MetroContentControl>
 </mah:MetroWindow>

@@ -22,7 +22,7 @@
                 <controls:BookmarkCreateControl x:Name="ctrl_CreateBookmark"></controls:BookmarkCreateControl>
             </TabItem>
             <TabItem Header="Profile">
-                <ScrollViewer>
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                     <StackPanel Orientation="Vertical">
                         <!--<GroupBox Header="Actions">
                             <WrapPanel Orientation="Horizontal">

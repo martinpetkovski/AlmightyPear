@@ -9,6 +9,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -335,8 +336,11 @@ namespace AlmightyPear.Controls
             }
             else
             {
-                if(FilterTextBox != null)
+                if (FilterTextBox != null)
+                {
+                    FilterTextBox.Clear();
                     FilterTextBox.Text = "-p " + sourcePath;
+                }
             }
         }
 

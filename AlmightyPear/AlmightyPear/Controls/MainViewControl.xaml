@@ -7,21 +7,43 @@
              xmlns:controller="clr-namespace:AlmightyPear.Controller"
              xmlns:controls="clr-namespace:AlmightyPear.Controls"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:fa="http://schemas.fontawesome.io/icons/"
              xmlns:model="clr-namespace:AlmightyPear.Model"
              xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Border Grid.Row="1" Background="{DynamicResource GradInsetSide}">
         <mah:MetroAnimatedTabControl TabStripPlacement="Left" Background="{DynamicResource mg.solid.10}">
-            <TabItem Header="{Binding Source={StaticResource Env}, Path=BinData.BookmarksViewCaption}" Width="250">
+            <TabItem Width="250">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <fa:ImageAwesome Icon="Bookmark" Foreground="{DynamicResource mg.solid.100}" Height="16"></fa:ImageAwesome>
+                        <TextBlock Text="{Binding Source={StaticResource Env}, Path=BinData.BookmarksViewCaption}"
+                                   VerticalAlignment="Center" Margin="15,0,0,0"></TextBlock>
+                    </StackPanel>
+                </TabItem.Header>
                 <Grid>
                     <controls:BookmarksViewControl MaxContentHeight="10000" ContentTextSize="16"></controls:BookmarksViewControl>
                 </Grid>
             </TabItem>
-            <TabItem Header="{Binding Source={StaticResource Env}, Path=BinData.BookmarksCreateCaption}">
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <fa:ImageAwesome Icon="Plus" Foreground="{DynamicResource mg.solid.100}" Height="16"></fa:ImageAwesome>
+                        <TextBlock Text="{Binding Source={StaticResource Env}, Path=BinData.BookmarksCreateCaption}"
+                                   VerticalAlignment="Center" Margin="15,0,0,0"></TextBlock>
+                    </StackPanel>
+                </TabItem.Header>
                 <controls:BookmarkCreateControl x:Name="ctrl_CreateBookmark"></controls:BookmarkCreateControl>
             </TabItem>
-            <TabItem Header="Profile">
+            <TabItem >
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <fa:ImageAwesome Icon="UserCircle" Foreground="{DynamicResource mg.solid.100}" Height="16"></fa:ImageAwesome>
+                        <TextBlock Text="Profile"
+                                   VerticalAlignment="Center" Margin="15,0,0,0"></TextBlock>
+                    </StackPanel>
+                </TabItem.Header>
                 <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                     <StackPanel Orientation="Vertical">
                         <!--<GroupBox Header="Actions">

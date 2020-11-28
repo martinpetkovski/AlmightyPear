@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using AlmightyPear.Controller;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AlmightyPear.Model
 {
@@ -31,6 +27,7 @@ namespace AlmightyPear.Model
             {
                 _windowState = value;
                 OnPropertyChanged();
+                Env.MainWindow.OnChangeWindowState();
             }
         }
 

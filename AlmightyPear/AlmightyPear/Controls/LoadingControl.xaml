@@ -4,11 +4,16 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:fa="http://schemas.fontawesome.io/icons/"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:local="clr-namespace:AlmightyPear.Controls"
              mc:Ignorable="d" 
-             Background="{DynamicResource mg.solid.0}"
              d:DesignHeight="450" d:DesignWidth="800">
-    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Background="Transparent">
+    <UserControl.Background>
+
+        <ImageBrush Opacity="0.4" ImageSource="..\Resources\Textures\background_monochromatic.png" Stretch="UniformToFill" AlignmentX="Left"/>
+    </UserControl.Background>
+
+    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
         <fa:ImageAwesome Icon="Spinner" Spin="True" SpinDuration="2" Foreground="{DynamicResource mg.solid.100}" Height="60" Width="60" Margin="40,0" />
         <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="60">Loading...</TextBlock>
     </StackPanel>

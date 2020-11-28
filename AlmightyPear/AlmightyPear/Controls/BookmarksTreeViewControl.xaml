@@ -10,13 +10,14 @@
              xmlns:fa="http://schemas.fontawesome.io/icons/"
              xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
              mc:Ignorable="d" 
-             Name="rootControl"
+             x:Name="rootControl"
              PreviewKeyDown="RootControl_PreviewKeyDown">
     <UserControl.Resources>
         <ResourceDictionary>
             <converters:FilterBinItemsConverter x:Key="FilterBinItemsConverter" />
             <converters:BookmarkCaptionConverter x:Key="BookmarkCaptionConverter" />
             <converters:BookmarkSelectedConverter x:Key="BookmarkSelectedConverter" />
+            <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
         </ResourceDictionary>
     </UserControl.Resources>
     <ScrollViewer 
@@ -62,15 +63,39 @@
                             </TextBlock.LayoutTransform>
                         </TextBlock>
                         <StackPanel.ContextMenu>
-                            <ContextMenu FontSize="12">
+                            <ContextMenu FontSize="14">
+                                <MenuItem IsEnabled="False" Header="{Binding Path=Path}"></MenuItem>
+                                <MenuItem Name="mi_MoveSelection" 
+                                          Click="Mi_MoveSelection_Click" 
+                                          Visibility="{Binding Source={x:Reference rootControl}, 
+                                                               Path=Model.HasSelected, 
+                                                               Converter={StaticResource BoolToVisibilityConverter}}">
+                                    <MenuItem.Header>
+                                        <StackPanel Orientation="Horizontal">
+                                            <fa:ImageAwesome Icon="Download" Foreground="{DynamicResource mg.solid.100}" Height="12" Width="12" Margin="5,0" />
+                                            <TextBlock Text="Move Selected Here"></TextBlock>
+                                        </StackPanel>
+                                    </MenuItem.Header>
+                                </MenuItem>
+                                <Separator></Separator>
+                                <MenuItem Name="mi_addBookmarkToBin" Click="Mi_addBookmarkToBin_Click">
+                                    <MenuItem.Header>
+                                        <StackPanel Orientation="Horizontal">
+                                            <fa:ImageAwesome Icon="Plus" Foreground="{DynamicResource mg.solid.100}" Height="12" Width="12" Margin="5,0" />
+                                            <TextBlock Text="New Here..."></TextBlock>
+                                        </StackPanel>
+                                    </MenuItem.Header>
+                                </MenuItem>
                                 <MenuItem Name="mi_changePath" Click="Mi_changePath_Click">
                                     <MenuItem.Header>
                                         <StackPanel Orientation="Horizontal">
                                             <fa:ImageAwesome Icon="Exchange" Foreground="{DynamicResource mg.solid.100}" Height="12" Width="12" Margin="5,0" />
-                                            <TextBlock Text="Change Path"></TextBlock>
+                                            <TextBlock Text="Change Path..."></TextBlock>
                                         </StackPanel>
                                     </MenuItem.Header>
                                 </MenuItem>
+                                
+                                <Separator></Separator>
                                 <MenuItem Name="mi_copyPath" Click="Mi_copyPath_Click">
                                     <MenuItem.Header>
                                         <StackPanel Orientation="Horizontal">
@@ -83,7 +108,7 @@
                                     <MenuItem.Header>
                                         <StackPanel Orientation="Horizontal">
                                             <fa:ImageAwesome Icon="Xing" Foreground="Red" Height="12" Width="12" Margin="5,0" />
-                                            <TextBlock Text="Delete" Foreground="Red"></TextBlock>
+                                            <TextBlock Text="Delete..." Foreground="Red"></TextBlock>
                                         </StackPanel>
                                     </MenuItem.Header>
                                 </MenuItem>
@@ -92,7 +117,7 @@
                                     <MenuItem.Header>
                                         <StackPanel Orientation="Horizontal">
                                             <fa:ImageAwesome Icon="CircleThin" Foreground="{DynamicResource mg.solid.100}" Height="12" Width="12" Margin="5,0" />
-                                            <TextBlock Text="Select Items"></TextBlock>
+                                            <TextBlock Text="Select"></TextBlock>
                                         </StackPanel>
                                     </MenuItem.Header>
                                 </MenuItem>
@@ -100,7 +125,18 @@
                                     <MenuItem.Header>
                                         <StackPanel Orientation="Horizontal">
                                             <fa:ImageAwesome Icon="CircleThin" Foreground="{DynamicResource mg.solid.100}" Height="12" Width="12" Margin="5,0" />
-                                            <TextBlock Text="Select Items + Children"></TextBlock>
+                                            <TextBlock Text="Select All"></TextBlock>
+                                        </StackPanel>
+                                    </MenuItem.Header>
+                                </MenuItem>
+                                <MenuItem Name="mi_deselectItemsBin" Click="Mi_Deselect_Click"
+                                          Visibility="{Binding Source={x:Reference rootControl}, 
+                                                               Path=Model.HasSelected, 
+                                                               Converter={StaticResource BoolToVisibilityConverter}}">
+                                    <MenuItem.Header>
+                                        <StackPanel Orientation="Horizontal">
+                                            <fa:ImageAwesome Icon="CircleThin" Foreground="{DynamicResource mg.solid.100}" Height="12" Width="12" Margin="5,0" />
+                                            <TextBlock Text="Deselect All"></TextBlock>
                                         </StackPanel>
                                     </MenuItem.Header>
                                 </MenuItem>
@@ -133,7 +169,7 @@
                             </MultiBinding>
                         </Button.BorderBrush>
                         <Button.ContextMenu>
-                            <ContextMenu FontSize="12">
+                            <ContextMenu FontSize="14">
                                 <MenuItem Name="mi_BookmarkDetails" Click="Mi_BookmarkDetails_Click">
                                     <MenuItem.Header>
                                         <StackPanel Orientation="Horizontal">
@@ -146,7 +182,7 @@
                                     <MenuItem.Header>
                                         <StackPanel Orientation="Horizontal">
                                             <fa:ImageAwesome Icon="Copy" Foreground="{DynamicResource mg.solid.100}" Height="12" Width="12" Margin="5,0" />
-                                            <TextBlock Text="Copy"></TextBlock>
+                                            <TextBlock Text="Copy Content"></TextBlock>
                                         </StackPanel>
                                     </MenuItem.Header>
                                 </MenuItem>
@@ -154,7 +190,7 @@
                                     <MenuItem.Header>
                                         <StackPanel Orientation="Horizontal">
                                             <fa:ImageAwesome Icon="Plus" Foreground="{DynamicResource mg.solid.100}" Height="12" Width="12" Margin="5,0" />
-                                            <TextBlock Text="Copy Additive"></TextBlock>
+                                            <TextBlock Text="Copy Add"></TextBlock>
                                         </StackPanel>
                                     </MenuItem.Header>
                                 </MenuItem>
@@ -162,16 +198,35 @@
                                     <MenuItem.Header>
                                         <StackPanel Orientation="Horizontal">
                                             <fa:ImageAwesome Icon="Xing" Foreground="Red" Height="12" Width="12" Margin="5,0" />
-                                            <TextBlock Text="Delete" Foreground="Red"></TextBlock>
+                                            <TextBlock Text="Delete..." Foreground="Red"></TextBlock>
                                         </StackPanel>
                                     </MenuItem.Header>
                                 </MenuItem>
                                 <Separator></Separator>
-                                <MenuItem Name="mi_Deselect" Click="Mi_Deselect_Click">
+                                <MenuItem Name="mi_Select" Click="Mi_Select_Click">
                                     <MenuItem.Header>
                                         <StackPanel Orientation="Horizontal">
-                                            <fa:ImageAwesome Icon="CircleThin" Foreground="Tomato" Height="12" Width="12" Margin="5,0" />
-                                            <TextBlock Text="Deselect All" Foreground="Tomato"></TextBlock>
+                                            <fa:ImageAwesome Icon="CircleThin" Foreground="{DynamicResource mg.solid.100}" Height="12" Width="12" Margin="5,0" />
+                                            <TextBlock Text="Select" Foreground="{DynamicResource mg.solid.100}"></TextBlock>
+                                        </StackPanel>
+                                    </MenuItem.Header>
+                                </MenuItem>
+                                <MenuItem Name="mi_SelectAdd" Click="Mi_SelectAdd_Click">
+                                    <MenuItem.Header>
+                                        <StackPanel Orientation="Horizontal">
+                                            <fa:ImageAwesome Icon="CircleThin" Foreground="{DynamicResource mg.solid.100}" Height="12" Width="12" Margin="5,0" />
+                                            <TextBlock Text="Select Add" Foreground="{DynamicResource mg.solid.100}"></TextBlock>
+                                        </StackPanel>
+                                    </MenuItem.Header>
+                                </MenuItem>
+                                <MenuItem Name="mi_Deselect" Click="Mi_Deselect_Click"
+                                          Visibility="{Binding Source={x:Reference rootControl}, 
+                                                               Path=Model.HasSelected, 
+                                                               Converter={StaticResource BoolToVisibilityConverter}}">
+                                    <MenuItem.Header>
+                                        <StackPanel Orientation="Horizontal">
+                                            <fa:ImageAwesome Icon="CircleThin" Foreground="{DynamicResource mg.solid.100}" Height="12" Width="12" Margin="5,0" />
+                                            <TextBlock Text="Deselect All" Foreground="{DynamicResource mg.solid.100}"></TextBlock>
                                         </StackPanel>
                                     </MenuItem.Header>
                                 </MenuItem>

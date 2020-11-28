@@ -39,7 +39,7 @@ namespace AlmightyPear.View
             Loaded += (sender, e) => MoveFocus(new TraversalRequest(FocusNavigationDirection.First));
         }
 
-        public void Fire()
+        public void Fire(string initPath = "")
         {
             if (!Env.UserData.IsLoggedIn)
                 return;
@@ -49,7 +49,7 @@ namespace AlmightyPear.View
             inputSim.Keyboard.KeyUp(VirtualKeyCode.LWIN);
             inputSim.Keyboard.ModifiedKeyStroke(VirtualKeyCode.CONTROL, VirtualKeyCode.VK_C);
 
-            ctrl_bookmarkCreate.Initialize();
+            ctrl_bookmarkCreate.Initialize(initPath);
 
             Point mousePos = GetMousePosition();
             Screen screen = Screen.FromPoint(new System.Drawing.Point((int)mousePos.X, (int)mousePos.Y));

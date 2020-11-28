@@ -65,6 +65,7 @@ namespace AlmightyPear.Controls
                     SelectedBinItems.Add(item);
                 }
                 OnPropertyChanged("SelectedBinItems");
+                OnPropertyChanged("HasSelected");
             }
 
             public void SelectItem(IBinItem item)
@@ -73,17 +74,19 @@ namespace AlmightyPear.Controls
                     SelectedBinItems.Add(item);
 
                 OnPropertyChanged("SelectedBinItems");
+                OnPropertyChanged("HasSelected");
             }
 
             public void ClearSelection()
             {
                 SelectedBinItems.Clear();
                 OnPropertyChanged("SelectedBinItems");
+                OnPropertyChanged("HasSelected");
             }
 
-            public bool HasSelected()
+            public bool HasSelected
             {
-                return SelectedBinItems.Count > 0;
+                get { return SelectedBinItems.Count > 0; }
             }
 
             public BookmarksTreeViewControlModel()
@@ -322,17 +325,25 @@ namespace AlmightyPear.Controls
             Env.CopyToClipboard(Env.GetClipboardText() + " " + bookmark.Content);
         }
 
+        private void MoveSelected(string path)
+        {
+            if (Model.HasSelected)
+            {
+                foreach (IBinItem item in Model.SelectedBinItems)
+                {
+                    Env.BinController.ChangePath(item, path);
+                }
+            }
+        }
+
         private void Rt_bin_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             IBinItem sourceBin = (IBinItem)((StackPanel)sender).DataContext;
             string sourcePath = sourceBin.Path;
 
-            if (Model.HasSelected())
+            if (Model.HasSelected)
             {
-                foreach (IBinItem item in Model.SelectedBinItems)
-                {
-                    Env.BinController.ChangePath(item, sourcePath);
-                }
+                MoveSelected(sourcePath);
             }
             else
             {
@@ -453,6 +464,31 @@ namespace AlmightyPear.Controls
                 imagePreview.Top = pos.Y + 10;
                 imagePreview.Left = pos.X + 10;
             }
+        }
+
+        private void Mi_addBookmarkToBin_Click(object sender, RoutedEventArgs e)
+        {
+            IBinItem sourceBin = (IBinItem)((MenuItem)sender).DataContext;
+            ((CreateBookmarkWnd)Env.MainWindow.ChildWindows[typeof(CreateBookmarkWnd)]).Fire(sourceBin.Path);
+        }
+
+        private void Mi_Select_Click(object sender, RoutedEventArgs e)
+        {
+            IBinItem sourceBin = (IBinItem)((MenuItem)sender).DataContext;
+            Model.ToggleSelectItem(sourceBin);
+        }
+
+        private void Mi_SelectAdd_Click(object sender, RoutedEventArgs e)
+        {
+            IBinItem sourceBin = (IBinItem)((MenuItem)sender).DataContext;
+            Model.SelectItem(sourceBin);
+        }
+
+        private void Mi_MoveSelection_Click(object sender, RoutedEventArgs e)
+        {
+            IBinItem sourceBin = (IBinItem)((MenuItem)sender).DataContext;
+            string sourcePath = sourceBin.Path;
+            MoveSelected(sourcePath);
         }
     }
 }

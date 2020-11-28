@@ -37,6 +37,7 @@ namespace AlmightyPear.Controller
             var authProvider = new FirebaseAuthProvider(new Firebase.Auth.FirebaseConfig(_apiKey));
             FirebaseAuthLink auth;
             auth = await authProvider.SignInWithEmailAndPasswordAsync(email, password);
+            auth.ExpiresIn = 50000;
 
             if (auth.User.LocalId != "")
             {

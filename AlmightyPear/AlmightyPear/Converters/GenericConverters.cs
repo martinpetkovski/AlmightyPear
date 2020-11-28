@@ -151,4 +151,33 @@ namespace AlmightyPear.Converters
             throw new NotImplementedException();
         }
     }
+
+    class BoolToVisibilityConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if(value is bool)
+            {
+                bool invert = false;
+                if (parameter != null && parameter is string)
+                {
+                    bool.TryParse((string)parameter, out invert);
+                }
+
+                bool b = (bool)value;
+
+                if (invert)
+                    b = !b;
+
+                return b ? Visibility.Visible : Visibility.Collapsed;
+            }
+
+            return true;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

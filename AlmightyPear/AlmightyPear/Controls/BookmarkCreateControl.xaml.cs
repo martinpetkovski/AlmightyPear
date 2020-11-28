@@ -54,10 +54,11 @@ namespace AlmightyPear.Controls
             Env.ClearClipboard();
         }
 
-        public void Initialize()
+        public void Initialize(string initPath = "")
         {
             string selectedText = Env.GetClipboardText();
 
+            tb_category.Text = initPath;
             txt_selection.Text = selectedText;
 
         }

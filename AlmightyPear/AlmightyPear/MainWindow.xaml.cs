@@ -131,11 +131,10 @@ namespace AlmightyPear
         {
             Env.Initialize(this);
             Env.MainWindowData.WindowState = MainWindowModel.EMainWindowState.Loading;
-
-            InitializeComponent();
-            await InitializeThemesAsync();
-
             Style = (Style)FindResource(typeof(Window));
+            await InitializeThemesAsync();
+            InitializeComponent();
+            
             MinimizeToTray.Enable(this);
 
             HotKeyManager.RegisterHotKey(Keys.None, KeyModifiers.Windows | KeyModifiers.Control);
@@ -146,7 +145,7 @@ namespace AlmightyPear
             ChildWindows[typeof(FindBookmarkWnd)] = new FindBookmarkWnd();
 
             await ExecSignInAsync();
-
+            
         }
 
         public MainWindow()
@@ -222,6 +221,14 @@ namespace AlmightyPear
         private void Mi_minimize_Click(object sender, RoutedEventArgs e)
         {
             WindowState = WindowState.Minimized;
+        }
+
+        public void OnChangeWindowState()
+        {
+            if (mah_contentControl != null)
+            {
+                mah_contentControl.Reload();
+            }
         }
     }
 }

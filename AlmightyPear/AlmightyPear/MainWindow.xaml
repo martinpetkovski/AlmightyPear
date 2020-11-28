@@ -5,11 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AlmightyPear"
         xmlns:controls="clr-namespace:AlmightyPear.Controls"
-                 xmlns:converters="clr-namespace:AlmightyPear.Converters"
+        xmlns:converters="clr-namespace:AlmightyPear.Converters"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
         xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         mc:Ignorable="d"
         Title="Checkmeg PRE-ALPHA"
+        Background="{DynamicResource mg.solid.10}"
         BorderThickness="1"
         TitleBarHeight="48"
         MinHeight="800"
@@ -26,13 +28,55 @@
                     <MenuItem.Header>
                         <Image  Source="Resources\Textures\logo.png" Height="36"/>
                     </MenuItem.Header>
-                    <MenuItem Header="Save All..." Name="mi_SaveAll" Click="Mi_SaveAll_ClickAsync"></MenuItem>
-                    <MenuItem Header="Full Reload" Name="mi_FullReload" Click="Mi_FullReload_ClickAsync"></MenuItem>
-                    <MenuItem Header="Clear Temp Bin" Name="mi_ClearTempBin" Click="Mi_ClearTempBin_Click"></MenuItem>
+                    <MenuItem Name="mi_SaveAll" Click="Mi_SaveAll_ClickAsync">
+                        <MenuItem.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <fa:ImageAwesome Icon="Save" Foreground="{DynamicResource mg.solid.100}" Height="12"/>
+                                <TextBlock Text="Save All..." VerticalAlignment="Center" Margin="5,0,0,0"></TextBlock>
+                            </StackPanel>
+                        </MenuItem.Header>
+                    </MenuItem>
+                    <MenuItem Name="mi_FullReload" Click="Mi_FullReload_ClickAsync">
+                        <MenuItem.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <fa:ImageAwesome Icon="RotateLeft" Foreground="{DynamicResource mg.solid.100}" Height="12"/>
+                                <TextBlock Text="Full Reload" VerticalAlignment="Center" Margin="5,0,0,0"></TextBlock>
+                            </StackPanel>
+                        </MenuItem.Header>
+                    </MenuItem>
+                    <MenuItem Name="mi_ClearTempBin" Click="Mi_ClearTempBin_Click">
+                        <MenuItem.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <fa:ImageAwesome Icon="TimesCircleOutline" Foreground="{DynamicResource mg.solid.100}" Height="12"/>
+                                <TextBlock Text="Clear TEMP bin" VerticalAlignment="Center" Margin="5,0,0,0"></TextBlock>
+                            </StackPanel>
+                        </MenuItem.Header>
+                    </MenuItem>
                     <Separator></Separator>
-                    <MenuItem Header="Minimize to tray" Name="mi_minimize" Click="Mi_minimize_Click"></MenuItem>
-                    <MenuItem Header="Log out" Name="mi_LogOut" Click="Mi_LogOut_Click"></MenuItem>
-                    <MenuItem Header="Quit" Name="mi_Quit" Click="Mi_Quit_Click"></MenuItem>
+                    <MenuItem Name="mi_minimize" Click="Mi_minimize_Click">
+                        <MenuItem.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <fa:ImageAwesome Icon="WindowMinimize" Foreground="{DynamicResource mg.solid.100}" Height="12" Width="12"/>
+                                <TextBlock Text="Minimize to tray" VerticalAlignment="Center" Margin="5,0,0,0"></TextBlock>
+                            </StackPanel>
+                        </MenuItem.Header>
+                    </MenuItem>
+                    <MenuItem Name="mi_LogOut" Click="Mi_LogOut_Click">
+                        <MenuItem.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <fa:ImageAwesome Icon="SignOut" Foreground="{DynamicResource mg.solid.100}" Height="12"/>
+                                <TextBlock Text="Log out" VerticalAlignment="Center" Margin="5,0,0,0"></TextBlock>
+                            </StackPanel>
+                        </MenuItem.Header>
+                    </MenuItem>
+                    <MenuItem Name="mi_Quit" Click="Mi_Quit_Click">
+                        <MenuItem.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <fa:ImageAwesome Icon="Times" Foreground="Red" Height="12"/>
+                                <TextBlock Text="Quit" VerticalAlignment="Center" Margin="5,0,0,0"></TextBlock>
+                            </StackPanel>
+                        </MenuItem.Header>
+                    </MenuItem>
                 </MenuItem>
             </Menu>
         </mah:WindowCommands>
@@ -95,7 +139,7 @@
                                                         Path=MainWindowData.WindowState}" Value="Loading">
                         <Setter Property="Content">
                             <Setter.Value>
-                                <controls:LoadingControl></controls:LoadingControl>
+                                <controls:LoadingControl x:Name="ctrl_Loading"></controls:LoadingControl>
                             </Setter.Value>
                         </Setter>
                     </DataTrigger>

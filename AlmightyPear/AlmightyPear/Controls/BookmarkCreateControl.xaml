@@ -30,7 +30,7 @@
             <TextBox  
                 Grid.Column="0" 
                 Name="tb_category" 
-                KeyDown="Tb_category_KeyDownAsync" 
+                KeyDown="Tb_category_KeyDown" 
                 KeyUp="Tb_category_KeyUp"
                 TabIndex="0"
                 behaviors:AutoCompleteBehavior.AutoCompleteItemsSource="{Binding  
@@ -47,6 +47,7 @@
             Name="txt_selection" 
             Foreground="{DynamicResource mg.solid.100}" 
             Background="{DynamicResource GradInset}" 
+            KeyDown="Txt_selection_KeyDown"
             FontSize="16"
             WordWrap="True"
             ShowLineNumbers="True"

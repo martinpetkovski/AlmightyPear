@@ -65,6 +65,7 @@ namespace AlmightyPear.View
             Top = finalY;
 
             tb_content.Text = Bookmark.Content;
+            Env.ExplicitFocus(tb_path);
         }
 
         private void Btn_cancel_Click(object sender, RoutedEventArgs e)
@@ -72,11 +73,32 @@ namespace AlmightyPear.View
             Close();
         }
 
-        private void Btn_accept_Click(object sender, RoutedEventArgs e)
+        private void Accept()
         {
             Env.BinController.ChangePath(Bookmark, tb_path.Text);
             Bookmark.Content = tb_content.Text;
             Close();
+        }
+
+        private void Btn_accept_Click(object sender, RoutedEventArgs e)
+        {
+            Accept();
+        }
+
+        private void Tb_content_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if(e.Key == Key.S && Keyboard.Modifiers == ModifierKeys.Control)
+            {
+                Accept();
+            }
+        }
+
+        private void Tb_path_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == Key.S && Keyboard.Modifiers == ModifierKeys.Control)
+            {
+                Accept();
+            }
         }
     }
 }

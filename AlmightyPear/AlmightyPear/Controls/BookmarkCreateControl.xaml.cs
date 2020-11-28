@@ -63,7 +63,7 @@ namespace AlmightyPear.Controls
 
         }
 
-        private void Tb_category_KeyDownAsync(object sender, KeyEventArgs e)
+        private void Tb_category_KeyDown(object sender, KeyEventArgs e)
         {
             InputEvent?.Invoke(sender, e);
         }
@@ -76,6 +76,11 @@ namespace AlmightyPear.Controls
         private void Tb_category_KeyUp(object sender, KeyEventArgs e)
         {
             Env.BinData.BookmarksCreateCaption = (tb_category.Text != "" || txt_selection.Text != "").ToString();
+        }
+
+        private void Txt_selection_KeyDown(object sender, KeyEventArgs e)
+        {
+            InputEvent?.Invoke(sender, e);
         }
     }
 }

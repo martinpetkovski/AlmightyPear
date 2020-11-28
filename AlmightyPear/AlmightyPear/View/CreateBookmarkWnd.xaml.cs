@@ -74,15 +74,27 @@ namespace AlmightyPear.View
         private async void Ctrl_bookmarkCreate_InputEventAsync(object sender, EventArgs e)
         {
             System.Windows.Input.KeyEventArgs ea = (System.Windows.Input.KeyEventArgs)e;
-            if (ea.Key == Key.Enter)
+
+            if (sender is TextBox)
             {
-                await ctrl_bookmarkCreate.CreateAsync();
-                Hide();
+                if (ea.Key == Key.Enter)
+                {
+                    await ctrl_bookmarkCreate.CreateAsync();
+                    Hide();
+                }
+                if (ea.Key == Key.Escape)
+                {
+                    ctrl_bookmarkCreate.Cancel();
+                    Hide();
+                }
             }
-            else if (ea.Key == Key.Escape)
+            else
             {
-                ctrl_bookmarkCreate.Cancel();
-                Hide();
+                if (ea.Key == Key.S && Keyboard.Modifiers == ModifierKeys.Control)
+                {
+                    await ctrl_bookmarkCreate.CreateAsync();
+                    Hide();
+                }
             }
         }
     }

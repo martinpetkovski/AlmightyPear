@@ -44,6 +44,7 @@
                 Grid.ColumnSpan="3"
                 VerticalAlignment="Center"
                 Name="tb_path"
+                KeyDown="Tb_path_KeyDown"
                 Text="{Binding ElementName=rootControl, Path=Bookmark.Path, Mode=OneWay}"></TextBox>
             
             <TextBlock 
@@ -78,6 +79,7 @@
             WordWrap="True"
             ShowLineNumbers="True"
             LineNumbersForeground="#555"
+            KeyDown="Tb_content_KeyDown"
             ></avalonEdit:TextEditor>
         <StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Right" Margin="5">
             <Button Padding="10" Margin="0,0,10,0" Name="btn_cancel" Click="Btn_cancel_Click" BorderBrush="#333">Cancel</Button>

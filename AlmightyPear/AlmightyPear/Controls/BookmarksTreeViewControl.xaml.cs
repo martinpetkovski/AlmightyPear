@@ -7,11 +7,13 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Threading;
 
 namespace AlmightyPear.Controls
 {
@@ -173,7 +175,7 @@ namespace AlmightyPear.Controls
             TextBlock txtBlock = (TextBlock)spParent.FindName("lbl_name");
             TextBox tbRename = (TextBox)spParent.FindName("tb_rename");
             tbRename.Text = fill;
-            MoveFocus(new TraversalRequest(FocusNavigationDirection.First));
+            Env.ExplicitFocus(tbRename);
             tbRename.Visibility = Visibility.Visible;
             txtBlock.Visibility = Visibility.Collapsed;
         }
@@ -351,6 +353,8 @@ namespace AlmightyPear.Controls
                 {
                     FilterTextBox.Clear();
                     FilterTextBox.Text = "-p " + sourcePath;
+
+                    Env.ExplicitFocus(FilterTextBox);
                 }
             }
         }

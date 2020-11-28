@@ -2,6 +2,10 @@
 using MahApps.Metro.Controls;
 using System;
 using System.Threading;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace AlmightyPear.Controller
 {
@@ -113,6 +117,17 @@ namespace AlmightyPear.Controller
 
 
             Thread.Sleep(clipboardDelay);
+        }
+
+        public static void ExplicitFocus(TextBox element)
+        {
+            element.Dispatcher.BeginInvoke(DispatcherPriority.Input,
+            new Action(delegate ()
+            {
+                element.Focus();         // Set Logical Focus
+                Keyboard.Focus(element); // Set Keyboard Focus
+                element.CaretIndex = element.Text.Length;
+            }));
         }
     }
 }

@@ -72,6 +72,11 @@ namespace AlmightyPear.View
             }
         }
 
+        private static double Clamp(double x, double a, double b)
+        {
+            return Math.Min(Math.Max(x, a), b);
+        }
+
         public static async Task<int> FireAsync(string title, string message, List<string> buttons)
         {
             if(Instance != null)
@@ -83,8 +88,8 @@ namespace AlmightyPear.View
             Point mousePos = GetMousePosition();
             Screen screen = Screen.FromPoint(new System.Drawing.Point((int)mousePos.X, (int)mousePos.Y));
 
-            Instance.Left = mousePos.X;
-            Instance.Top = mousePos.Y;
+            Instance.Left = Clamp(mousePos.X - 320, screen.Bounds.Left, screen.Bounds.Left + screen.Bounds.Width - Instance.Width);
+            Instance.Top = Clamp(mousePos.Y - 160, screen.Bounds.Top, screen.Bounds.Top + screen.Bounds.Height - Instance.Height);
 
             Instance.Show();
 

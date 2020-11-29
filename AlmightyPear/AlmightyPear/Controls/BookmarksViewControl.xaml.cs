@@ -96,6 +96,11 @@ namespace AlmightyPear.Controls
             {
                 tb_filter.Clear();
             }
+            if (e.Key == Key.Tab)
+            {
+                tb_filter.CaretIndex = tb_filter.Text.Length;
+                e.Handled = true;
+            }
         }
 
         private void FinishedTyping()

@@ -60,7 +60,7 @@
                                                Bin="{Binding Source={StaticResource Env}, Path=BinData.RootBin}"
                                                Filter="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:BookmarksViewControl}}, 
             Path=Model.DelayedText}"
-                                               FilterTextBox="{x:Reference Name=tb_filter}">
+                                               ExplicitFilter="Ctrl_BookmarksTreeView_ExplicitFilter">
 
         </controls:BookmarksTreeViewControl>
     </Grid>

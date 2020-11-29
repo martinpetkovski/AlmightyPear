@@ -21,11 +21,12 @@
             <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"></RowDefinition>
-        </Grid.RowDefinitions>
-        <TreeView Grid.Row="0" 
+    <mah:MetroContentControl Name="mah_contentControl">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <TreeView Grid.Row="0" 
                   Name="tv_main"
                   VirtualizingPanel.IsVirtualizing="True"
                   VirtualizingPanel.VirtualizationMode="Standard"
@@ -34,24 +35,23 @@
                   ScrollViewer.HorizontalScrollBarVisibility="Auto" 
                   ScrollViewer.VerticalScrollBarVisibility="Auto" 
                   ScrollViewer.CanContentScroll="True" 
-                  ScrollViewer.PreviewMouseWheel="ScrollViewer_PreviewMouseWheel"
                   Padding="0">
-            
-            <TreeView.ItemsSource>
-                <MultiBinding Converter="{StaticResource FilterBinItemsConverter}">
-                    <Binding ElementName="rootControl" Path="Bin.BinItemsCollection"></Binding>
-                    <Binding ElementName="rootControl" Path="Filter"></Binding>
-                </MultiBinding>
-            </TreeView.ItemsSource>
-            <TreeView.Resources>
-                <HierarchicalDataTemplate DataType="{x:Type model:BinModel}">
-                    <HierarchicalDataTemplate.ItemsSource>
-                        <MultiBinding Converter="{StaticResource FilterBinItemsConverter}">
-                            <Binding Path="BinItemsCollection"></Binding>
-                            <Binding ElementName="rootControl" Path="Filter"></Binding>
-                        </MultiBinding>
-                    </HierarchicalDataTemplate.ItemsSource>
-                    <StackPanel Name="rt_bin" 
+
+                <TreeView.ItemsSource>
+                    <MultiBinding Converter="{StaticResource FilterBinItemsConverter}">
+                        <Binding ElementName="rootControl" Path="Bin.BinItemsCollection"></Binding>
+                        <Binding ElementName="rootControl" Path="Filter"></Binding>
+                    </MultiBinding>
+                </TreeView.ItemsSource>
+                <TreeView.Resources>
+                    <HierarchicalDataTemplate DataType="{x:Type model:BinModel}">
+                        <HierarchicalDataTemplate.ItemsSource>
+                            <MultiBinding Converter="{StaticResource FilterBinItemsConverter}">
+                                <Binding Path="BinItemsCollection"></Binding>
+                                <Binding ElementName="rootControl" Path="Filter"></Binding>
+                            </MultiBinding>
+                        </HierarchicalDataTemplate.ItemsSource>
+                        <StackPanel Name="rt_bin" 
                                 VirtualizingPanel.IsVirtualizing="True"
                                 VirtualizingPanel.VirtualizationMode="Standard"
                                 SnapsToDevicePixels="True"
@@ -60,99 +60,99 @@
                                 Height="auto" Width="auto"
                                 HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                                 ToolTip="{Binding Path=Path}">
-                        <TextBox TabIndex="0" Visibility="Collapsed" Name="tb_rename" KeyDown="Tb_rename_KeyDown" ></TextBox>
-                        <TextBlock Name="lbl_name"
+                            <TextBox TabIndex="0" Visibility="Collapsed" Name="tb_rename" KeyDown="Tb_rename_KeyDown" ></TextBox>
+                            <TextBlock Name="lbl_name"
                                    Foreground="{DynamicResource mg.solid.100}"
                                    Text="{Binding Path=Name}"  
                                    FontSize="{Binding RelativeSource={RelativeSource AncestorType=local:BookmarksTreeViewControl}, Path=FontSize}" >
-                            <TextBlock.LayoutTransform>
-                                <RotateTransform Angle="-70"></RotateTransform>
-                            </TextBlock.LayoutTransform>
-                        </TextBlock>
-                        <StackPanel.ContextMenu>
-                            <ContextMenu FontSize="14">
-                                <MenuItem IsEnabled="False" Header="{Binding Path=Path}"></MenuItem>
-                                <MenuItem Name="mi_MoveSelection" 
+                                <TextBlock.LayoutTransform>
+                                    <RotateTransform Angle="-70"></RotateTransform>
+                                </TextBlock.LayoutTransform>
+                            </TextBlock>
+                            <StackPanel.ContextMenu>
+                                <ContextMenu FontSize="14">
+                                    <MenuItem IsEnabled="False" Header="{Binding Path=Path}"></MenuItem>
+                                    <MenuItem Name="mi_MoveSelection" 
                                           Click="Mi_MoveSelection_Click" 
                                           Visibility="{Binding Source={x:Reference rootControl}, 
                                                                Path=Model.HasSelected, 
                                                                Converter={StaticResource BoolToVisibilityConverter}}">
-                                    <MenuItem.Header>
-                                        <StackPanel Orientation="Horizontal">
-                                            <fa:ImageAwesome Icon="Download" Foreground="{DynamicResource mg.solid.100}" Height="12" Width="12" Margin="5,0" />
-                                            <TextBlock Text="Move Selected Here"></TextBlock>
-                                        </StackPanel>
-                                    </MenuItem.Header>
-                                </MenuItem>
-                                <Separator></Separator>
-                                <MenuItem Name="mi_addBookmarkToBin" Click="Mi_addBookmarkToBin_Click">
-                                    <MenuItem.Header>
-                                        <StackPanel Orientation="Horizontal">
-                                            <fa:ImageAwesome Icon="Plus" Foreground="{DynamicResource mg.solid.100}" Height="12" Width="12" Margin="5,0" />
-                                            <TextBlock Text="New Here..."></TextBlock>
-                                        </StackPanel>
-                                    </MenuItem.Header>
-                                </MenuItem>
-                                <MenuItem Name="mi_changePath" Click="Mi_changePath_Click">
-                                    <MenuItem.Header>
-                                        <StackPanel Orientation="Horizontal">
-                                            <fa:ImageAwesome Icon="Exchange" Foreground="{DynamicResource mg.solid.100}" Height="12" Width="12" Margin="5,0" />
-                                            <TextBlock Text="Change Path..."></TextBlock>
-                                        </StackPanel>
-                                    </MenuItem.Header>
-                                </MenuItem>
+                                        <MenuItem.Header>
+                                            <StackPanel Orientation="Horizontal">
+                                                <fa:ImageAwesome Icon="Download" Foreground="{DynamicResource mg.solid.100}" Height="12" Width="12" Margin="5,0" />
+                                                <TextBlock Text="Move Selected Here"></TextBlock>
+                                            </StackPanel>
+                                        </MenuItem.Header>
+                                    </MenuItem>
+                                    <Separator></Separator>
+                                    <MenuItem Name="mi_addBookmarkToBin" Click="Mi_addBookmarkToBin_Click">
+                                        <MenuItem.Header>
+                                            <StackPanel Orientation="Horizontal">
+                                                <fa:ImageAwesome Icon="Plus" Foreground="{DynamicResource mg.solid.100}" Height="12" Width="12" Margin="5,0" />
+                                                <TextBlock Text="New Here..."></TextBlock>
+                                            </StackPanel>
+                                        </MenuItem.Header>
+                                    </MenuItem>
+                                    <MenuItem Name="mi_changePath" Click="Mi_changePath_Click">
+                                        <MenuItem.Header>
+                                            <StackPanel Orientation="Horizontal">
+                                                <fa:ImageAwesome Icon="Exchange" Foreground="{DynamicResource mg.solid.100}" Height="12" Width="12" Margin="5,0" />
+                                                <TextBlock Text="Change Path..."></TextBlock>
+                                            </StackPanel>
+                                        </MenuItem.Header>
+                                    </MenuItem>
 
-                                <Separator></Separator>
-                                <MenuItem Name="mi_copyPath" Click="Mi_copyPath_Click">
-                                    <MenuItem.Header>
-                                        <StackPanel Orientation="Horizontal">
-                                            <fa:ImageAwesome Icon="Copy" Foreground="{DynamicResource mg.solid.100}" Height="12" Width="12" Margin="5,0" />
-                                            <TextBlock Text="Copy Path"></TextBlock>
-                                        </StackPanel>
-                                    </MenuItem.Header>
-                                </MenuItem>
-                                <MenuItem Name="mi_delete" Click="Mi_delete_ClickAsync">
-                                    <MenuItem.Header>
-                                        <StackPanel Orientation="Horizontal">
-                                            <fa:ImageAwesome Icon="Xing" Foreground="Red" Height="12" Width="12" Margin="5,0" />
-                                            <TextBlock Text="Delete..." Foreground="Red"></TextBlock>
-                                        </StackPanel>
-                                    </MenuItem.Header>
-                                </MenuItem>
-                                <Separator></Separator>
-                                <MenuItem Name="mi_selectItems" Click="Mi_selectItems_Click">
-                                    <MenuItem.Header>
-                                        <StackPanel Orientation="Horizontal">
-                                            <fa:ImageAwesome Icon="CircleThin" Foreground="{DynamicResource mg.solid.100}" Height="12" Width="12" Margin="5,0" />
-                                            <TextBlock Text="Select"></TextBlock>
-                                        </StackPanel>
-                                    </MenuItem.Header>
-                                </MenuItem>
-                                <MenuItem Name="mi_selectItemsChildren" Click="Mi_selectItemsChildren_Click">
-                                    <MenuItem.Header>
-                                        <StackPanel Orientation="Horizontal">
-                                            <fa:ImageAwesome Icon="CircleThin" Foreground="{DynamicResource mg.solid.100}" Height="12" Width="12" Margin="5,0" />
-                                            <TextBlock Text="Select All"></TextBlock>
-                                        </StackPanel>
-                                    </MenuItem.Header>
-                                </MenuItem>
-                                <MenuItem Name="mi_deselectItemsBin" Click="Mi_Deselect_Click"
+                                    <Separator></Separator>
+                                    <MenuItem Name="mi_copyPath" Click="Mi_copyPath_Click">
+                                        <MenuItem.Header>
+                                            <StackPanel Orientation="Horizontal">
+                                                <fa:ImageAwesome Icon="Copy" Foreground="{DynamicResource mg.solid.100}" Height="12" Width="12" Margin="5,0" />
+                                                <TextBlock Text="Copy Path"></TextBlock>
+                                            </StackPanel>
+                                        </MenuItem.Header>
+                                    </MenuItem>
+                                    <MenuItem Name="mi_delete" Click="Mi_delete_ClickAsync">
+                                        <MenuItem.Header>
+                                            <StackPanel Orientation="Horizontal">
+                                                <fa:ImageAwesome Icon="Xing" Foreground="Red" Height="12" Width="12" Margin="5,0" />
+                                                <TextBlock Text="Delete..." Foreground="Red"></TextBlock>
+                                            </StackPanel>
+                                        </MenuItem.Header>
+                                    </MenuItem>
+                                    <Separator></Separator>
+                                    <MenuItem Name="mi_selectItems" Click="Mi_selectItems_Click">
+                                        <MenuItem.Header>
+                                            <StackPanel Orientation="Horizontal">
+                                                <fa:ImageAwesome Icon="CircleThin" Foreground="{DynamicResource mg.solid.100}" Height="12" Width="12" Margin="5,0" />
+                                                <TextBlock Text="Select"></TextBlock>
+                                            </StackPanel>
+                                        </MenuItem.Header>
+                                    </MenuItem>
+                                    <MenuItem Name="mi_selectItemsChildren" Click="Mi_selectItemsChildren_Click">
+                                        <MenuItem.Header>
+                                            <StackPanel Orientation="Horizontal">
+                                                <fa:ImageAwesome Icon="CircleThin" Foreground="{DynamicResource mg.solid.100}" Height="12" Width="12" Margin="5,0" />
+                                                <TextBlock Text="Select All"></TextBlock>
+                                            </StackPanel>
+                                        </MenuItem.Header>
+                                    </MenuItem>
+                                    <MenuItem Name="mi_deselectItemsBin" Click="Mi_Deselect_Click"
                                           Visibility="{Binding Source={x:Reference rootControl}, 
                                                                Path=Model.HasSelected, 
                                                                Converter={StaticResource BoolToVisibilityConverter}}">
-                                    <MenuItem.Header>
-                                        <StackPanel Orientation="Horizontal">
-                                            <fa:ImageAwesome Icon="CircleThin" Foreground="{DynamicResource mg.solid.100}" Height="12" Width="12" Margin="5,0" />
-                                            <TextBlock Text="Deselect All"></TextBlock>
-                                        </StackPanel>
-                                    </MenuItem.Header>
-                                </MenuItem>
-                            </ContextMenu>
-                        </StackPanel.ContextMenu>
-                    </StackPanel>
-                </HierarchicalDataTemplate>
-                <HierarchicalDataTemplate DataType="{x:Type model:BookmarkModel}">
-                    <Button 
+                                        <MenuItem.Header>
+                                            <StackPanel Orientation="Horizontal">
+                                                <fa:ImageAwesome Icon="CircleThin" Foreground="{DynamicResource mg.solid.100}" Height="12" Width="12" Margin="5,0" />
+                                                <TextBlock Text="Deselect All"></TextBlock>
+                                            </StackPanel>
+                                        </MenuItem.Header>
+                                    </MenuItem>
+                                </ContextMenu>
+                            </StackPanel.ContextMenu>
+                        </StackPanel>
+                    </HierarchicalDataTemplate>
+                    <HierarchicalDataTemplate DataType="{x:Type model:BookmarkModel}">
+                        <Button 
                         Name="btn_BookmarkAction"
                         Padding="8"
                         Margin="0"
@@ -166,115 +166,116 @@
                         MouseLeave="Btn_BookmarkAction_MouseLeave"
                         MouseMove="Btn_BookmarkAction_MouseMove"
                         Click="Btn_BookmarkAction_Click">
-                        <Button.Content>
-                            <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Converter={StaticResource BookmarkCaptionConverter}}"></TextBlock>
-                        </Button.Content>
-                        <Button.BorderBrush>
-                            <MultiBinding Converter="{StaticResource BookmarkSelectedConverter}" ConverterParameter="Brush">
-                                <Binding ElementName="rootControl" Path="Model.SelectedBinItems" UpdateSourceTrigger="PropertyChanged"></Binding>
-                                <Binding ElementName="btn_BookmarkAction" Path="DataContext"></Binding>
-                            </MultiBinding>
-                        </Button.BorderBrush>
-                        <Button.ContextMenu>
-                            <ContextMenu FontSize="14">
-                                <MenuItem Name="mi_BookmarkDetails" Click="Mi_BookmarkDetails_Click">
-                                    <MenuItem.Header>
-                                        <StackPanel Orientation="Horizontal">
-                                            <fa:ImageAwesome Icon="FileText" Foreground="{DynamicResource mg.solid.100}" Height="12" Width="12" Margin="5,0" />
-                                            <TextBlock Text="Details..."></TextBlock>
-                                        </StackPanel>
-                                    </MenuItem.Header>
-                                </MenuItem>
-                                <MenuItem Name="mi_ExecuteBookmarkAction" Click="Mi_ExecuteBookmarkAction_Click">
-                                    <MenuItem.Header>
-                                        <StackPanel Orientation="Horizontal">
-                                            <fa:ImageAwesome Icon="Copy" Foreground="{DynamicResource mg.solid.100}" Height="12" Width="12" Margin="5,0" />
-                                            <TextBlock Text="Copy Content"></TextBlock>
-                                        </StackPanel>
-                                    </MenuItem.Header>
-                                </MenuItem>
-                                <MenuItem Name="mi_CopyAdditive" Click="Mi_CopyAdditive_Click">
-                                    <MenuItem.Header>
-                                        <StackPanel Orientation="Horizontal">
-                                            <fa:ImageAwesome Icon="Plus" Foreground="{DynamicResource mg.solid.100}" Height="12" Width="12" Margin="5,0" />
-                                            <TextBlock Text="Copy Add"></TextBlock>
-                                        </StackPanel>
-                                    </MenuItem.Header>
-                                </MenuItem>
-                                <MenuItem Name="mi_BookmarkDelete" Click="Mi_BookmarkDelete_ClickAsync">
-                                    <MenuItem.Header>
-                                        <StackPanel Orientation="Horizontal">
-                                            <fa:ImageAwesome Icon="Xing" Foreground="Red" Height="12" Width="12" Margin="5,0" />
-                                            <TextBlock Text="Delete..." Foreground="Red"></TextBlock>
-                                        </StackPanel>
-                                    </MenuItem.Header>
-                                </MenuItem>
-                                <Separator></Separator>
-                                <MenuItem Name="mi_Select" Click="Mi_Select_Click">
-                                    <MenuItem.Header>
-                                        <StackPanel Orientation="Horizontal">
-                                            <fa:ImageAwesome Icon="CircleThin" Foreground="{DynamicResource mg.solid.100}" Height="12" Width="12" Margin="5,0" />
-                                            <TextBlock Text="Select" Foreground="{DynamicResource mg.solid.100}"></TextBlock>
-                                        </StackPanel>
-                                    </MenuItem.Header>
-                                </MenuItem>
-                                <MenuItem Name="mi_SelectAdd" Click="Mi_SelectAdd_Click">
-                                    <MenuItem.Header>
-                                        <StackPanel Orientation="Horizontal">
-                                            <fa:ImageAwesome Icon="CircleThin" Foreground="{DynamicResource mg.solid.100}" Height="12" Width="12" Margin="5,0" />
-                                            <TextBlock Text="Select Add" Foreground="{DynamicResource mg.solid.100}"></TextBlock>
-                                        </StackPanel>
-                                    </MenuItem.Header>
-                                </MenuItem>
-                                <MenuItem Name="mi_Deselect" Click="Mi_Deselect_Click"
+                            <Button.Content>
+                                <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Converter={StaticResource BookmarkCaptionConverter}}"></TextBlock>
+                            </Button.Content>
+                            <Button.BorderBrush>
+                                <MultiBinding Converter="{StaticResource BookmarkSelectedConverter}" ConverterParameter="Brush">
+                                    <Binding ElementName="rootControl" Path="Model.SelectedBinItems" UpdateSourceTrigger="PropertyChanged"></Binding>
+                                    <Binding ElementName="btn_BookmarkAction" Path="DataContext"></Binding>
+                                </MultiBinding>
+                            </Button.BorderBrush>
+                            <Button.ContextMenu>
+                                <ContextMenu FontSize="14">
+                                    <MenuItem Name="mi_BookmarkDetails" Click="Mi_BookmarkDetails_Click">
+                                        <MenuItem.Header>
+                                            <StackPanel Orientation="Horizontal">
+                                                <fa:ImageAwesome Icon="FileText" Foreground="{DynamicResource mg.solid.100}" Height="12" Width="12" Margin="5,0" />
+                                                <TextBlock Text="Details..."></TextBlock>
+                                            </StackPanel>
+                                        </MenuItem.Header>
+                                    </MenuItem>
+                                    <MenuItem Name="mi_ExecuteBookmarkAction" Click="Mi_ExecuteBookmarkAction_Click">
+                                        <MenuItem.Header>
+                                            <StackPanel Orientation="Horizontal">
+                                                <fa:ImageAwesome Icon="Copy" Foreground="{DynamicResource mg.solid.100}" Height="12" Width="12" Margin="5,0" />
+                                                <TextBlock Text="Copy Content"></TextBlock>
+                                            </StackPanel>
+                                        </MenuItem.Header>
+                                    </MenuItem>
+                                    <MenuItem Name="mi_CopyAdditive" Click="Mi_CopyAdditive_Click">
+                                        <MenuItem.Header>
+                                            <StackPanel Orientation="Horizontal">
+                                                <fa:ImageAwesome Icon="Plus" Foreground="{DynamicResource mg.solid.100}" Height="12" Width="12" Margin="5,0" />
+                                                <TextBlock Text="Copy Add"></TextBlock>
+                                            </StackPanel>
+                                        </MenuItem.Header>
+                                    </MenuItem>
+                                    <MenuItem Name="mi_BookmarkDelete" Click="Mi_BookmarkDelete_ClickAsync">
+                                        <MenuItem.Header>
+                                            <StackPanel Orientation="Horizontal">
+                                                <fa:ImageAwesome Icon="Xing" Foreground="Red" Height="12" Width="12" Margin="5,0" />
+                                                <TextBlock Text="Delete..." Foreground="Red"></TextBlock>
+                                            </StackPanel>
+                                        </MenuItem.Header>
+                                    </MenuItem>
+                                    <Separator></Separator>
+                                    <MenuItem Name="mi_Select" Click="Mi_Select_Click">
+                                        <MenuItem.Header>
+                                            <StackPanel Orientation="Horizontal">
+                                                <fa:ImageAwesome Icon="CircleThin" Foreground="{DynamicResource mg.solid.100}" Height="12" Width="12" Margin="5,0" />
+                                                <TextBlock Text="Select" Foreground="{DynamicResource mg.solid.100}"></TextBlock>
+                                            </StackPanel>
+                                        </MenuItem.Header>
+                                    </MenuItem>
+                                    <MenuItem Name="mi_SelectAdd" Click="Mi_SelectAdd_Click">
+                                        <MenuItem.Header>
+                                            <StackPanel Orientation="Horizontal">
+                                                <fa:ImageAwesome Icon="CircleThin" Foreground="{DynamicResource mg.solid.100}" Height="12" Width="12" Margin="5,0" />
+                                                <TextBlock Text="Select Add" Foreground="{DynamicResource mg.solid.100}"></TextBlock>
+                                            </StackPanel>
+                                        </MenuItem.Header>
+                                    </MenuItem>
+                                    <MenuItem Name="mi_Deselect" Click="Mi_Deselect_Click"
                                           Visibility="{Binding Source={x:Reference rootControl}, 
                                                                Path=Model.HasSelected, 
                                                                Converter={StaticResource BoolToVisibilityConverter}}">
-                                    <MenuItem.Header>
-                                        <StackPanel Orientation="Horizontal">
-                                            <fa:ImageAwesome Icon="CircleThin" Foreground="{DynamicResource mg.solid.100}" Height="12" Width="12" Margin="5,0" />
-                                            <TextBlock Text="Deselect All" Foreground="{DynamicResource mg.solid.100}"></TextBlock>
-                                        </StackPanel>
-                                    </MenuItem.Header>
-                                </MenuItem>
-                                <Separator></Separator>
-                                <MenuItem Name="mi_GoogleSearch" Click="QueryNet" CommandParameter="https://www.google.com/search?q=">
-                                    <MenuItem.Header>
-                                        <StackPanel Orientation="Horizontal">
-                                            <fa:ImageAwesome Icon="Google" Foreground="{DynamicResource mg.solid.100}" Height="12" Width="12" Margin="5,0" />
-                                            <TextBlock Text="Google..."></TextBlock>
-                                        </StackPanel>
-                                    </MenuItem.Header>
-                                </MenuItem>
-                                <MenuItem Name="mi_YoutubeSearch" Click="QueryNet" CommandParameter="https://www.youtube.com/results?search_query=">
-                                    <MenuItem.Header>
-                                        <StackPanel Orientation="Horizontal">
-                                            <fa:ImageAwesome Icon="YoutubePlay" Foreground="{DynamicResource mg.solid.100}" Height="12" Width="12" Margin="5,0" />
-                                            <TextBlock Text="Youtube..."></TextBlock>
-                                        </StackPanel>
-                                    </MenuItem.Header>
-                                </MenuItem>
-                                <MenuItem Name="mi_WikipediaSearch" Click="QueryNet" CommandParameter="https://en.wikipedia.org/w/index.php?search=">
-                                    <MenuItem.Header>
-                                        <StackPanel Orientation="Horizontal">
-                                            <fa:ImageAwesome Icon="WikipediaW" Foreground="{DynamicResource mg.solid.100}" Height="12" Width="12" Margin="5,0" />
-                                            <TextBlock Text="Wikipedia..."></TextBlock>
-                                        </StackPanel>
-                                    </MenuItem.Header>
-                                </MenuItem>
-                                <MenuItem Name="mi_LetterboxdSearch" Click="QueryNet" CommandParameter="https://letterboxd.com/search/">
-                                    <MenuItem.Header>
-                                        <StackPanel Orientation="Horizontal">
-                                            <fa:ImageAwesome Icon="FileMovieOutline" Foreground="{DynamicResource mg.solid.100}" Height="12" Width="12" Margin="5,0" />
-                                            <TextBlock Text="Letterboxd..."></TextBlock>
-                                        </StackPanel>
-                                    </MenuItem.Header>
-                                </MenuItem>
-                            </ContextMenu>
-                        </Button.ContextMenu>
-                    </Button>
-                </HierarchicalDataTemplate>
-            </TreeView.Resources>
-        </TreeView>
-    </Grid>
+                                        <MenuItem.Header>
+                                            <StackPanel Orientation="Horizontal">
+                                                <fa:ImageAwesome Icon="CircleThin" Foreground="{DynamicResource mg.solid.100}" Height="12" Width="12" Margin="5,0" />
+                                                <TextBlock Text="Deselect All" Foreground="{DynamicResource mg.solid.100}"></TextBlock>
+                                            </StackPanel>
+                                        </MenuItem.Header>
+                                    </MenuItem>
+                                    <Separator></Separator>
+                                    <MenuItem Name="mi_GoogleSearch" Click="QueryNet" CommandParameter="https://www.google.com/search?q=">
+                                        <MenuItem.Header>
+                                            <StackPanel Orientation="Horizontal">
+                                                <fa:ImageAwesome Icon="Google" Foreground="{DynamicResource mg.solid.100}" Height="12" Width="12" Margin="5,0" />
+                                                <TextBlock Text="Google..."></TextBlock>
+                                            </StackPanel>
+                                        </MenuItem.Header>
+                                    </MenuItem>
+                                    <MenuItem Name="mi_YoutubeSearch" Click="QueryNet" CommandParameter="https://www.youtube.com/results?search_query=">
+                                        <MenuItem.Header>
+                                            <StackPanel Orientation="Horizontal">
+                                                <fa:ImageAwesome Icon="YoutubePlay" Foreground="{DynamicResource mg.solid.100}" Height="12" Width="12" Margin="5,0" />
+                                                <TextBlock Text="Youtube..."></TextBlock>
+                                            </StackPanel>
+                                        </MenuItem.Header>
+                                    </MenuItem>
+                                    <MenuItem Name="mi_WikipediaSearch" Click="QueryNet" CommandParameter="https://en.wikipedia.org/w/index.php?search=">
+                                        <MenuItem.Header>
+                                            <StackPanel Orientation="Horizontal">
+                                                <fa:ImageAwesome Icon="WikipediaW" Foreground="{DynamicResource mg.solid.100}" Height="12" Width="12" Margin="5,0" />
+                                                <TextBlock Text="Wikipedia..."></TextBlock>
+                                            </StackPanel>
+                                        </MenuItem.Header>
+                                    </MenuItem>
+                                    <MenuItem Name="mi_LetterboxdSearch" Click="QueryNet" CommandParameter="https://letterboxd.com/search/">
+                                        <MenuItem.Header>
+                                            <StackPanel Orientation="Horizontal">
+                                                <fa:ImageAwesome Icon="FileMovieOutline" Foreground="{DynamicResource mg.solid.100}" Height="12" Width="12" Margin="5,0" />
+                                                <TextBlock Text="Letterboxd..."></TextBlock>
+                                            </StackPanel>
+                                        </MenuItem.Header>
+                                    </MenuItem>
+                                </ContextMenu>
+                            </Button.ContextMenu>
+                        </Button>
+                    </HierarchicalDataTemplate>
+                </TreeView.Resources>
+            </TreeView>
+        </Grid>
+    </mah:MetroContentControl>
 </UserControl>

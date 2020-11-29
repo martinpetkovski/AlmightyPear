@@ -1,21 +1,12 @@
 ﻿using AlmightyPear.Controller;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace AlmightyPear.Controls
 {
@@ -70,7 +61,7 @@ namespace AlmightyPear.Controls
         public static readonly DependencyProperty ContentTextSizeProperty =
             DependencyProperty.Register(
             "ContentTextSize", typeof(int),
-            typeof(BookmarksViewControl), 
+            typeof(BookmarksViewControl),
             new PropertyMetadata(10)
         );
 
@@ -103,10 +94,16 @@ namespace AlmightyPear.Controls
             }
         }
 
+        private static bool isExplicitRefresh = false;
         private void FinishedTyping()
         {
-            
-            Model.DelayedText = tb_filter.Text;
+            if (!isExplicitRefresh)
+            {
+                Model.DelayedText = tb_filter.Text;
+                ctrl_BookmarksTreeView.ExecAnim();
+            }
+
+            isExplicitRefresh = false;
         }
 
         private void Btn_clearFilter_Click(object sender, RoutedEventArgs e)
@@ -128,6 +125,17 @@ namespace AlmightyPear.Controls
             {
                 // Ignore the exception
             }
+        }
+
+        private void Ctrl_BookmarksTreeView_ExplicitFilter(string filter)
+        {
+            tb_filter.Clear();
+            tb_filter.Text = filter;
+            isExplicitRefresh = true;
+            Model.DelayedText = filter;
+            ctrl_BookmarksTreeView.ExecAnim();
+
+            Env.ExplicitFocus(tb_filter);
         }
     }
 }

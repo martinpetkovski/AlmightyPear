@@ -125,18 +125,6 @@ namespace AlmightyPear.Controls
             set { SetValue(FilterProperty, value); }
         }
 
-        public static readonly DependencyProperty FilterTextBoxProperty =
-            DependencyProperty.Register(
-            "FilterTextBox", typeof(TextBox),
-            typeof(BookmarksTreeViewControl)
-        );
-
-        public TextBox FilterTextBox
-        {
-            get { return (TextBox)GetValue(FilterTextBoxProperty); }
-            set { SetValue(FilterTextBoxProperty, value); }
-        }
-
         public BookmarksTreeViewControl()
         {
             InitializeComponent();
@@ -336,25 +324,15 @@ namespace AlmightyPear.Controls
             }
         }
 
+        public delegate void ExplicitFilterHandler(string filter);
+        public event ExplicitFilterHandler ExplicitFilter;
+
         private void Rt_bin_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             IBinItem sourceBin = (IBinItem)((StackPanel)sender).DataContext;
             string sourcePath = sourceBin.Path;
 
-            if (FilterTextBox != null)
-            {
-                FilterTextBox.Clear();
-                FilterTextBox.Text = "-p " + sourcePath;
-
-                Env.ExplicitFocus(FilterTextBox);
-            }
-        }
-
-        private void ScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
-        {
-            //ScrollViewer scv = (ScrollViewer)sender;
-            //scv.ScrollToVerticalOffset(scv.VerticalOffset - e.Delta / 10);
-            //e.Handled = true;
+            ExplicitFilter?.Invoke("-p " + sourcePath);
         }
 
         private void QueryNet(object sender, RoutedEventArgs e)
@@ -484,6 +462,10 @@ namespace AlmightyPear.Controls
             IBinItem sourceBin = (IBinItem)((MenuItem)sender).DataContext;
             string sourcePath = sourceBin.Path;
             MoveSelected(sourcePath);
+        }
+        public void ExecAnim()
+        {
+            if(Env.UserData.CustomModel.AnimationsLevel == 2) mah_contentControl.Reload();
         }
     }
 }

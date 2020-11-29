@@ -37,7 +37,6 @@ namespace AlmightyPear.Controller
             var authProvider = new FirebaseAuthProvider(new Firebase.Auth.FirebaseConfig(_apiKey));
             FirebaseAuthLink auth;
             auth = await authProvider.SignInWithEmailAndPasswordAsync(email, password);
-            auth.ExpiresIn = 50000;
 
             if (auth.User.LocalId != "")
             {
@@ -55,7 +54,7 @@ namespace AlmightyPear.Controller
 
         public async Task<bool> AuthenticateUserAsync()
         {
-            var authProvider = new FirebaseAuthProvider(new Firebase.Auth.FirebaseConfig(_apiKey));
+            var authProvider = new FirebaseAuthProvider(new FirebaseConfig(_apiKey));
             var link = await authProvider.GetUserAsync(_token);
 
             if (link.Email != "")
@@ -97,12 +96,28 @@ namespace AlmightyPear.Controller
                 return "Error changing password.";
         }
 
-        public async void UpdateProfileAsync(string displayName, string photoUrl)
+        public async void UpdateProfileAsync(string displayName, string photoUrl) // needs validation
         {
             var authProvider = new FirebaseAuthProvider(new Firebase.Auth.FirebaseConfig(_apiKey));
             FirebaseAuthLink link = await authProvider.UpdateProfileAsync(_token, displayName, photoUrl);
             Env.UserData.DisplayName = link.User.DisplayName;
             Env.UserData.PhotoUrl = link.User.PhotoUrl;
+
+            FirebaseResponse response = await _client.UpdateAsync("profile/" + Env.UserData.ID, Env.UserData.CustomModel);
+
+        }
+
+        public async Task LoadCustomProfileDataAsync() // needs validation
+        {
+            FirebaseResponse response = await _client.GetAsync("profile/" + Env.UserData.ID);
+            if (response.StatusCode != System.Net.HttpStatusCode.OK)
+            {
+                await _client.SetAsync("profile/" + Env.UserData.ID, Env.UserData.CustomModel);
+            }
+            else
+            {
+                Env.UserData.CustomModel = response.ResultAs<UserModel.CustomUserModel>();
+            }
         }
 
         public void LogOutUser()
@@ -133,7 +148,7 @@ namespace AlmightyPear.Controller
             if ((await _client.GetAsync("themes/" + theme.Name)).StatusCode != System.Net.HttpStatusCode.OK)
             {
                 SetResponse response = await _client.SetAsync("themes/" + theme.Name, theme);
-                if(response.StatusCode == System.Net.HttpStatusCode.OK)
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 {
                     Env.UserData.AddTheme(theme);
                 }
@@ -200,9 +215,19 @@ namespace AlmightyPear.Controller
             }
         }
 
+        public string GetOrCreateTokenPath()
+        {
+            string dir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Checkmeg";
+            if (!Directory.Exists(dir))
+            {
+                Directory.CreateDirectory(dir);
+            }
+            return dir + "\\token.apf";
+        }
+
         public bool ReadToken()
         {
-            string path = AppDomain.CurrentDomain.BaseDirectory + "sgnittes.apf";
+            string path = GetOrCreateTokenPath();
             if (File.Exists(path))
             {
                 BinaryReader reader = new BinaryReader(File.OpenRead(path));
@@ -218,7 +243,7 @@ namespace AlmightyPear.Controller
 
         public void DeleteToken()
         {
-            string path = AppDomain.CurrentDomain.BaseDirectory + "sgnittes.apf";
+            string path = GetOrCreateTokenPath();
             if (File.Exists(path))
             {
                 File.Delete(path);
@@ -227,7 +252,7 @@ namespace AlmightyPear.Controller
 
         public void SaveToken()
         {
-            string path = AppDomain.CurrentDomain.BaseDirectory + "sgnittes.apf";
+            string path = GetOrCreateTokenPath();
             BinaryWriter writer = new BinaryWriter(File.Open(path, FileMode.Create));
             writer.Write(_token);
             writer.Close();

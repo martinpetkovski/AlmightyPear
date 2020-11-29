@@ -1,5 +1,6 @@
 ﻿using AlmightyPear.Controller;
 using AlmightyPear.Model;
+using AlmightyPear.Utils;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -178,6 +179,75 @@ namespace AlmightyPear.Converters
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
+        }
+    }
+    class AnimationValueToNameConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if(value is double)
+            {
+                double animValue = (double)value;
+                if (animValue == 0)
+                    return "off";
+                else if (animValue == 1)
+                    return "non-distracting";
+                else if (animValue == 2)
+                    return "beautiful";
+            }
+            return "off the scale";
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    class AnimationLevelToBoolenConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if(value is int && parameter is string)
+            {
+                int level = (int)value;
+                int expectedLevel = int.Parse((string)parameter);
+                return level >= expectedLevel;
+            }
+            return false;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    class ThemeNameToThemeReferenceConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is string)
+            {
+                string themeName = (string)value;
+
+                if(Env.UserData.Themes.ContainsKey(themeName))
+                    return Env.UserData.Themes[themeName];
+            }
+
+            if (Env.UserData.ThemesList.Count > 0)
+                return Env.UserData.ThemesList[0];
+            else return null;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if(value is ThemeManager.Theme)
+            {
+                return ((ThemeManager.Theme)value).Name;
+            }
+
+            return "BasicBlack";
         }
     }
 }

@@ -82,5 +82,25 @@ namespace AlmightyPear.Controls
         {
             InputEvent?.Invoke(sender, e);
         }
+
+        private void Txt_selection_TextChanged(object sender, EventArgs e)
+        {
+            if (txt_selection.Text.Length > Env.CharacterLimit)
+            {
+                txt_selection.Document.Text = txt_selection.Text.Substring(0, Env.CharacterLimit);
+                txt_selection.CaretOffset = Env.CharacterLimit;
+            }
+
+            tb_characterLimit.Text = txt_selection.Text.Length + "/" + Env.CharacterLimit;
+        }
+
+        private void Tb_category_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (tb_category.Text.Length > Env.BinPathCharacterLimit)
+            {
+                tb_category.Text = tb_category.Text.Substring(0, Env.BinPathCharacterLimit);
+                tb_category.CaretIndex = Env.BinPathCharacterLimit;
+            }
+        }
     }
 }

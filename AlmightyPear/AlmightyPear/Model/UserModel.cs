@@ -8,6 +8,51 @@ namespace AlmightyPear.Model
 {
     class UserModel : INotifyPropertyChanged
     {
+        public class CustomUserModel : INotifyPropertyChanged
+        {
+            public CustomUserModel()
+            {
+                Theme = "BasicDark";
+                AnimationsLevel = 2;
+            }
+
+            private string _theme;
+            public string Theme
+            {
+                get
+                {
+                    return _theme;
+                }
+                set
+                {
+                    _theme = value;
+                    ThemeManager.SetTheme(value);
+                    OnPropertyChanged();
+                }
+            }
+
+            private int _animationsLevel;
+            public int AnimationsLevel
+            {
+                get
+                {
+                    return _animationsLevel;
+                }
+                set
+                {
+                    _animationsLevel = value;
+                    OnPropertyChanged();
+                }
+            }
+
+            public event PropertyChangedEventHandler PropertyChanged;
+            protected void OnPropertyChanged([CallerMemberName] string name = null)
+            {
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+            }
+        }
+
+
         public void Initialize(string id, string email, string displayName, string photoUrl)
         {
             Email = email;
@@ -25,6 +70,8 @@ namespace AlmightyPear.Model
                 Bookmarks.Clear();
                 Bookmarks = null;
             }
+            CustomModel.Theme = "BasicDark";
+            CustomModel.AnimationsLevel = 2;
         }
 
         private string _email;
@@ -91,6 +138,23 @@ namespace AlmightyPear.Model
                 return ID != "";
             }
         }
+
+        private CustomUserModel _customModel;
+        public CustomUserModel CustomModel
+        {
+            get
+            {
+                if (_customModel == null)
+                    _customModel = new CustomUserModel();
+                return _customModel;
+            }
+            set
+            {
+                _customModel = value;
+                OnPropertyChanged();
+            }
+        }
+
 
         private Dictionary<string, BookmarkModel> _bookmarks;
         public Dictionary<string, BookmarkModel> Bookmarks

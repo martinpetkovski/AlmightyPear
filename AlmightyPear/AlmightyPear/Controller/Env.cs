@@ -14,6 +14,8 @@ namespace AlmightyPear.Controller
         // global
         public static char PathSeparator = ':';
         public static string TempBinPath = "TEMP";
+        public static int CharacterLimit = 5000;
+        public static int BinPathCharacterLimit = 100;
         // data
         public static EnvModel EnvModel { get; private set; }
         public static MainWindowModel MainWindowData { get; private set; }

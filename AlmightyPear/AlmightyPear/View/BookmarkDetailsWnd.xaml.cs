@@ -100,5 +100,25 @@ namespace AlmightyPear.View
                 Accept();
             }
         }
+
+        private void Tb_content_TextChanged(object sender, EventArgs e)
+        {
+            if (tb_content.Text.Length > Env.CharacterLimit)
+            {
+                tb_content.Document.Text = tb_content.Text.Substring(0, Env.CharacterLimit);
+                tb_content.CaretOffset = Env.CharacterLimit;
+            }
+
+            tb_characterLimit.Text = tb_content.Text.Length + "/" + Env.CharacterLimit;
+        }
+
+        private void Tb_path_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (tb_path.Text.Length > Env.BinPathCharacterLimit)
+            {
+                tb_path.Text = tb_path.Text.Substring(0, Env.BinPathCharacterLimit);
+                tb_path.CaretIndex = Env.BinPathCharacterLimit;
+            }
+        }
     }
 }

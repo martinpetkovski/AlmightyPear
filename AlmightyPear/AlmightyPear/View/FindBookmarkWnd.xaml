@@ -26,8 +26,15 @@
     <Window.Resources>
         <ResourceDictionary>
             <converters:BinDepthListConverter x:Key="BinDepthListConverter"/>
+            <converters:AnimationLevelToBoolenConverter x:Key="AnimationLevelToBoolenConverter"/>
         </ResourceDictionary>
     </Window.Resources>
+    <mah:MetroWindow.WindowTransitionsEnabled>
+        <Binding Source="{StaticResource Env}" 
+                 Path="UserData.CustomModel.AnimationsLevel" 
+                 Converter="{StaticResource AnimationLevelToBoolenConverter}"
+                 ConverterParameter="1"/>
+    </mah:MetroWindow.WindowTransitionsEnabled>
     <Window.DataContext>
         <StaticResourceExtension ResourceKey="Env"/>
     </Window.DataContext>

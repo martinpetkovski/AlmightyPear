@@ -8,14 +8,10 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
-using System.Windows.Media;
 using System.Windows.Threading;
-using XamlCSS.WPF;
-using static AlmightyPear.Utils.ThemeManager;
 using MessageBox = AlmightyPear.View.MessageBox;
 
 namespace AlmightyPear
@@ -106,25 +102,32 @@ namespace AlmightyPear
             }));
         }
 
+        public async Task OnSuccessfulSignInAsync()
+        {
+            await Env.FirebaseController.LoadCustomProfileDataAsync();
+            ThemeManager.SetTheme(Env.UserData.CustomModel.Theme);
+            Env.MainWindowData.WindowState = Model.MainWindowModel.EMainWindowState.BookmarksView;
+        }
+
         public async Task ExecSignInAsync()
         {
             string outstr = await Env.FirebaseController.SignInUserAsync();
-            if(outstr != "")
+            if (outstr != "")
             {
                 Env.MainWindowData.WindowState = MainWindowModel.EMainWindowState.SignIn;
             }
             else
             {
-                Env.MainWindowData.WindowState = MainWindowModel.EMainWindowState.BookmarksView;
+                await OnSuccessfulSignInAsync();
             }
-            mah_contentControl.Reload();
+
+            if (Env.UserData.CustomModel.AnimationsLevel == 2) mah_contentControl.Reload();
         }
 
         private async Task InitializeThemesAsync()
         {
-            await ThemeManager.CreateBasicThemesAsync();
+            //await ThemeManager.CreateBasicThemesAsync();
             await Env.FirebaseController.GetThemesAsync();
-            ThemeManager.SetTheme("BasicDark");
         }
 
         public async Task InitializeAsync()
@@ -134,7 +137,7 @@ namespace AlmightyPear
             Style = (Style)FindResource(typeof(Window));
             await InitializeThemesAsync();
             InitializeComponent();
-            
+
             MinimizeToTray.Enable(this);
 
             HotKeyManager.RegisterHotKey(Keys.None, KeyModifiers.Windows | KeyModifiers.Control);
@@ -145,7 +148,8 @@ namespace AlmightyPear
             ChildWindows[typeof(FindBookmarkWnd)] = new FindBookmarkWnd();
 
             await ExecSignInAsync();
-            
+
+
         }
 
         public MainWindow()
@@ -205,7 +209,6 @@ namespace AlmightyPear
         {
             Env.FirebaseController.LogOutUser();
             Env.MainWindowData.WindowState = MainWindowModel.EMainWindowState.SignIn;
-            ThemeManager.SetTheme("BasicDark");
         }
 
         public async void Mi_FullReload_ClickAsync(object sender, RoutedEventArgs e)
@@ -227,7 +230,7 @@ namespace AlmightyPear
         {
             if (mah_contentControl != null)
             {
-                mah_contentControl.Reload();
+                if (Env.UserData.CustomModel.AnimationsLevel == 2) mah_contentControl.Reload();
             }
         }
     }

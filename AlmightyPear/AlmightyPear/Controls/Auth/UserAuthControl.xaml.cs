@@ -1,4 +1,5 @@
 ﻿using AlmightyPear.Controller;
+using AlmightyPear.Utils;
 using Firebase.Auth;
 using System.Windows;
 using System.Windows.Controls;
@@ -31,7 +32,7 @@ namespace AlmightyPear.Controls
             }
             else
             {
-                Env.MainWindowData.WindowState = Model.MainWindowModel.EMainWindowState.BookmarksView;
+                await Env.MainWindow.OnSuccessfulSignInAsync();
             }
         }
 
@@ -43,11 +44,6 @@ namespace AlmightyPear.Controls
         private void Tb_password_KeyDown(object sender, KeyEventArgs e)
         {
             txt_messagebox.Text = "";
-        }
-
-        private void Btn_register_Click(object sender, RoutedEventArgs e)
-        {
-            Env.MainWindowData.WindowState = Model.MainWindowModel.EMainWindowState.Register;
         }
     }
 }

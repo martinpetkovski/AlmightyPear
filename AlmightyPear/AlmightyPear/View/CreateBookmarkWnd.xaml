@@ -7,6 +7,7 @@
         xmlns:local="clr-namespace:AlmightyPear.View"
         xmlns:controller="clr-namespace:AlmightyPear.Controller"
         xmlns:controls="clr-namespace:AlmightyPear.Controls"
+        xmlns:converters="clr-namespace:AlmightyPear.Converters"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:behaviors="clr-namespace:WPFTextBoxAutoComplete;assembly=WPFTextBoxAutoComplete"
         Title="{Binding Path=BinData.BookmarksViewCaption}" 
@@ -23,6 +24,17 @@
     <Window.DataContext>
         <StaticResourceExtension ResourceKey="Env"/>
     </Window.DataContext>
+    <Window.Resources>
+        <ResourceDictionary>
+            <converters:AnimationLevelToBoolenConverter x:Key="AnimationLevelToBoolenConverter"/>
+        </ResourceDictionary>
+    </Window.Resources>
+    <mah:MetroWindow.WindowTransitionsEnabled>
+        <Binding Source="{StaticResource Env}" 
+                 Path="UserData.CustomModel.AnimationsLevel" 
+                 Converter="{StaticResource AnimationLevelToBoolenConverter}"
+                 ConverterParameter="1"/>
+    </mah:MetroWindow.WindowTransitionsEnabled>
     <mah:MetroContentControl Name="mah_contentControl">
         <controls:BookmarkCreateControl 
             x:Name="ctrl_bookmarkCreate" 

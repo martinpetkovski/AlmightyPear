@@ -17,14 +17,22 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Window.Resources>
         <ResourceDictionary>
+            <converters:AnimationLevelToBoolenConverter x:Key="AnimationLevelToBoolenConverter"/>
             <converters:UnixTimeConverter x:Key="UnixTimeConverter"/>
         </ResourceDictionary>
     </Window.Resources>
+    <mah:MetroWindow.WindowTransitionsEnabled>
+        <Binding Source="{StaticResource Env}" 
+                 Path="UserData.CustomModel.AnimationsLevel" 
+                 Converter="{StaticResource AnimationLevelToBoolenConverter}"
+                 ConverterParameter="1"/>
+    </mah:MetroWindow.WindowTransitionsEnabled>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
@@ -45,6 +53,7 @@
                 VerticalAlignment="Center"
                 Name="tb_path"
                 KeyDown="Tb_path_KeyDown"
+                TextChanged="Tb_path_TextChanged"
                 Text="{Binding ElementName=rootControl, Path=Bookmark.Path, Mode=OneWay}"></TextBox>
             
             <TextBlock 
@@ -80,8 +89,13 @@
             ShowLineNumbers="True"
             LineNumbersForeground="#555"
             KeyDown="Tb_content_KeyDown"
+            TextChanged="Tb_content_TextChanged"
             ></avalonEdit:TextEditor>
-        <StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Right" Margin="5">
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Left">
+            <TextBlock Text="Character Limit: "></TextBlock>
+            <TextBlock Name="tb_characterLimit"></TextBlock>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Grid.Row="4" HorizontalAlignment="Right" Margin="5">
             <Button Padding="10" Margin="0,0,10,0" Name="btn_cancel" Click="Btn_cancel_Click" BorderBrush="#333">Cancel</Button>
             <Button Padding="10" Name="btn_accept" Click="Btn_accept_Click" BorderBrush="#333">Accept</Button>
         </StackPanel>

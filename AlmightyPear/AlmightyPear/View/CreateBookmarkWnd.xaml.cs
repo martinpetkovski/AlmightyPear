@@ -65,7 +65,7 @@ namespace AlmightyPear.View
             Left = finalX;
             Top = finalY;
 
-            mah_contentControl.Reload();
+            if (Env.UserData.CustomModel.AnimationsLevel == 2)  mah_contentControl.Reload();
             Show();
             Activate();
         }

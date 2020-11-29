@@ -53,9 +53,22 @@ namespace AlmightyPear.Controls
             Env.MainWindow.Mi_LogOut_Click(sender, e);
         }
 
-        private void Cb_themes_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ThemeManager.SetTheme((ThemeManager.Theme)(e.AddedItems[0]));
+            if(Env.UserData.CustomModel.AnimationsLevel >= 1)
+            {
+                mah_bookmarksViewContentControl.TransitionsEnabled = true;
+                mah_createBookmarkContentControl.TransitionsEnabled = true;
+            }
+            else
+            {
+                mah_bookmarksViewContentControl.TransitionsEnabled = false;
+                mah_createBookmarkContentControl.TransitionsEnabled = false;
+            }
+
+            mah_bookmarksViewContentControl.Reload();
+            mah_createBookmarkContentControl.Reload();
+
         }
     }
 }

@@ -20,8 +20,15 @@
     <mah:MetroWindow.Resources>
         <ResourceDictionary>
             <converters:IsLoggedInToStateConverter x:Key="IsLoggedInToStateConverter"/>
+            <converters:AnimationLevelToBoolenConverter x:Key="AnimationLevelToBoolenConverter"/>
         </ResourceDictionary>
     </mah:MetroWindow.Resources>
+    <mah:MetroWindow.WindowTransitionsEnabled>
+        <Binding Source="{StaticResource Env}" 
+                 Path="UserData.CustomModel.AnimationsLevel" 
+                 Converter="{StaticResource AnimationLevelToBoolenConverter}"
+                 ConverterParameter="1"/>
+    </mah:MetroWindow.WindowTransitionsEnabled>
     <mah:MetroWindow.LeftWindowCommands>
         <mah:WindowCommands>
             <Menu Grid.Column="2" Foreground="White" IsEnabled="{Binding Source={StaticResource Env}, Path=UserData.IsLoggedIn, Converter={StaticResource IsLoggedInToStateConverter}}">

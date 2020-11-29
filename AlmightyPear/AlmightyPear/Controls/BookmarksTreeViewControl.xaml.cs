@@ -5,19 +5,17 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Threading;
 
 namespace AlmightyPear.Controls
 {
-    
+
 
     public partial class BookmarksTreeViewControl : UserControl
     {
@@ -227,10 +225,10 @@ namespace AlmightyPear.Controls
 
         private async void Mi_delete_ClickAsync(object sender, RoutedEventArgs e)
         {
-            int result = await View.MessageBox.FireAsync("Delete Bin", 
+            int result = await View.MessageBox.FireAsync("Delete Bin",
                 "You are about to delete this bin along with all containing bookmarks. " +
                 "\nThis action is irreversible. " +
-                "\nAre you sure you want to continue?", 
+                "\nAre you sure you want to continue?",
                 new List<string>() { "Yes", "No" });
             if (result == 0)
             {
@@ -307,7 +305,7 @@ namespace AlmightyPear.Controls
                 "Delete Bookmark",
                 "You are about to delete this bookmark. " +
                 "\nThis action is irreversible. " +
-                "\nAre you sure you want to continue?", 
+                "\nAre you sure you want to continue?",
                 new List<string>() { "Yes", "No" });
 
             if (result == 0)
@@ -343,27 +341,20 @@ namespace AlmightyPear.Controls
             IBinItem sourceBin = (IBinItem)((StackPanel)sender).DataContext;
             string sourcePath = sourceBin.Path;
 
-            if (Model.HasSelected)
+            if (FilterTextBox != null)
             {
-                MoveSelected(sourcePath);
-            }
-            else
-            {
-                if (FilterTextBox != null)
-                {
-                    FilterTextBox.Clear();
-                    FilterTextBox.Text = "-p " + sourcePath;
+                FilterTextBox.Clear();
+                FilterTextBox.Text = "-p " + sourcePath;
 
-                    Env.ExplicitFocus(FilterTextBox);
-                }
+                Env.ExplicitFocus(FilterTextBox);
             }
         }
 
         private void ScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
-            ScrollViewer scv = (ScrollViewer)sender;
-            scv.ScrollToVerticalOffset(scv.VerticalOffset - e.Delta / 10);
-            e.Handled = true;
+            //ScrollViewer scv = (ScrollViewer)sender;
+            //scv.ScrollToVerticalOffset(scv.VerticalOffset - e.Delta / 10);
+            //e.Handled = true;
         }
 
         private void QueryNet(object sender, RoutedEventArgs e)
@@ -462,7 +453,7 @@ namespace AlmightyPear.Controls
 
         private void Btn_BookmarkAction_MouseMove(object sender, MouseEventArgs e)
         {
-            if(imagePreview != null)
+            if (imagePreview != null)
             {
                 Point pos = GetMousePosition();
                 imagePreview.Top = pos.Y + 10;

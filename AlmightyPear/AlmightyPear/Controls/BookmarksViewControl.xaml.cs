@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -23,8 +24,23 @@ namespace AlmightyPear.Controls
     /// </summary>
     public partial class BookmarksViewControl : UserControl
     {
-        protected class BookmarksViewModel : INotifyPropertyChanged
+        public class BookmarksViewModel : INotifyPropertyChanged
         {
+            private string _delayedText;
+            public string DelayedText
+            {
+                get
+                {
+                    return _delayedText;
+                }
+
+                set
+                {
+                    _delayedText = value;
+                    OnPropertyChanged();
+                }
+            }
+
             public event PropertyChangedEventHandler PropertyChanged;
             protected void OnPropertyChanged([CallerMemberName] string name = null)
             {
@@ -67,8 +83,12 @@ namespace AlmightyPear.Controls
         public BookmarksViewControl()
         {
             InitializeComponent();
+            Model = new BookmarksViewModel();
         }
 
+        public BookmarksViewModel Model { get; set; }
+
+        private CancellationTokenSource _cts;
         private void Tb_filter_KeyDown(object sender, KeyEventArgs e)
         {
             FilterEvent?.Invoke(sender, e);
@@ -78,9 +98,31 @@ namespace AlmightyPear.Controls
             }
         }
 
+        private void FinishedTyping()
+        {
+            
+            Model.DelayedText = tb_filter.Text;
+        }
+
         private void Btn_clearFilter_Click(object sender, RoutedEventArgs e)
         {
             tb_filter.Clear();
+        }
+
+        private async void Tb_filter_TextChangedAsync(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                _cts?.Cancel();
+                _cts = new CancellationTokenSource();
+                var cancellationToken = _cts.Token;
+                await Task.Delay(200, cancellationToken);
+                FinishedTyping();
+            }
+            catch (TaskCanceledException ex)
+            {
+                // Ignore the exception
+            }
         }
     }
 }

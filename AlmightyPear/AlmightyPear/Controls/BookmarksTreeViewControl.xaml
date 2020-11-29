@@ -7,6 +7,7 @@
              xmlns:model="clr-namespace:AlmightyPear.Model"
              xmlns:controller="clr-namespace:AlmightyPear.Controller"
              xmlns:converters="clr-namespace:AlmightyPear.Converters"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:fa="http://schemas.fontawesome.io/icons/"
              xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
              mc:Ignorable="d" 
@@ -20,18 +21,22 @@
             <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
         </ResourceDictionary>
     </UserControl.Resources>
-    <ScrollViewer 
-        HorizontalScrollBarVisibility="Auto" 
-        VerticalScrollBarVisibility="Auto" 
-        CanContentScroll="True" 
-        PreviewMouseWheel="ScrollViewer_PreviewMouseWheel">
-        <TreeView Grid.Column="0" 
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <TreeView Grid.Row="0" 
                   Name="tv_main"
                   VirtualizingPanel.IsVirtualizing="True"
-                  VirtualizingPanel.VirtualizationMode="Recycling"
+                  VirtualizingPanel.VirtualizationMode="Standard"
                   Background="{DynamicResource mg.solid.10}"
                   Margin="0"
+                  ScrollViewer.HorizontalScrollBarVisibility="Auto" 
+                  ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                  ScrollViewer.CanContentScroll="True" 
+                  ScrollViewer.PreviewMouseWheel="ScrollViewer_PreviewMouseWheel"
                   Padding="0">
+            
             <TreeView.ItemsSource>
                 <MultiBinding Converter="{StaticResource FilterBinItemsConverter}">
                     <Binding ElementName="rootControl" Path="Bin.BinItemsCollection"></Binding>
@@ -47,6 +52,8 @@
                         </MultiBinding>
                     </HierarchicalDataTemplate.ItemsSource>
                     <StackPanel Name="rt_bin" 
+                                VirtualizingPanel.IsVirtualizing="True"
+                                VirtualizingPanel.VirtualizationMode="Standard"
                                 SnapsToDevicePixels="True"
                                 Background="Transparent"
                                 MouseLeftButtonDown="Rt_bin_MouseLeftButtonDown"
@@ -94,7 +101,7 @@
                                         </StackPanel>
                                     </MenuItem.Header>
                                 </MenuItem>
-                                
+
                                 <Separator></Separator>
                                 <MenuItem Name="mi_copyPath" Click="Mi_copyPath_Click">
                                     <MenuItem.Header>
@@ -269,5 +276,5 @@
                 </HierarchicalDataTemplate>
             </TreeView.Resources>
         </TreeView>
-    </ScrollViewer>
+    </Grid>
 </UserControl>

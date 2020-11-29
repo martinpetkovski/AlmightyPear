@@ -54,10 +54,17 @@ namespace AlmightyPear.View
             Left = finalX;
             Top = finalY;
 
-            if (Env.UserData.CustomModel.AnimationsLevel == 2) mah_contentControl.Reload();
+            if (Env.UserData.CustomModel.AnimationsLevel == 2)
+            {
+                mah_contentControl.TransitionsEnabled = true;
+            }
+            else
+            {
+                mah_contentControl.TransitionsEnabled = false;
+            }
             Show();
             Activate();
-
+            mah_contentControl.Reload();
         }
 
         private async void Ctrl_filter_FilterEventAsync(object sender, EventArgs e)

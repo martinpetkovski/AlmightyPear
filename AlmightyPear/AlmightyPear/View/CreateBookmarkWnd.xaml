@@ -20,21 +20,13 @@
         ShowInTaskbar="False"
         BorderBrush="#444"
         BorderThickness="1"
+        GlowBrush="{DynamicResource mg.solid.70}"
+        ResizeBorderThickness="5"
+        WindowTransitionsEnabled="False"
         ResizeMode="NoResize">
     <Window.DataContext>
         <StaticResourceExtension ResourceKey="Env"/>
     </Window.DataContext>
-    <Window.Resources>
-        <ResourceDictionary>
-            <converters:AnimationLevelToBoolenConverter x:Key="AnimationLevelToBoolenConverter"/>
-        </ResourceDictionary>
-    </Window.Resources>
-    <mah:MetroWindow.WindowTransitionsEnabled>
-        <Binding Source="{StaticResource Env}" 
-                 Path="UserData.CustomModel.AnimationsLevel" 
-                 Converter="{StaticResource AnimationLevelToBoolenConverter}"
-                 ConverterParameter="1"/>
-    </mah:MetroWindow.WindowTransitionsEnabled>
     <mah:MetroContentControl Name="mah_contentControl">
         <controls:BookmarkCreateControl 
             x:Name="ctrl_bookmarkCreate" 

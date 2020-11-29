@@ -33,6 +33,7 @@
                 Name="tb_category" 
                 KeyDown="Tb_category_KeyDown" 
                 KeyUp="Tb_category_KeyUp"
+                AcceptsTab="False"
                 TextChanged="Tb_category_TextChanged"
                 TabIndex="0"
                 behaviors:AutoCompleteBehavior.AutoCompleteItemsSource="{Binding  

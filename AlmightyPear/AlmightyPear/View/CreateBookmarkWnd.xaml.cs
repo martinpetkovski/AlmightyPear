@@ -65,7 +65,15 @@ namespace AlmightyPear.View
             Left = finalX;
             Top = finalY;
 
-            if (Env.UserData.CustomModel.AnimationsLevel == 2)  mah_contentControl.Reload();
+            if (Env.UserData.CustomModel.AnimationsLevel == 2)
+            {
+                mah_contentControl.TransitionsEnabled = true;
+            }
+            else
+            {
+                mah_contentControl.TransitionsEnabled = false;
+            }
+            mah_contentControl.Reload();
             Show();
             Activate();
         }
@@ -75,7 +83,7 @@ namespace AlmightyPear.View
         {
             System.Windows.Input.KeyEventArgs ea = (System.Windows.Input.KeyEventArgs)e;
 
-            if (sender is TextBox)
+            if (sender is System.Windows.Controls.TextBox)
             {
                 if (ea.Key == Key.Enter)
                 {

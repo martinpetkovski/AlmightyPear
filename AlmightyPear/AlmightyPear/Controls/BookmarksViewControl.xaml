@@ -35,6 +35,7 @@
                      Name="tb_filter" 
                      TabIndex="0"
                      KeyDown="Tb_filter_KeyDown"
+                     TextChanged="Tb_filter_TextChangedAsync"
                      VerticalAlignment="Center"
                      VerticalContentAlignment="Center"
                      behaviors:AutoCompleteBehavior.AutoCompleteItemsSource="{Binding  
@@ -57,7 +58,8 @@
                                                MaxHeight="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:BookmarksViewControl}}, Path=MaxContentHeight}"
                                                x:Name="ctrl_BookmarksTreeView"
                                                Bin="{Binding Source={StaticResource Env}, Path=BinData.RootBin}"
-                                               Filter="{Binding ElementName=tb_filter, Path=Text}"
+                                               Filter="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:BookmarksViewControl}}, 
+            Path=Model.DelayedText}"
                                                FilterTextBox="{x:Reference Name=tb_filter}">
 
         </controls:BookmarksTreeViewControl>

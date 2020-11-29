@@ -22,23 +22,19 @@
         MaxHeight="400"
         BorderBrush="#333"
         BorderThickness="1"
+        GlowBrush="{DynamicResource mg.solid.70}"
+        WindowTransitionsEnabled="False"
+        ResizeBorderThickness="5"
         ResizeMode="NoResize">
     <Window.Resources>
         <ResourceDictionary>
             <converters:BinDepthListConverter x:Key="BinDepthListConverter"/>
-            <converters:AnimationLevelToBoolenConverter x:Key="AnimationLevelToBoolenConverter"/>
         </ResourceDictionary>
     </Window.Resources>
-    <mah:MetroWindow.WindowTransitionsEnabled>
-        <Binding Source="{StaticResource Env}" 
-                 Path="UserData.CustomModel.AnimationsLevel" 
-                 Converter="{StaticResource AnimationLevelToBoolenConverter}"
-                 ConverterParameter="1"/>
-    </mah:MetroWindow.WindowTransitionsEnabled>
     <Window.DataContext>
         <StaticResourceExtension ResourceKey="Env"/>
     </Window.DataContext>
-    <mah:MetroContentControl Name="mah_contentControl">
+    <mah:MetroContentControl Name="mah_contentControl" TransitionsEnabled="False">
         <controls:BookmarksViewControl 
             x:Name="ctrl_filter" 
             FilterEvent="Ctrl_filter_FilterEventAsync" 

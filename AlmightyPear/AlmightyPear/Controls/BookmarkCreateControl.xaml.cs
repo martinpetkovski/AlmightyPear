@@ -66,6 +66,11 @@ namespace AlmightyPear.Controls
         private void Tb_category_KeyDown(object sender, KeyEventArgs e)
         {
             InputEvent?.Invoke(sender, e);
+            if(e.Key == Key.Tab)
+            {
+                tb_category.CaretIndex = tb_category.Text.Length;
+                e.Handled = true;
+            }
         }
 
         private void Txt_selection_KeyUp(object sender, KeyEventArgs e)

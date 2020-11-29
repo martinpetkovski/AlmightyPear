@@ -203,6 +203,9 @@ namespace AlmightyPear.Model
 
         public int FilterScore(FilterToken filter, ref Dictionary<string, int> pathScores)
         {
+            if (filter.TokenType == FilterToken.FilterTokenType.All)
+                return 100;
+
             int existScore = 0;
             if (pathScores.TryGetValue(ID, out existScore))
             {

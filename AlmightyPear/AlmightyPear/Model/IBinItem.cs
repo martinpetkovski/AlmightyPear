@@ -14,7 +14,8 @@ namespace AlmightyPear.Model
             Path,
             Date,
             Type,
-            Any
+            Any,
+            All
         }
 
         private List<string> _tokens;
@@ -57,6 +58,8 @@ namespace AlmightyPear.Model
                 TokenType = FilterTokenType.Date;
             else if (tokenFlag == "-t")
                 TokenType = FilterTokenType.Type;
+            else if (tokenFlag == "-a")
+                TokenType = FilterTokenType.All;
             else
                 TokenType = FilterTokenType.Any;
         }

@@ -95,6 +95,9 @@ namespace AlmightyPear.Model
 
         public int FilterScore(FilterToken filter, ref Dictionary<string, int> pathScores)
         {
+            if (filter.TokenType == FilterToken.FilterTokenType.All)
+                return 100;
+
             int existScore = 0;
             if (pathScores.TryGetValue(Path, out existScore))
             {
@@ -117,6 +120,9 @@ namespace AlmightyPear.Model
                 score = BinModel.FilterPath(Path, filterString, Env.PathSeparator);
                 score = Math.Max(score, BinModel.FilterPath(Path, filterString, ' '));
             }
+
+            if (filter.TokenType == FilterToken.FilterTokenType.All)
+                score = 100;
 
             foreach (var binItem in BinItems)
             {

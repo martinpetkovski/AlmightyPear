@@ -35,7 +35,7 @@ namespace AlmightyPear.Converters
                     tokenMods.Add(new FilterToken(FilterToken.FilterTokenType.Any));
                     foreach(string token in filterTokens)
                     {
-                        if (token == "-q" || token == "-p" || token == "-d" || token == "-t")
+                        if (token == "-q" || token == "-p" || token == "-d" || token == "-t" || token == "-a")
                         {
                             tokenMods.Add(new FilterToken(token));
                         }

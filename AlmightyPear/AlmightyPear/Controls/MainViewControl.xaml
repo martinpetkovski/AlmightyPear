@@ -58,32 +58,15 @@
 
                 <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                     <StackPanel Orientation="Vertical">
-                        <!--<GroupBox Header="Actions">
-                            <WrapPanel Orientation="Horizontal">
-                                <Button HorizontalAlignment="Right" 
-                                    Padding="20" 
-                                    Name="btn_saveAll" Click="Btn_saveAll_Click"
-                                    BorderBrush="#333">Save All... </Button>
-                                <Button HorizontalAlignment="Right" 
-                                    Padding="20" 
-                                        Name="btn_fullReload" Click="Btn_fullReload_Click"
-                                    BorderBrush="#333">Full Reload</Button>
-                                <Button HorizontalAlignment="Right" 
-                                    Padding="20" 
-                                        Name ="btn_clearTempBin" Click="Btn_clearTempBin_Click"
-                                    BorderBrush="#600">Clear Temp Bin</Button>
-                                <Button HorizontalAlignment="Right" 
-                                    Padding="20" 
-                                        Name="btn_logOut" Click="Btn_logOut_Click"
-                                    BorderBrush="#333">Log Out</Button>
-                            </WrapPanel>
-                        </GroupBox>-->
                         <GroupBox Header="Profile Settings">
+                            <GroupBox.Resources>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Margin" Value="0,10,0,3"></Setter>
+                                </Style>
+                            </GroupBox.Resources>
                             <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Width="400">
                                 <TextBlock>display name</TextBlock>
                                 <TextBox Name="tb_displayName" Text="{Binding Source={StaticResource Env}, Path=UserData.DisplayName, Mode=OneWay}"></TextBox>
-                                <!--<TextBlock>picture url</TextBlock>
-                                <TextBox Name="tb_profilePicture" Text="{Binding Source={StaticResource Env}, Path=UserData.PhotoUrl, Mode=OneWay}"></TextBox>-->
                                 <TextBlock>theme</TextBlock>
                                 <ComboBox Name="cb_themes" 
                                     ItemsSource="{Binding Source={StaticResource Env}, Path=UserData.ThemesList}"
@@ -97,10 +80,14 @@
                                         </DataTemplate>
                                     </ComboBox.ItemTemplate>
                                 </ComboBox>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Margin="0,0,10,0">animations</TextBlock>
-                                    <TextBlock Text="{Binding ElementName=sld_animations, Path=Value, Converter={StaticResource AnimationValueToNameConverter}}" />
-                                </StackPanel>
+                                <Grid Margin="0,10,0,3">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock VerticalAlignment="Bottom">animations</TextBlock>
+                                    <TextBlock Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Text="{Binding ElementName=sld_animations, Path=Value, Converter={StaticResource AnimationValueToNameConverter}}" />
+                                </Grid>
                                 <Slider x:Name="sld_animations" 
                                         Orientation="Horizontal" 
                                         Minimum="0" 

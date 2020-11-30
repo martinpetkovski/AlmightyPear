@@ -45,5 +45,10 @@ namespace AlmightyPear.Controls
         {
             txt_messagebox.Text = "";
         }
+
+        private void Btn_passwordReset_Click(object sender, RoutedEventArgs e)
+        {
+            Env.MainWindowData.WindowState = Model.MainWindowModel.EMainWindowState.ChangePw;
+        }
     }
 }

@@ -29,13 +29,22 @@ namespace AlmightyPear.Controls
                 email = tb_email.Text;
             }
 
-            string result = await Env.FirebaseController.ChangePasswordAsync(email, tb_oldPassword.Password, tb_newPassword.Password, tb_repeatPassword.Password);
-            tb_email.Text = "";
+            FirebaseController.SChangePasswordResult result = await Env.FirebaseController.ChangePasswordAsync(email, tb_oldPassword.Password, tb_newPassword.Password, tb_repeatPassword.Password);
             tb_newPassword.Password = "";
             tb_oldPassword.Password = "";
             tb_repeatPassword.Password = "";
 
-            await MessageBox.FireAsync("Change Password", result, new System.Collections.Generic.List<string>() { "Ok" });
+            await MessageBox.FireAsync("Change Password", result.message, new System.Collections.Generic.List<string>() { "Ok" });
+            if(result.success && !Env.UserData.IsLoggedIn)
+            {
+                Env.MainWindowData.WindowState = Model.MainWindowModel.EMainWindowState.SignIn;
+            }
+
+        }
+
+        private void Btn_return_Click(object sender, RoutedEventArgs e)
+        {
+            Env.MainWindowData.WindowState = Model.MainWindowModel.EMainWindowState.SignIn;
         }
     }
 }

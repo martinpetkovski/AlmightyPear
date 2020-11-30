@@ -33,6 +33,11 @@
                             IsDefault="True"  
                             Padding="10" 
                             BorderBrush="#333" >SIGN-IN</Button>
+                    <Button Name="btn_passwordReset" 
+                            Click="Btn_passwordReset_Click" 
+                            IsDefault="True"  
+                            Padding="10" 
+                            BorderBrush="#333" >RESET PASSWORD</Button>
                 </WrapPanel>
                 <TextBlock Name="txt_messagebox" HorizontalAlignment="Center"></TextBlock>
             </StackPanel>

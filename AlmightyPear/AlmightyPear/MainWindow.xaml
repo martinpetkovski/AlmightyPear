@@ -122,6 +122,16 @@
                         </Setter>
                     </DataTrigger>
 
+                    <!-- PASSWORD RESET VIEW -->
+                    <DataTrigger Binding="{Binding  Source={StaticResource Env},
+                                                        Path=MainWindowData.WindowState}" Value="ChangePw">
+                        <Setter Property="Content">
+                            <Setter.Value>
+                                <controls:ResetPasswordControl></controls:ResetPasswordControl>
+                            </Setter.Value>
+                        </Setter>
+                    </DataTrigger>
+
                     <!-- REGISTER VIEW -->
                     <DataTrigger Binding="{Binding  Source={StaticResource Env},
                                                         Path=MainWindowData.WindowState}" Value="Register">

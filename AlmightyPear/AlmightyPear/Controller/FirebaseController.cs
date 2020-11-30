@@ -32,7 +32,7 @@ namespace AlmightyPear.Controller
             _client = new FirebaseClient(_config);
         }
 
-        public async Task<bool> AuthenticateUserAsync(string email, string password)
+        public async Task<bool> AuthenticateUserAsync(string email, string password, bool initialize = true)
         {
             var authProvider = new FirebaseAuthProvider(new Firebase.Auth.FirebaseConfig(_apiKey));
             FirebaseAuthLink auth;
@@ -40,9 +40,11 @@ namespace AlmightyPear.Controller
 
             if (auth.User.LocalId != "")
             {
-                Env.UserData.Initialize(auth.User.LocalId, auth.User.Email, auth.User.DisplayName, auth.User.PhotoUrl);
-
-                _token = auth.FirebaseToken;
+                if (initialize)
+                {
+                    Env.UserData.Initialize(auth.User.LocalId, auth.User.Email, auth.User.DisplayName, auth.User.PhotoUrl);
+                    _token = auth.FirebaseToken;
+                }
 
                 return true;
             }
@@ -69,31 +71,56 @@ namespace AlmightyPear.Controller
             }
         }
 
-        public async Task<string> ChangePasswordAsync(string email, string oldPassword, string password, string repeatPassword)
+        public struct SChangePasswordResult
         {
+            public bool success;
+            public string message;
+        }
+
+        public async Task<SChangePasswordResult> ChangePasswordAsync(string email, string oldPassword, string password, string repeatPassword)
+        {
+            SChangePasswordResult result = new SChangePasswordResult();
             bool authSuccess = false;
             try
             {
-                authSuccess = await AuthenticateUserAsync(email, oldPassword);
+                authSuccess = await AuthenticateUserAsync(email, oldPassword, false);
             }
             catch (Exception e)
             {
-                return "Entered wrong email and/or password";
+                result.message = "Entered wrong email and/or password";
+                result.success = false;
+                return result;
             }
 
             if (!authSuccess)
-                return "Entered wrong password";
+            {
+                result.message = "Entered wrong password";
+                result.success = false;
+                return result;
+            }
 
             if (password != repeatPassword)
-                return "Passwords do not match";
+            {
+                result.message = "Passwords do not match";
+                result.success = false;
+                return result;
+            }
 
             var authProvider = new FirebaseAuthProvider(new FirebaseConfig(_apiKey));
             var link = authProvider.ChangeUserPassword(_token, password);
 
             if (link.Status == TaskStatus.WaitingForActivation)
-                return "Password changed!";
+            {
+                result.message = "Password changed!";
+                result.success = true;
+                return result;
+            }
             else
-                return "Error changing password.";
+            {
+                result.message = "Error changing password.";
+                result.success = false;
+                return result;
+            }
         }
 
         public async void UpdateProfileAsync(string displayName, string photoUrl) // needs validation

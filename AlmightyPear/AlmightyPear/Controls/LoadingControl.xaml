@@ -15,6 +15,9 @@
 
     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
         <fa:ImageAwesome Icon="Spinner" Spin="True" SpinDuration="2" Foreground="{DynamicResource mg.solid.100}" Height="60" Width="60" Margin="40,0" />
-        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="60">Loading...</TextBlock>
+        <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <TextBlock FontSize="60">Loading...</TextBlock>
+            <TextBlock FontSize="12">Setting up things for you</TextBlock>
+        </StackPanel>
     </StackPanel>
 </UserControl>

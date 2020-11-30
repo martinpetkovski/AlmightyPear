@@ -10,7 +10,7 @@ namespace AlmightyPear.Model
         {
             SignIn,
             Register,
-            ForgotPw,
+            ChangePw,
             BookmarksView,
             Loading,
             Count

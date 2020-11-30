@@ -50,5 +50,10 @@ namespace AlmightyPear.Controls
         {
             Env.MainWindowData.WindowState = Model.MainWindowModel.EMainWindowState.ChangePw;
         }
+
+        private void Btn_quit_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
     }
 }

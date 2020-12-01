@@ -16,6 +16,8 @@
         WindowStyle="None"
         TitleBarHeight="0"
         Background="{DynamicResource mg.solid.10}"
+                 LostFocus="MetroWindow_LostFocus"
+                 Deactivated="MetroWindow_Deactivated"
         AllowsTransparency="True"
         ShowInTaskbar="False"
         BorderBrush="#444"

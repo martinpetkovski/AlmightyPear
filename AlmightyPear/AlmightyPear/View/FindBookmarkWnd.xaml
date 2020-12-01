@@ -23,6 +23,8 @@
         BorderBrush="#333"
         BorderThickness="1"
         GlowBrush="{DynamicResource mg.solid.70}"
+                 LostFocus="MetroWindow_LostFocus"
+                 Deactivated="MetroWindow_Deactivated"
         WindowTransitionsEnabled="False"
         ResizeBorderThickness="5"
         ResizeMode="NoResize">

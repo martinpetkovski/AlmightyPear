@@ -33,6 +33,8 @@ namespace AlmightyPear.Model
 
         public void AddItemToBin(string key, IBinItem value)
         {
+            if (key == null) return;
+
             IBinItem nextBin;
             lock (BinItems)
             {
@@ -53,7 +55,6 @@ namespace AlmightyPear.Model
                     OnPropertyChanged("BinItemsCollection");
                 }
             }
-
         }
 
         public void Nuke()

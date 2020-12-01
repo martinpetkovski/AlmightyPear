@@ -78,15 +78,14 @@ namespace AlmightyPear.Controller
             Env.BinData.RootBin = new BinModel("root", "");
 
             Parallel.ForEach(Env.UserData.Bookmarks, (bookmark) =>
-           {
-               AddBookmark(bookmark.Value);
-           });
+            {
+                AddBookmark(bookmark.Value);
+            });
         }
 
-        public void DeleteBookmark(BookmarkModel bookmark)
+        public void DeleteBookmark(string ID)
         {
-            Env.UserData.Bookmarks.Remove(bookmark.ID);
-            Env.FirebaseController.DeleteBookmark(bookmark);
+            Env.UserData.Bookmarks.Remove(ID);
             GenerateBinTree();
         }
 
@@ -101,7 +100,7 @@ namespace AlmightyPear.Controller
                 else if (item.Value is BookmarkModel)
                 {
                     BookmarkModel bookmark = (BookmarkModel)item.Value;
-                    DeleteBookmark(bookmark);
+                    Env.FirebaseController.DeleteBookmark(bookmark);
                 }
             }
         }
@@ -140,7 +139,7 @@ namespace AlmightyPear.Controller
                 {
                     if (binItem.Value is BookmarkModel)
                     {
-                        DeleteBookmark((BookmarkModel)binItem.Value);
+                        Env.FirebaseController.DeleteBookmark((BookmarkModel)binItem.Value);
                     }
                 }
 
@@ -288,13 +287,6 @@ namespace AlmightyPear.Controller
         public void ClearTempBin()
         {
             Env.BinController.DeleteBin(Env.BinController.GetBin(Env.TempBinPath));
-        }
-
-        public async Task ReloadAllAsync()
-        {
-            await Env.FirebaseController.GetBookmarksByUserAsync();
-            Env.BinController.GenerateBinTree();
-            Env.BinController.ClearBookmarksForEdit();
         }
 
     }

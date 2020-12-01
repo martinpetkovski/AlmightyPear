@@ -4,10 +4,12 @@ using Firebase.Auth;
 using FireSharp;
 using FireSharp.Interfaces;
 using FireSharp.Response;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace AlmightyPear.Controller
@@ -18,6 +20,7 @@ namespace AlmightyPear.Controller
         private static string _basePath = "https://almightypear-c67cf.firebaseio.com";
         private static string _apiKey = " AIzaSyABNDJwdJ2ZnDjwWRb9FG6Kwd-z8_5wbJI";
         private string _token;
+        private EventStreamResponse bookmarksEventStream;
 
         private IFirebaseConfig _config = new FireSharp.Config.FirebaseConfig
         {
@@ -30,6 +33,18 @@ namespace AlmightyPear.Controller
         public void Initialize()
         {
             _client = new FirebaseClient(_config);
+        }
+
+        ~FirebaseController()
+        {
+            if (bookmarksEventStream != null)
+            {
+                try
+                {
+                    bookmarksEventStream.Dispose();
+                }
+                catch (Exception) { }
+            }
         }
 
         public async Task<bool> AuthenticateUserAsync(string email, string password, bool initialize = true)
@@ -85,7 +100,7 @@ namespace AlmightyPear.Controller
             {
                 authSuccess = await AuthenticateUserAsync(email, oldPassword, false);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 result.message = "Entered wrong email and/or password";
                 result.success = false;
@@ -149,11 +164,12 @@ namespace AlmightyPear.Controller
 
         public void LogOutUser()
         {
+            bookmarksEventStream.Dispose();
             Env.UserData.Deinitialize();
             Env.BinController.Deinitalize();
         }
 
-        public async Task CreateBookmarkAsync(string category, string content)
+        public async Task<bool> CreateBookmarkAsync(string category, string content)
         {
             BookmarkModel bookmarkData = new BookmarkModel();
             bookmarkData.ID = Guid.NewGuid().ToString();
@@ -163,11 +179,7 @@ namespace AlmightyPear.Controller
             bookmarkData.TimeModified = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
 
             SetResponse response = await _client.SetAsync("bookmarks/" + Env.UserData.ID + "/" + bookmarkData.ID, bookmarkData);
-            if (response.StatusCode == System.Net.HttpStatusCode.OK)
-            {
-                Env.UserData.Bookmarks.Add(bookmarkData.ID, bookmarkData);
-                Env.BinController.AddBookmark(bookmarkData);
-            }
+            return response.StatusCode == System.Net.HttpStatusCode.OK;
         }
 
         public async Task CreateOrUpdateTheme(ThemeManager.Theme theme)
@@ -203,6 +215,7 @@ namespace AlmightyPear.Controller
                 bookmark.TimeModified = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
                 await _client.UpdateAsync("bookmarks/" + Env.UserData.ID + "/" + bookmark.ID, bookmark);
             }
+
         }
 
         public void DeleteBookmark(BookmarkModel bookmark)
@@ -210,46 +223,107 @@ namespace AlmightyPear.Controller
             _client.DeleteAsync("bookmarks/" + Env.UserData.ID + "/" + bookmark.ID);
         }
 
-        public async Task GetBookmarksByUserAsync()
+        public void HandleBookmarkChanged(string data, string path)
         {
-            if (Env.UserData.Bookmarks != null && Env.UserData.Bookmarks.Count > 0)
-            {
-                Env.UserData.Bookmarks.Clear();
-            }
-
-            string userId = Env.UserData.ID;
-            FirebaseResponse response = await _client.GetAsync("bookmarks/" + userId + "/");
             try
             {
-                Env.UserData.Bookmarks = response.ResultAs<Dictionary<string, BookmarkModel>>();
+                string trimmed = path.Trim('/');
+                string[] pathTokens = trimmed.Split('/');
+
+                string bookmarkId = pathTokens[pathTokens.Length - 2];
+                string propertyContent = pathTokens[pathTokens.Length - 1];
+
+                lock (Env.UserData.Bookmarks)
+                {
+                    if (!Env.UserData.Bookmarks.ContainsKey(bookmarkId))
+                    {
+                        Env.UserData.Bookmarks.Add(bookmarkId, new BookmarkModel());
+                    }
+                }
+
+                BookmarkModel bookmark = Env.UserData.Bookmarks[bookmarkId];
+
+                PropertyInfo property = bookmark.GetType().GetProperty(propertyContent);
+                if (property != null && property.CanWrite)
+                {
+                    if (property.PropertyType == typeof(long))
+                    {
+                        property.SetValue(bookmark, long.Parse(data));
+                    }
+                    else
+                    {
+                        property.SetValue(bookmark, data);
+                    }
+                }
             }
-            catch (Newtonsoft.Json.JsonSerializationException e)
+            catch (Exception) { }
+        }
+
+        public async Task RegisterBookmarksListener()
+        {
+            bookmarksEventStream = await _client.OnAsync("bookmarks/" + Env.UserData.ID + "/",
+            added: (sender, args, context) =>
             {
-                Debug.Write(e.Message);
-            }
+                HandleBookmarkChanged(args.Data, args.Path);
+            },
+            changed: (sender, args, context) =>
+            {
+                HandleBookmarkChanged(args.Data, args.Path);
+            },
+            removed: (sender, args, context) =>
+            {
+                string trimmed = args.Path.Trim('/');
+                string[] pathTokens = trimmed.Split('/');
+                Env.BinController.DeleteBookmark(pathTokens[0]);
+            });
         }
 
         public async Task GetThemesAsync()
         {
-            FirebaseResponse response = await _client.GetAsync("themes");
-            try
+            string path = GetUserPath() + "\\themes.ccm";
+
+            if (File.Exists(path))
             {
-                Env.UserData.Themes = response.ResultAs<Dictionary<string, ThemeManager.Theme>>();
+                BinaryReader reader = new BinaryReader(File.OpenRead(path));
+                string json = reader.ReadString();
+                reader.Close();
+                Env.UserData.Themes = JsonConvert.DeserializeObject<Dictionary<string, ThemeManager.Theme>>(json);
             }
-            catch (Newtonsoft.Json.JsonSerializationException e)
+            else
             {
-                Debug.Write(e.Message);
+                string userId = Env.UserData.ID;
+                FirebaseResponse response = await _client.GetAsync("themes");
+                try
+                {
+                    Env.UserData.Themes = response.ResultAs<Dictionary<string, ThemeManager.Theme>>();
+
+                    string json = JsonConvert.SerializeObject(Env.UserData.Themes);
+
+                    BinaryWriter writer = new BinaryWriter(File.Open(path, FileMode.Create));
+                    writer.Write(json);
+                    writer.Close();
+                }
+                catch (JsonSerializationException e)
+                {
+                    Debug.Write(e.Message);
+                }
             }
         }
 
-        public string GetOrCreateTokenPath()
+        public string GetUserPath()
         {
             string dir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Checkmeg";
             if (!Directory.Exists(dir))
             {
                 Directory.CreateDirectory(dir);
             }
-            return dir + "\\token.apf";
+
+            return dir;
+        }
+
+        public string GetOrCreateTokenPath()
+        {
+            return GetUserPath() + "\\token.ccm";
         }
 
         public bool ReadToken()
@@ -287,8 +361,7 @@ namespace AlmightyPear.Controller
 
         private async Task PostSignInAsync()
         {
-            await Env.FirebaseController.GetBookmarksByUserAsync();
-            Env.BinController.GenerateBinTree();
+            await RegisterBookmarksListener();
         }
 
         public async Task<string> SignInUserAsync(string email, string password, bool remember)

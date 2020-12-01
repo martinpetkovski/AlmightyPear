@@ -38,11 +38,6 @@ namespace AlmightyPear.Controls
             Env.MainWindow.Mi_SaveAll_ClickAsync(sender, e);
         }
 
-        private void Btn_fullReload_Click(object sender, RoutedEventArgs e)
-        {
-            Env.MainWindow.Mi_FullReload_ClickAsync(sender, e);
-        }
-
         private void Btn_clearTempBin_Click(object sender, RoutedEventArgs e)
         {
             Env.MainWindow.Mi_ClearTempBin_Click(sender, e);

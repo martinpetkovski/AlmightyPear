@@ -126,7 +126,6 @@ namespace AlmightyPear
 
         private async Task InitializeThemesAsync()
         {
-            //await ThemeManager.CreateBasicThemesAsync();
             await Env.FirebaseController.GetThemesAsync();
         }
 
@@ -209,11 +208,6 @@ namespace AlmightyPear
         {
             Env.FirebaseController.LogOutUser();
             Env.MainWindowData.WindowState = MainWindowModel.EMainWindowState.SignIn;
-        }
-
-        public async void Mi_FullReload_ClickAsync(object sender, RoutedEventArgs e)
-        {
-            await Env.BinController.ReloadAllAsync();
         }
 
         private void Mi_Quit_Click(object sender, RoutedEventArgs e)

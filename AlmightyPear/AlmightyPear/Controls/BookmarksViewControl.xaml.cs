@@ -121,7 +121,7 @@ namespace AlmightyPear.Controls
                 await Task.Delay(200, cancellationToken);
                 FinishedTyping();
             }
-            catch (TaskCanceledException ex)
+            catch (TaskCanceledException)
             {
                 // Ignore the exception
             }

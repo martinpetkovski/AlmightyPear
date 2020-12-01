@@ -298,7 +298,7 @@ namespace AlmightyPear.Controls
 
             if (result == 0)
             {
-                Env.BinController.DeleteBookmark(bookmark);
+                Env.FirebaseController.DeleteBookmark(bookmark);
             }
         }
 

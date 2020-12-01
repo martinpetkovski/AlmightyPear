@@ -161,6 +161,8 @@ namespace AlmightyPear.Model
         {
             get
             {
+                if (_bookmarks == null)
+                    _bookmarks = new Dictionary<string, BookmarkModel>();
                 return _bookmarks;
             }
             set

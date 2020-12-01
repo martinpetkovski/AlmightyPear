@@ -6,44 +6,46 @@
              xmlns:local="clr-namespace:AlmightyPear.Controls"
              mc:Ignorable="d" 
              FocusManager.FocusedElement="{x:Reference Name=tb_email}" >
-    <Grid>
+    <Grid VerticalAlignment="Stretch">
         <Grid.Background>
             <ImageBrush ImageSource="..\..\Resources\Textures\background_monochromatic.png" Stretch="UniformToFill" AlignmentX="Right" AlignmentY="Bottom"/>
         </Grid.Background>
-        <Border Padding="50,50,50,0" Background="#AA111111">
-            <StackPanel Orientation="Vertical"  MaxWidth="600" >
+        <Border Background="#AA111111">
+            <Border Padding="50,50,50,0" VerticalAlignment="Center">
+                <StackPanel Orientation="Vertical"  MaxWidth="600" >
 
-                <Image Source="..\..\Resources\Textures\logo.png" Height="256"></Image>
-                <TextBlock FontSize="60" 
+                    <Image Source="..\..\Resources\Textures\logo.png" Height="256"></Image>
+                    <TextBlock FontSize="60" 
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
                             Margin="0,50,0,50">Checkmeg</TextBlock>
 
-                <TextBlock Margin="0,0,0,10">e-mail</TextBlock>
-                <TextBox x:Name="tb_email" TabIndex="1" KeyDown="Tb_email_KeyDown"></TextBox>
-                <TextBlock Margin="0,30,30,10">password</TextBlock>
-                <PasswordBox x:Name="tb_password" TabIndex="2" KeyDown="Tb_password_KeyDown"></PasswordBox>
-                <StackPanel Orientation="Horizontal" Margin="0,20">
-                    <CheckBox Name="cb_RememberMe"></CheckBox>
-                    <TextBlock Margin="10,0">remember me</TextBlock>
-                </StackPanel>
-                <WrapPanel Orientation="Horizontal" Margin="0,0" HorizontalAlignment="Center">
-                    <Button Name="btn_signin" 
+                    <TextBlock Margin="0,0,0,10">e-mail</TextBlock>
+                    <TextBox x:Name="tb_email" TabIndex="1" KeyDown="Tb_email_KeyDown"></TextBox>
+                    <TextBlock Margin="0,30,30,10">password</TextBlock>
+                    <PasswordBox x:Name="tb_password" TabIndex="2" KeyDown="Tb_password_KeyDown"></PasswordBox>
+                    <StackPanel Orientation="Horizontal" Margin="0,20">
+                        <CheckBox Name="cb_RememberMe"></CheckBox>
+                        <TextBlock Margin="10,0">remember me</TextBlock>
+                    </StackPanel>
+                    <WrapPanel Orientation="Horizontal" Margin="0,0" HorizontalAlignment="Center">
+                        <Button Name="btn_signin" 
                             Click="Btn_signin_ClickAsync" 
                             IsDefault="True"  
                             Padding="10" 
                             BorderBrush="#333" >SIGN-IN</Button>
-                    <Button Name="btn_passwordReset" 
+                        <Button Name="btn_passwordReset" 
                             Click="Btn_passwordReset_Click" 
                             Padding="10" 
                             BorderBrush="#333" >RESET PASSWORD</Button>
-                    <Button Name="btn_quit" 
+                        <Button Name="btn_quit" 
                             Click="Btn_quit_Click"  
                             Padding="10" 
                             BorderBrush="#333" >QUIT</Button>
-                </WrapPanel>
-                <TextBlock Name="txt_messagebox" HorizontalAlignment="Center"></TextBlock>
-            </StackPanel>
+                    </WrapPanel>
+                    <TextBlock Name="txt_messagebox" HorizontalAlignment="Center"></TextBlock>
+                </StackPanel>
+            </Border>
         </Border>
     </Grid>
 </UserControl>

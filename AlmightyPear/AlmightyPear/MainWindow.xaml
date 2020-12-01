@@ -44,14 +44,6 @@
                             </StackPanel>
                         </MenuItem.Header>
                     </MenuItem>
-                    <MenuItem Name="mi_FullReload" Click="Mi_FullReload_ClickAsync">
-                        <MenuItem.Header>
-                            <StackPanel Orientation="Horizontal">
-                                <fa:ImageAwesome Icon="RotateLeft" Foreground="{DynamicResource mg.solid.100}" Height="12"/>
-                                <TextBlock Text="Full Reload" VerticalAlignment="Center" Margin="5,0,0,0"></TextBlock>
-                            </StackPanel>
-                        </MenuItem.Header>
-                    </MenuItem>
                     <MenuItem Name="mi_ClearTempBin" Click="Mi_ClearTempBin_Click">
                         <MenuItem.Header>
                             <StackPanel Orientation="Horizontal">

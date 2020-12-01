@@ -1,5 +1,6 @@
 ﻿using AlmightyPear.Controller;
 using FuzzySharp;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -108,6 +109,7 @@ namespace AlmightyPear.Model
             {
                 _path = value;
                 OnPropertyChanged();
+                Env.BinController.GenerateBinTree();
             }
         }
 
@@ -180,6 +182,7 @@ namespace AlmightyPear.Model
             }
         }
 
+        [JsonIgnore]
         public int PathDepth
         {
             get

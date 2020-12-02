@@ -57,38 +57,6 @@ namespace AlmightyPear.Model
             RootBin = null;
         }
 
-        public string BookmarksViewCaption
-        {
-            get
-            {
-                if (Env.BinController.HasEditedBookmarks())
-                    return "Bookmarks View (*)";
-                else
-                    return "Bookmarks View";
-            }
-            set
-            {
-                OnPropertyChanged();
-            }
-        }
-
-        public bool HasCreatedBookmarks; // fixme martinp: move somewhere else
-        public string BookmarksCreateCaption
-        {
-            get
-            {
-                if (HasCreatedBookmarks)
-                    return "Create Bookmark (*)";
-                else
-                    return "Create Bookmark";
-            }
-            set
-            {
-                HasCreatedBookmarks = bool.Parse(value);
-                OnPropertyChanged();
-            }
-        }
-
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string name = null)
         {

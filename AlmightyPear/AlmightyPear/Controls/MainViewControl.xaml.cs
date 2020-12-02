@@ -33,11 +33,6 @@ namespace AlmightyPear.Controls
             Env.FirebaseController.UpdateProfileAsync(tb_displayName.Text, "");
         }
 
-        private void Btn_saveAll_Click(object sender, RoutedEventArgs e)
-        {
-            Env.MainWindow.Mi_SaveAll_ClickAsync(sender, e);
-        }
-
         private void Btn_clearTempBin_Click(object sender, RoutedEventArgs e)
         {
             Env.MainWindow.Mi_ClearTempBin_Click(sender, e);

@@ -89,7 +89,7 @@ namespace AlmightyPear.View
             Screen screen = Screen.FromPoint(new System.Drawing.Point((int)mousePos.X, (int)mousePos.Y));
 
             Instance.Left = Clamp(mousePos.X - 320, screen.Bounds.Left, screen.Bounds.Left + screen.Bounds.Width - Instance.Width);
-            Instance.Top = Clamp(mousePos.Y - 160, screen.Bounds.Top, screen.Bounds.Top + screen.Bounds.Height - Instance.Height);
+            Instance.Top  = Clamp(mousePos.Y - 160, screen.Bounds.Top, screen.Bounds.Top + screen.Bounds.Height - Instance.Height);
 
             Instance.Show();
 

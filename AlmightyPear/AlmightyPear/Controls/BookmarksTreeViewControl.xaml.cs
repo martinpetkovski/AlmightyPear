@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Windows;
@@ -39,6 +38,85 @@ namespace AlmightyPear.Controls
 
         public class BookmarksTreeViewControlModel : INotifyPropertyChanged
         {
+            private void UpdateSelection()
+            {
+                OnPropertyChanged("SelectedBinItems");
+                OnPropertyChanged("HasSelected");
+                OnPropertyChanged("HasOneSelected");
+                OnPropertyChanged("HasOnlyBinSelected");
+                OnPropertyChanged("HasOnlyBookmarkSelected");
+                OnPropertyChanged("HasOnlyOneBinSelected");
+                OnPropertyChanged("HasOnlyOneBookmarkSelected");
+                OnPropertyChanged("ContextedItem");
+                OnPropertyChanged("IsContextedItemBin");
+                OnPropertyChanged("IsContextedItemBookmark");
+                OnPropertyChanged("IsContextedItemSelected");
+                OnPropertyChanged("IsContextedItemNotSelected");
+                OnPropertyChanged("IsContextedItemNotInArchive");
+            }
+
+            private IBinItem _contextedItem;
+            public IBinItem ContextedItem
+            {
+                get
+                {
+                    return _contextedItem;
+                }
+                set
+                {
+                    _contextedItem = value;
+                    UpdateSelection();
+                }
+            }
+
+            public bool IsContextedItemBin
+            {
+                get
+                {
+                    return _contextedItem is BinModel;
+                }
+            }
+
+            public bool IsContextedItemBookmark
+            {
+                get
+                {
+                    return _contextedItem is BookmarkModel;
+                }
+            }
+
+            public bool IsContextedItemAny
+            {
+                get
+                {
+                    return true;
+                }
+            }
+
+            public bool IsContextedItemNotSelected
+            {
+                get
+                {
+                    return !SelectedBinItems.Contains(ContextedItem);
+                }
+            }
+
+            public bool IsContextedItemSelected
+            {
+                get
+                {
+                    return SelectedBinItems.Contains(ContextedItem);
+                }
+            }
+
+            public bool IsContextedItemNotInArchive
+            {
+                get
+                {
+                    return ContextedItem.Path != Env.ArchiveBinPath;
+                }
+            }
+
             private List<IBinItem> _selectedBinItems;
             public List<IBinItem> SelectedBinItems
             {
@@ -49,7 +127,7 @@ namespace AlmightyPear.Controls
                 set
                 {
                     _selectedBinItems = value;
-                    OnPropertyChanged();
+                    UpdateSelection();
                 }
             }
 
@@ -64,8 +142,7 @@ namespace AlmightyPear.Controls
 
                     SelectedBinItems.Add(item);
                 }
-                OnPropertyChanged("SelectedBinItems");
-                OnPropertyChanged("HasSelected");
+                UpdateSelection();
             }
 
             public void SelectItem(IBinItem item)
@@ -73,20 +150,65 @@ namespace AlmightyPear.Controls
                 if (!SelectedBinItems.Contains(item))
                     SelectedBinItems.Add(item);
 
-                OnPropertyChanged("SelectedBinItems");
-                OnPropertyChanged("HasSelected");
+                UpdateSelection();
             }
 
             public void ClearSelection()
             {
                 SelectedBinItems.Clear();
-                OnPropertyChanged("SelectedBinItems");
-                OnPropertyChanged("HasSelected");
+                UpdateSelection();
             }
 
             public bool HasSelected
             {
                 get { return SelectedBinItems.Count > 0; }
+            }
+
+            public bool HasOneSelected
+            {
+                get { return SelectedBinItems.Count == 1; }
+            }
+
+            public bool HasOnlyBinSelected
+            {
+                get
+                {
+                    foreach (IBinItem item in SelectedBinItems)
+                    {
+                        if (!(item is BinModel))
+                            return false;
+                    }
+                    return true;
+                }
+            }
+
+            public bool HasOnlyOneBinSelected
+            {
+                get
+                {
+                    return SelectedBinItems.Count == 1 && SelectedBinItems[0] is BinModel;
+                }
+            }
+
+            public bool HasOnlyOneBookmarkSelected
+            {
+                get
+                {
+                    return SelectedBinItems.Count == 1 && SelectedBinItems[0] is BookmarkModel;
+                }
+            }
+
+            public bool HasOnlyBookmarkSelected
+            {
+                get
+                {
+                    foreach (IBinItem item in SelectedBinItems)
+                    {
+                        if (!(item is BookmarkModel))
+                            return false;
+                    }
+                    return true;
+                }
             }
 
             public BookmarksTreeViewControlModel()
@@ -213,14 +335,30 @@ namespace AlmightyPear.Controls
 
         private async void Mi_delete_ClickAsync(object sender, RoutedEventArgs e)
         {
-            int result = await View.MessageBox.FireAsync("Delete Bin",
+            object dataContextedElement = ((MenuItem)sender).DataContext;
+            if (dataContextedElement is BinModel)
+            {
+                int result = await View.MessageBox.FireAsync("Delete Bin",
                 "You are about to delete this bin along with all containing bookmarks. " +
                 "\nThis action is irreversible. " +
                 "\nAre you sure you want to continue?",
                 new List<string>() { "Yes", "No" });
-            if (result == 0)
+                if (result == 0)
+                {
+                    Env.BinController.DeleteBin((BinModel)dataContextedElement);
+                }
+            }
+            else if (dataContextedElement is BookmarkModel)
             {
-                Env.BinController.DeleteBin((BinModel)((MenuItem)sender).DataContext);
+                int result = await View.MessageBox.FireAsync("Delete Bin",
+                "You are about to delete this bookmark. " +
+                "\nThis action is irreversible. " +
+                "\nAre you sure you want to continue?",
+                new List<string>() { "Yes", "No" });
+                if (result == 0)
+                {
+                    Env.BinController.DeleteBookmark(((BookmarkModel)dataContextedElement).ID);
+                }
             }
         }
 
@@ -267,12 +405,6 @@ namespace AlmightyPear.Controls
             }
         }
 
-        private void Btn_BookmarkAction_Click(object sender, RoutedEventArgs e)
-        {
-            BookmarkModel bookmark = (BookmarkModel)((Button)sender).DataContext;
-            ExecuteBookmarkAction(bookmark);
-        }
-
         private void Mi_ExecuteBookmarkAction_Click(object sender, RoutedEventArgs e)
         {
             BookmarkModel bookmark = (BookmarkModel)((MenuItem)sender).DataContext;
@@ -304,13 +436,26 @@ namespace AlmightyPear.Controls
 
         private void Mi_copyPath_Click(object sender, RoutedEventArgs e)
         {
-            Env.CopyToClipboard(((BinModel)((MenuItem)sender).DataContext).Path);
+            Env.CopyToClipboard(((IBinItem)((MenuItem)sender).DataContext).Path);
         }
 
         private void Mi_CopyAdditive_Click(object sender, RoutedEventArgs e)
         {
-            BookmarkModel bookmark = (BookmarkModel)((MenuItem)sender).DataContext;
-            Env.CopyToClipboard(Env.GetClipboardText() + " " + bookmark.Content);
+            if (Model.HasOneSelected)
+            {
+                BookmarkModel bookmark = (BookmarkModel)((MenuItem)sender).DataContext;
+                Env.CopyToClipboard(Env.GetClipboardText() + " " + bookmark.Content);
+            }
+            else
+            {
+                string toCopy = " ";
+                foreach (IBinItem item in Model.SelectedBinItems)
+                {
+                    if (item is BookmarkModel) toCopy += " " + ((BookmarkModel)item).Content;
+                    else if (item is BinModel) toCopy += " " + ((BinModel)item).Name;
+                }
+                Env.CopyToClipboard(toCopy);
+            }
         }
 
         private void MoveSelected(string path)
@@ -330,24 +475,43 @@ namespace AlmightyPear.Controls
         private void Rt_bin_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             IBinItem sourceBin = (IBinItem)((StackPanel)sender).DataContext;
-            string sourcePath = sourceBin.Path;
+            if (Keyboard.Modifiers == ModifierKeys.Control && Keyboard.Modifiers != ModifierKeys.Shift)
+            {
+                Model.ToggleSelectItem(sourceBin);
+            }
+            else if (Keyboard.Modifiers == (ModifierKeys.Control | ModifierKeys.Shift))
+            {
+                Model.SelectItem(sourceBin);
+            }
+            else
+            {
+                string sourcePath = sourceBin.Path;
 
-            ExplicitFilter?.Invoke("-p " + sourcePath);
+                ExplicitFilter?.Invoke("-p " + sourcePath);
+            }
         }
 
         private void QueryNet(object sender, RoutedEventArgs e)
         {
             MenuItem menuItem = (MenuItem)sender;
             string param = (string)menuItem.CommandParameter;
-            BookmarkModel bookmark = (BookmarkModel)((MenuItem)sender).DataContext;
+            IBinItem binItem = (IBinItem)((MenuItem)sender).DataContext;
 
-            string content = "";
-            if (bookmark.Caption != "")
-                content = bookmark.Caption;
+            if (binItem is BookmarkModel)
+            {
+                BookmarkModel bookmark = (BookmarkModel)binItem;
+                string content = "";
+                if (bookmark.Caption != "")
+                    content = bookmark.Caption;
+                else
+                    content = bookmark.Content;
+
+                OpenLink(param + content);
+            }
             else
-                content = bookmark.Content;
-
-            OpenLink(param + content);
+            {
+                OpenLink(param + binItem.Path.Replace(Env.PathSeparator, ' '));
+            }
         }
 
         private void Mi_Deselect_Click(object sender, RoutedEventArgs e)
@@ -370,11 +534,7 @@ namespace AlmightyPear.Controls
 
             if (sourceBin != null)
             {
-                var pathChildren = Env.BinController.GetBinItems(sourceBin.Path);
-                foreach (var item in pathChildren)
-                {
-                    Model.SelectItem(item.Value);
-                }
+                Model.SelectItem(sourceBin);
             }
         }
 
@@ -383,59 +543,68 @@ namespace AlmightyPear.Controls
             Model.ClearSelection();
             IBinItem sourceBin = (IBinItem)((MenuItem)sender).DataContext;
 
-            if (sourceBin != null && sourceBin is BinModel)
+            if (sourceBin != null)
             {
-                var pathChildren = Env.BinController.GetItemsAndChildren((BinModel)sourceBin);
-                foreach (var item in pathChildren)
+                if (sourceBin is BookmarkModel)
                 {
-                    Model.SelectItem(item.Value);
+                    sourceBin = Env.BinController.GetBin(sourceBin.Path);
+                }
+
+                if (sourceBin is BinModel)
+                {
+                    var pathChildren = Env.BinController.GetItemsAndChildren((BinModel)sourceBin);
+                    foreach (var item in pathChildren)
+                    {
+                        Model.SelectItem(item.Value);
+                    }
                 }
             }
         }
 
-        private static BinPreviewWnd imagePreview = null;
         private void Btn_BookmarkAction_MouseEnter(object sender, MouseEventArgs e)
         {
-            if (sender is Button)
+            if (sender is FrameworkElement)
             {
-                Button btn = (Button)sender;
-                if (btn.DataContext is BookmarkModel)
-                {
-                    BookmarkModel bookmark = (BookmarkModel)btn.DataContext;
-                    if (bookmark.Type == "image")
-                    {
-                        imagePreview = new BinPreviewWnd(bookmark.Content);
-                        imagePreview.Show();
-                        Env.MainWindow.Activate();
-                    }
-                }
+                FrameworkElement btn = (FrameworkElement)sender;
+
+                IBinItem binItem = (IBinItem)btn.DataContext;
+
+                BinItemPreviewWnd.Instance.SetBinItem(binItem);
+                BinItemPreviewWnd.Instance.Show();
+                Env.MainWindow.Activate();
             }
         }
 
         private void Btn_BookmarkAction_MouseLeave(object sender, MouseEventArgs e)
         {
-            if (sender is Button)
+            if (sender is FrameworkElement)
             {
-                Button btn = (Button)sender;
-                if (btn.DataContext is BookmarkModel)
+                FrameworkElement btn = (FrameworkElement)sender;
+                if (btn.DataContext is IBinItem)
                 {
-                    BookmarkModel bookmark = (BookmarkModel)btn.DataContext;
-                    if (imagePreview != null)
+                    IBinItem bookmark = (IBinItem)btn.DataContext;
+                    if (BinItemPreviewWnd.Instance.IsVisible)
                     {
-                        imagePreview.Hide();
-                        imagePreview = null;
+                        BinItemPreviewWnd.Instance.Hide();
                     }
                 }
             }
         }
 
+        private static double Clamp(double x, double a, double b)
+        {
+            return Math.Min(Math.Max(x, a), b);
+        }
+
         private void Btn_BookmarkAction_MouseMove(object sender, MouseEventArgs e)
         {
-            if (imagePreview != null)
+            if (BinItemPreviewWnd.Instance.IsVisible)
             {
-                Point pos = GetMousePosition();
-                imagePreview.Top = pos.Y + 10;
-                imagePreview.Left = pos.X + 10;
+                Point mousePos = GetMousePosition();
+                System.Windows.Forms.Screen screen = System.Windows.Forms.Screen.FromPoint(new System.Drawing.Point((int)mousePos.X, (int)mousePos.Y));
+
+                BinItemPreviewWnd.Instance.Left  = Clamp(mousePos.X + 20, screen.Bounds.Left, screen.Bounds.Left + screen.Bounds.Width - BinItemPreviewWnd.Instance.Width);
+                BinItemPreviewWnd.Instance.Top = Clamp(mousePos.Y + 20, screen.Bounds.Top, screen.Bounds.Top + screen.Bounds.Height - BinItemPreviewWnd.Instance.Height);
             }
         }
 
@@ -465,7 +634,73 @@ namespace AlmightyPear.Controls
         }
         public void ExecAnim()
         {
-            if(Env.UserData.CustomModel.AnimationsLevel == 2) mah_contentControl.Reload();
+            if (Env.UserData.CustomModel.AnimationsLevel == 2) mah_contentControl.Reload();
+        }
+
+        private void Mi_Archive_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (IBinItem sourceBin in Model.SelectedBinItems)
+            {
+                Env.BinController.ChangePath(sourceBin, Env.ArchiveBinPath);
+            }
+        }
+
+        private void Btn_BookmarkAction_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            IBinItem bookmark = (IBinItem)((FrameworkElement)sender).DataContext;
+            if (Mouse.RightButton == MouseButtonState.Pressed)
+            {
+                if (Model.HasSelected && bookmark is BinModel)
+                {
+
+                }
+                else if (Model.SelectedBinItems.Count <= 1)
+                {
+                    Model.ClearSelection();
+                    Model.SelectItem(bookmark);
+                }
+            }
+        }
+
+        private void Btn_BookmarkAction_Click(object sender, RoutedEventArgs e)
+        {
+            BookmarkModel bookmark = (BookmarkModel)((Button)sender).DataContext;
+            ExecuteBookmarkAction(bookmark);
+        }
+
+        private void Mah_contentControl_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (!(((FrameworkElement)e.OriginalSource).DataContext is IBinItem))
+            {
+                Model.ClearSelection();
+            }
+        }
+
+        private void BinItemContextMenu_Opened(object sender, RoutedEventArgs e)
+        {
+            Model.ContextedItem = (IBinItem)((FrameworkElement)sender).DataContext;
+        }
+
+        private void Mi_SelectAddAll_Click(object sender, RoutedEventArgs e)
+        {
+            IBinItem sourceBin = (IBinItem)((MenuItem)sender).DataContext;
+
+            if (sourceBin != null)
+            {
+                if (sourceBin is BookmarkModel)
+                {
+                    sourceBin = Env.BinController.GetBin(sourceBin.Path);
+                }
+
+                if (sourceBin is BinModel)
+                {
+                    var pathChildren = Env.BinController.GetItemsAndChildren((BinModel)sourceBin);
+                    foreach (var item in pathChildren)
+                    {
+                        Model.SelectItem(item.Value);
+                    }
+                }
+            }
         }
     }
 }

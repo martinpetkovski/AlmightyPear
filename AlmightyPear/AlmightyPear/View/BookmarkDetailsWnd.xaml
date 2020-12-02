@@ -7,6 +7,7 @@
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:converters="clr-namespace:AlmightyPear.Converters"
              xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
+             xmlns:behaviors="clr-namespace:WPFTextBoxAutoComplete;assembly=WPFTextBoxAutoComplete"
              Icon="..\Resources\Textures\logo_icon.ico"
              mc:Ignorable="d" 
              Name="rootControl"
@@ -19,6 +20,7 @@
         <ResourceDictionary>
             <converters:AnimationLevelToBoolenConverter x:Key="AnimationLevelToBoolenConverter"/>
             <converters:UnixTimeConverter x:Key="UnixTimeConverter"/>
+            <converters:BinDepthListConverter x:Key="BinDepthListConverter"/>
         </ResourceDictionary>
     </Window.Resources>
     <mah:MetroWindow.WindowTransitionsEnabled>
@@ -54,6 +56,10 @@
                 Name="tb_path"
                 KeyDown="Tb_path_KeyDown"
                 TextChanged="Tb_path_TextChanged"
+                behaviors:AutoCompleteBehavior.AutoCompleteItemsSource="{Binding  
+                ElementName=tb_path,
+                Path=Text, 
+                Converter={StaticResource BinDepthListConverter}}"
                 Text="{Binding ElementName=rootControl, Path=Bookmark.Path, Mode=OneWay}"></TextBox>
             
             <TextBlock 

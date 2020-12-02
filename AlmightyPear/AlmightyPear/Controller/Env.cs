@@ -13,7 +13,8 @@ namespace AlmightyPear.Controller
     {
         // global
         public static char PathSeparator = ':';
-        public static string TempBinPath = "TEMP";
+        public static string TempBinPath = "_TEMP";
+        public static string ArchiveBinPath = "_ARCHIVE";
         public static int CharacterLimit = 5000;
         public static int BinPathCharacterLimit = 100;
         // data

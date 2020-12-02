@@ -36,14 +36,6 @@
                     <MenuItem.Header>
                         <Image  Source="Resources\Textures\logo.png" Height="36"/>
                     </MenuItem.Header>
-                    <MenuItem Name="mi_SaveAll" Click="Mi_SaveAll_ClickAsync">
-                        <MenuItem.Header>
-                            <StackPanel Orientation="Horizontal">
-                                <fa:ImageAwesome Icon="Save" Foreground="{DynamicResource mg.solid.100}" Height="12"/>
-                                <TextBlock Text="Save All..." VerticalAlignment="Center" Margin="5,0,0,0"></TextBlock>
-                            </StackPanel>
-                        </MenuItem.Header>
-                    </MenuItem>
                     <MenuItem Name="mi_ClearTempBin" Click="Mi_ClearTempBin_Click">
                         <MenuItem.Header>
                             <StackPanel Orientation="Horizontal">
@@ -90,8 +82,6 @@
                 VerticalAlignment="Center" 
                 Margin="0,0,30,0"
                 >
-                <!--<TextBlock Text="Logged in as:  "></TextBlock>-->
-                <!--<Image Height="32" Source="{Binding Source={StaticResource Env}, Path=UserData.PhotoUrl}" Margin="0,0,10,0"></Image>-->
                 <TextBlock Text="{Binding Source={StaticResource Env}, Path=UserData.DisplayName}" VerticalAlignment="Center"></TextBlock>
                 <TextBlock Text="  ●  " VerticalAlignment="Center"></TextBlock>
                 <TextBlock Text="{Binding Source={StaticResource Env}, Path=UserData.Email}" VerticalAlignment="Center"></TextBlock>

@@ -61,16 +61,16 @@ namespace AlmightyPear.Converters
         }
     }
 
-    class BookmarkSelectedConverter : IMultiValueConverter
+    class BinItemSelectedConverter : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
             if (values[0] is List<IBinItem> &&
-               values[1] is BookmarkModel &&
+               values[1] is IBinItem &&
                parameter is string)
             {
                 List<IBinItem> selectedItems = (List<IBinItem>)values[0];
-                BookmarkModel bookmark = (BookmarkModel)values[1];
+                IBinItem bookmark = (IBinItem)values[1];
                 string type = (string)parameter;
 
                 if (type == "Brush")
@@ -181,6 +181,30 @@ namespace AlmightyPear.Converters
             throw new NotImplementedException();
         }
     }
+
+    class BoolToMenuItemVisibilityConverter : IMultiValueConverter
+    {
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (values.Length >= 2 && values[0] is bool && values[1] is bool)
+            {
+                bool add = true;
+                if(values.Length >=3 && values[2] is bool)
+                {
+                    add = (bool)values[2];
+                }
+                return ((bool)values[0] && (bool)values[1] && add) ? Visibility.Visible : Visibility.Collapsed;
+            }
+
+            return true;
+        }
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
     class AnimationValueToNameConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

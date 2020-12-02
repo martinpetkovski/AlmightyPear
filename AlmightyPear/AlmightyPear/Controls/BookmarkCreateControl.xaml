@@ -32,7 +32,6 @@
                 Grid.Column="0" 
                 Name="tb_category" 
                 KeyDown="Tb_category_KeyDown" 
-                KeyUp="Tb_category_KeyUp"
                 AcceptsTab="False"
                 TextChanged="Tb_category_TextChanged"
                 TabIndex="0"
@@ -55,7 +54,6 @@
             WordWrap="True"
             ShowLineNumbers="True"
             LineNumbersForeground="#555"
-            KeyUp="Txt_selection_KeyUp"
             TextChanged="Txt_selection_TextChanged"
             ></avalonEdit:TextEditor>
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Left">

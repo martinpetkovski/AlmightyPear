@@ -48,8 +48,7 @@ namespace AlmightyPear.View
 
             double finalX = (screen.Bounds.X + (screen.Bounds.Width / 2)) - (finalW / 2);
             double finalY = (screen.Bounds.Y + (screen.Bounds.Height / 2)) - Height / 2;
-
-
+            
             Width = finalW;
             Left = finalX;
             Top = finalY;
@@ -67,21 +66,15 @@ namespace AlmightyPear.View
             mah_contentControl.Reload();
         }
 
-        private async void Ctrl_filter_FilterEventAsync(object sender, EventArgs e)
+        private void Ctrl_filter_FilterEvent(object sender, EventArgs e)
         {
             System.Windows.Input.KeyEventArgs ea = (System.Windows.Input.KeyEventArgs)e;
 
             if (ea.Key == Key.Escape)
             {
                 Env.ClearClipboard();
-                await Env.BinController.SaveEditedBookmarksAsync();
                 Hide();
             }
-        }
-
-        private void MetroWindow_LostFocus(object sender, RoutedEventArgs e)
-        {
-            Hide();
         }
 
         private void MetroWindow_Deactivated(object sender, EventArgs e)

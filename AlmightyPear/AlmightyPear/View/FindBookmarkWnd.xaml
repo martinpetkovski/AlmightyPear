@@ -23,7 +23,6 @@
         BorderBrush="#333"
         BorderThickness="1"
         GlowBrush="{DynamicResource mg.solid.70}"
-                 LostFocus="MetroWindow_LostFocus"
                  Deactivated="MetroWindow_Deactivated"
         WindowTransitionsEnabled="False"
         ResizeBorderThickness="5"
@@ -39,7 +38,7 @@
     <mah:MetroContentControl Name="mah_contentControl" TransitionsEnabled="False">
         <controls:BookmarksViewControl 
             x:Name="ctrl_filter" 
-            FilterEvent="Ctrl_filter_FilterEventAsync" 
+            FilterEvent="Ctrl_filter_FilterEvent" 
             MaxContentHeight="300"
             Margin="10"></controls:BookmarksViewControl>
     </mah:MetroContentControl>

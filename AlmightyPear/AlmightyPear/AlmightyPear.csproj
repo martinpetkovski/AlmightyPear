@@ -1,5 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\CefSharp.Wpf.86.0.241\build\CefSharp.Wpf.props" Condition="Exists('..\packages\CefSharp.Wpf.86.0.241\build\CefSharp.Wpf.props')" />
+  <Import Project="..\packages\CefSharp.Common.86.0.241\build\CefSharp.Common.props" Condition="Exists('..\packages\CefSharp.Common.86.0.241\build\CefSharp.Common.props')" />
+  <Import Project="..\packages\cef.redist.x86.86.0.24\build\cef.redist.x86.props" Condition="Exists('..\packages\cef.redist.x86.86.0.24\build\cef.redist.x86.props')" />
+  <Import Project="..\packages\cef.redist.x64.86.0.24\build\cef.redist.x64.props" Condition="Exists('..\packages\cef.redist.x64.86.0.24\build\cef.redist.x64.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -40,6 +44,26 @@
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>logo_icon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ControlzEx, Version=4.0.0.0, Culture=neutral, PublicKeyToken=69f1c32f803d307e, processorArchitecture=MSIL">
@@ -229,6 +253,7 @@
     <Compile Include="Model\EnvModel.cs" />
     <Compile Include="Model\IBinItem.cs" />
     <Compile Include="Model\BinModel.cs" />
+    <Compile Include="Utils\DataTemplateSelectors.cs" />
     <Compile Include="Utils\HotKeyManager.cs" />
     <Compile Include="Utils\MinimizeToTray.cs" />
     <Compile Include="Utils\StringCypher.cs" />
@@ -243,8 +268,8 @@
     <Compile Include="View\CreateBookmarkWnd.xaml.cs">
       <DependentUpon>CreateBookmarkWnd.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\BinPreviewWnd.xaml.cs">
-      <DependentUpon>BinPreviewWnd.xaml</DependentUpon>
+    <Compile Include="View\BinItemPreviewWnd.xaml.cs">
+      <DependentUpon>BinItemPreviewWnd.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ProgressBarWnd.xaml.cs">
       <DependentUpon>ProgressBarWnd.xaml</DependentUpon>
@@ -328,7 +353,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\BinPreviewWnd.xaml">
+    <Page Include="View\BinItemPreviewWnd.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -392,4 +417,17 @@
     <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
     <Error Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
   </Target>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\cef.redist.x64.86.0.24\build\cef.redist.x64.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\cef.redist.x64.86.0.24\build\cef.redist.x64.props'))" />
+    <Error Condition="!Exists('..\packages\cef.redist.x86.86.0.24\build\cef.redist.x86.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\cef.redist.x86.86.0.24\build\cef.redist.x86.props'))" />
+    <Error Condition="!Exists('..\packages\CefSharp.Common.86.0.241\build\CefSharp.Common.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\CefSharp.Common.86.0.241\build\CefSharp.Common.props'))" />
+    <Error Condition="!Exists('..\packages\CefSharp.Common.86.0.241\build\CefSharp.Common.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\CefSharp.Common.86.0.241\build\CefSharp.Common.targets'))" />
+    <Error Condition="!Exists('..\packages\CefSharp.Wpf.86.0.241\build\CefSharp.Wpf.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\CefSharp.Wpf.86.0.241\build\CefSharp.Wpf.props'))" />
+    <Error Condition="!Exists('..\packages\CefSharp.Wpf.86.0.241\build\CefSharp.Wpf.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\CefSharp.Wpf.86.0.241\build\CefSharp.Wpf.targets'))" />
+  </Target>
+  <Import Project="..\packages\CefSharp.Common.86.0.241\build\CefSharp.Common.targets" Condition="Exists('..\packages\CefSharp.Common.86.0.241\build\CefSharp.Common.targets')" />
+  <Import Project="..\packages\CefSharp.Wpf.86.0.241\build\CefSharp.Wpf.targets" Condition="Exists('..\packages\CefSharp.Wpf.86.0.241\build\CefSharp.Wpf.targets')" />
 </Project>

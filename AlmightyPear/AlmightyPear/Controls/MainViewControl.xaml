@@ -25,7 +25,7 @@
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
                         <fa:ImageAwesome Icon="Bookmark" Foreground="{DynamicResource mg.solid.100}" Height="16"></fa:ImageAwesome>
-                        <TextBlock Text="{Binding Source={StaticResource Env}, Path=BinData.BookmarksViewCaption}"
+                        <TextBlock Text="Bookmarks View"
                                    VerticalAlignment="Center" Margin="15,0,0,0"></TextBlock>
                     </StackPanel>
                 </TabItem.Header>
@@ -39,7 +39,7 @@
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
                         <fa:ImageAwesome Icon="Plus" Foreground="{DynamicResource mg.solid.100}" Height="16"></fa:ImageAwesome>
-                        <TextBlock Text="{Binding Source={StaticResource Env}, Path=BinData.BookmarksCreateCaption}"
+                        <TextBlock Text="Create Bookmark"
                                    VerticalAlignment="Center" Margin="15,0,0,0"></TextBlock>
                     </StackPanel>
                 </TabItem.Header>

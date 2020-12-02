@@ -106,11 +106,6 @@ namespace AlmightyPear.View
             }
         }
 
-        private void MetroWindow_LostFocus(object sender, RoutedEventArgs e)
-        {
-            Hide();
-        }
-
         private void MetroWindow_Deactivated(object sender, EventArgs e)
         {
             Hide();

@@ -155,7 +155,6 @@ namespace AlmightyPear.Model
                 {
                     BookmarkModel model = ((BookmarkModel)binItem.Value);
                     model.Path = Path;
-                    Env.BinController.MarkBookmarkForEdit(model);
                 }
             }
         }

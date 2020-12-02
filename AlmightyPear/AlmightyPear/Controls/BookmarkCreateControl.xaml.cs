@@ -44,7 +44,6 @@ namespace AlmightyPear.Controls
 
             await Env.FirebaseController.CreateBookmarkAsync(bin, txt_selection.Text);
             Env.ClearClipboard();
-            Env.BinData.BookmarksCreateCaption = false.ToString();
         }
 
         public void Cancel()
@@ -71,16 +70,6 @@ namespace AlmightyPear.Controls
                 tb_category.CaretIndex = tb_category.Text.Length;
                 e.Handled = true;
             }
-        }
-
-        private void Txt_selection_KeyUp(object sender, KeyEventArgs e)
-        {
-            Env.BinData.BookmarksCreateCaption = (tb_category.Text != "" || txt_selection.Text != "").ToString();
-        }
-
-        private void Tb_category_KeyUp(object sender, KeyEventArgs e)
-        {
-            Env.BinData.BookmarksCreateCaption = (tb_category.Text != "" || txt_selection.Text != "").ToString();
         }
 
         private void Txt_selection_KeyDown(object sender, KeyEventArgs e)

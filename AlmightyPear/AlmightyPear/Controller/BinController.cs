@@ -51,6 +51,7 @@ namespace AlmightyPear.Controller
                 else path += Env.PathSeparator + bin;
 
                 IBinItem nextBin = null;
+
                 lock (parentBin.BinItems)
                 {
                     bool exists = parentBin.BinItems.TryGetValue(bin, out nextBin);
@@ -157,10 +158,6 @@ namespace AlmightyPear.Controller
                 model.Name = model.Path.Substring(model.Path.LastIndexOf(Env.PathSeparator) + 1, model.Path.Length - model.Path.LastIndexOf(':') - 1);
                 model.RecalculatePaths();
             }
-            else if (item is BookmarkModel)
-            {
-                MarkBookmarkForEdit((BookmarkModel)item);
-            }
 
             GenerateBinTree();
         }
@@ -223,65 +220,6 @@ namespace AlmightyPear.Controller
                 }
             }
             return retVal;
-        }
-
-        public void MarkBookmarkForEdit(BookmarkModel bookmark)
-        {
-            if (!EditedBookmarks.ContainsKey(bookmark.ID))
-            {
-                EditedBookmarks.Add(bookmark.ID, bookmark);
-            }
-            Env.BinData.BookmarksViewCaption = ""; // trigger change
-        }
-
-        public void ClearBookmarksForEdit()
-        {
-            EditedBookmarks.Clear();
-            Env.BinData.BookmarksViewCaption = ""; // trigger change
-        }
-
-        public async Task SaveEditedBookmarksAsync(Control instigatorControl = null, Action<double, string> progress = null)
-        {
-            if (EditedBookmarks.Count == 0)
-            {
-                progress?.Invoke(1, "");
-                return;
-            }
-
-            int totalEdited = EditedBookmarks.Count;
-
-            var tasks = EditedBookmarks.Select(bookmark => Env.FirebaseController.UpdateBookmarkAsync(bookmark.Value)).ToArray();
-            Task whenAllTask = Task.WhenAll(tasks);
-
-            int i = 0;
-            for (; ; )
-            {
-                var timer = Task.Delay(100);
-                await Task.WhenAny(whenAllTask, timer);
-                if (whenAllTask.IsCompleted)
-                {
-                    EditedBookmarks.Clear();
-                    Env.BinData.BookmarksViewCaption = "";
-                    return;
-                }
-                i++;
-                if (instigatorControl != null)
-                {
-                    instigatorControl.Dispatcher.Invoke(DispatcherPriority.Background,
-                        new Action(() =>
-                    {
-                        progress?.Invoke((double)i / totalEdited, "");
-                    }));
-                }
-            }
-        }
-
-        public bool HasEditedBookmarks()
-        {
-            if (EditedBookmarks != null)
-                return EditedBookmarks.Count > 0;
-            else
-                return false;
         }
 
         public void ClearTempBin()

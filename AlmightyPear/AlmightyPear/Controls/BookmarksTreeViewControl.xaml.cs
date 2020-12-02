@@ -571,7 +571,7 @@ namespace AlmightyPear.Controls
 
                 BinItemPreviewWnd.Instance.SetBinItem(binItem);
                 BinItemPreviewWnd.Instance.Show();
-                Env.MainWindow.Activate();
+                //Window.GetWindow(this).Activate();
             }
         }
 
@@ -647,17 +647,22 @@ namespace AlmightyPear.Controls
 
         private void Btn_BookmarkAction_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            IBinItem bookmark = (IBinItem)((FrameworkElement)sender).DataContext;
-            if (Mouse.RightButton == MouseButtonState.Pressed)
-            {
-                if (Model.HasSelected && bookmark is BinModel)
-                {
+            object context = ((FrameworkElement)sender).DataContext;
 
-                }
-                else if (Model.SelectedBinItems.Count <= 1)
+            if (context is IBinItem)
+            {
+                IBinItem bookmark = (IBinItem)context;
+                if (Mouse.RightButton == MouseButtonState.Pressed)
                 {
-                    Model.ClearSelection();
-                    Model.SelectItem(bookmark);
+                    if (Model.HasSelected && bookmark is BinModel)
+                    {
+
+                    }
+                    else if (Model.SelectedBinItems.Count <= 1)
+                    {
+                        Model.ClearSelection();
+                        Model.SelectItem(bookmark);
+                    }
                 }
             }
         }

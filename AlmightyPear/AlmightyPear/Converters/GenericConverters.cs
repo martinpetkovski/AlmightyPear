@@ -4,6 +4,7 @@ using AlmightyPear.Utils;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
@@ -272,6 +273,32 @@ namespace AlmightyPear.Converters
             }
 
             return "BasicBlack";
+        }
+    }
+
+    class YoutubeToAddressAutoplayConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if(value is string)
+            {
+                string url = ((string)value).Trim(' ');
+                string youtubeAddressRegex = "^(?:https?\\:\\/\\/)?(?:www\\.)?(?:youtu\\.be\\/|youtube\\.com\\/(?:embed\\/|v\\/|watch\\?v\\=))([\\w-]{10,12})(?:$|\\&|\\?\\#).*";
+                if (Regex.IsMatch(url, youtubeAddressRegex))
+                {
+                    Match match = Regex.Match(url, youtubeAddressRegex);
+                    return "https://www.youtube.com/embed/" + match.Groups[1] + "/?autoplay=1";
+                }
+                else
+                    return value;
+            }
+
+            return value;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
         }
     }
 }

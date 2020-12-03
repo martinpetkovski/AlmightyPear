@@ -1,6 +1,7 @@
 ﻿using AlmightyPear.Controller;
 using AlmightyPear.Model;
 using AlmightyPear.Utils;
+using FontAwesome.WPF;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -294,6 +295,30 @@ namespace AlmightyPear.Converters
             }
 
             return value;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    class BookmarkTypeToIcon : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if(value is string)
+            {
+                string type = (string)value;
+                if (type == "link")
+                    return FontAwesomeIcon.Link;
+                else if (type == "text")
+                    return FontAwesomeIcon.FileText;
+                else if (type == "image")
+                    return FontAwesomeIcon.Image;
+            }
+
+            return FontAwesomeIcon.None;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

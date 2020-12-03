@@ -20,6 +20,7 @@
             <converters:BinItemSelectedConverter x:Key="BinItemSelectedConverter" />
             <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
             <converters:BoolToMenuItemVisibilityConverter x:Key="BoolToMenuItemVisibilityConverter" />
+            <converters:BookmarkTypeToIcon x:Key="BookmarkTypeToIcon" />
             <ContextMenu x:Key="BinItemContextMenu" x:Name="BinItemContextMenu" FontSize="14" 
                          Opened="BinItemContextMenu_Opened">
                 <!-- CONTEXT MENU HEADER-->
@@ -384,7 +385,14 @@
                         MouseDown="Btn_BookmarkAction_MouseDown"
                         Click="Btn_BookmarkAction_Click">
                             <Button.Content>
-                                <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Converter={StaticResource BookmarkCaptionConverter}}"></TextBlock>
+                                <StackPanel Orientation="Horizontal">
+                                    <fa:ImageAwesome Icon="{Binding Path=Type, Converter={StaticResource BookmarkTypeToIcon}}" 
+                                                     Width="16" Height="16" Margin="0,0,10,0" 
+                                                     Foreground="{DynamicResource mg.solid.100}"></fa:ImageAwesome>
+                                    <TextBlock TextTrimming="CharacterEllipsis" 
+                                               VerticalAlignment="Center" 
+                                               Text="{Binding Converter={StaticResource BookmarkCaptionConverter}}"></TextBlock>
+                                </StackPanel>
                             </Button.Content>
                             <Button.BorderBrush>
                                 <MultiBinding Converter="{StaticResource BinItemSelectedConverter}" ConverterParameter="Brush">

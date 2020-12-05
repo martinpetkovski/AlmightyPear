@@ -49,7 +49,7 @@ namespace AlmightyPear.Controller
             MainWindow = mainWindow;
         }
 
-        private static int clipboardDelay = 10;
+        private static int clipboardDelay = 20;
         // UTILS
         public static string GetClipboardText()
         {
@@ -73,7 +73,7 @@ namespace AlmightyPear.Controller
             staThread.Start();
             staThread.Join();
 
-            Thread.Sleep(clipboardDelay);
+            //Thread.Sleep(clipboardDelay);
 
             return clipboardData;
         }
@@ -98,7 +98,7 @@ namespace AlmightyPear.Controller
             staThread.Start();
             staThread.Join();
 
-            Thread.Sleep(clipboardDelay);
+            //Thread.Sleep(clipboardDelay);
         }
 
         public static void CopyToClipboard(string text)

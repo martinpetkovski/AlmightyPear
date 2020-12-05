@@ -43,8 +43,6 @@ namespace AlmightyPear
             }
         }
 
-        private bool _flip = false;
-
         public Dictionary<Type, Window> ChildWindows { get; set; }
         public Dictionary<string, HotKeyManager> HotKeyManagers { get; set; }
 
@@ -63,15 +61,44 @@ namespace AlmightyPear
             return activeProcId == procId;
         }
 
-        private void ShowHotWndCreateBookmark(object sender, HotKeyEventArgs e)
+        public async Task ClipboardChanged(string inputValue)
+        {
+            await Task.Factory.StartNew(() =>
+            {
+                string a = Env.GetClipboardText();
+                while (inputValue == a)
+                {
+                    Thread.Sleep(10);
+                    a = Env.GetClipboardText();
+                }
+            });
+        }
+
+        private string _prevClipboardText = "";
+
+        private async void ShowHotWndCreateBookmarkAsync(object sender, HotKeyEventArgs e)
         {
             CreateBookmarkWnd createBookmarkWnd = (CreateBookmarkWnd)ChildWindows[typeof(CreateBookmarkWnd)];
 
-            InputSimulator inputSim = new InputSimulator();
+            if(createBookmarkWnd.IsVisible)
+            {
+                Dispatcher.Invoke(DispatcherPriority.SystemIdle, new Action(() =>
+                {
+                    createBookmarkWnd.Hide();
+                }));
+            }
 
+            InputSimulator inputSim = new InputSimulator();
+            string clipboardText = Env.GetClipboardText();
             inputSim.Keyboard.KeyUp(VirtualKeyCode.LWIN);
-            Thread.Sleep(20);
             inputSim.Keyboard.ModifiedKeyStroke(VirtualKeyCode.CONTROL, VirtualKeyCode.VK_C);
+
+            if (clipboardText != "" && clipboardText != _prevClipboardText)
+            {
+                await ClipboardChanged(clipboardText);
+            }
+
+            _prevClipboardText = Env.GetClipboardText();
 
             Dispatcher.Invoke(DispatcherPriority.SystemIdle, new Action(() =>
             {
@@ -130,13 +157,13 @@ namespace AlmightyPear
 
             HotKeyManagers = new Dictionary<string, HotKeyManager>();
 
-            HotKeyManagers["win+ctrl"] = new HotKeyManager();
-            HotKeyManagers["win+ctrl"].RegisterHotKey(Keys.None, KeyModifiers.Windows | KeyModifiers.Control);
-            HotKeyManagers["win+ctrl"].HotKeyPressed += new EventHandler<HotKeyEventArgs>(ShowHotWndFindBookmark);
-
             HotKeyManagers["win+alt"] = new HotKeyManager();
             HotKeyManagers["win+alt"].RegisterHotKey(Keys.None, KeyModifiers.Windows | KeyModifiers.Alt);
-            HotKeyManagers["win+alt"].HotKeyPressed += new EventHandler<HotKeyEventArgs>(ShowHotWndCreateBookmark);
+            HotKeyManagers["win+alt"].HotKeyPressed += new EventHandler<HotKeyEventArgs>(ShowHotWndFindBookmark);
+
+            HotKeyManagers["win+ctrl"] = new HotKeyManager();
+            HotKeyManagers["win+ctrl"].RegisterHotKey(Keys.None, KeyModifiers.Windows | KeyModifiers.Control);
+            HotKeyManagers["win+ctrl"].HotKeyPressed += new EventHandler<HotKeyEventArgs>(ShowHotWndCreateBookmarkAsync);
 
             ChildWindows = new Dictionary<Type, Window>();
             ChildWindows[typeof(CreateBookmarkWnd)] = new CreateBookmarkWnd();

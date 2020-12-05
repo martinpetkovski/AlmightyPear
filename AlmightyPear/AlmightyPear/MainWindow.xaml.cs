@@ -6,6 +6,7 @@ using AlmightyPear.View;
 using MahApps.Metro.Controls;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -153,7 +154,7 @@ namespace AlmightyPear
             await InitializeThemesAsync();
             InitializeComponent();
 
-            MinimizeToTray.Enable(this);
+            MinimizeToTray.Register(this);
 
             HotKeyManagers = new Dictionary<string, HotKeyManager>();
 
@@ -206,6 +207,12 @@ namespace AlmightyPear
             {
                 if (Env.UserData.CustomModel.AnimationsLevel == 2) mah_contentControl.Reload();
             }
+        }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            e.Cancel = true;
+            WindowState = WindowState.Minimized;
         }
     }
 }

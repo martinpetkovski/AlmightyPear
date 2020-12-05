@@ -16,7 +16,8 @@
         TitleBarHeight="48"
         MinHeight="800"
         MinWidth="800"
-        SaveWindowPosition="True">
+        SaveWindowPosition="True"
+        >
     <mah:MetroWindow.Resources>
         <ResourceDictionary>
             <converters:IsLoggedInToStateConverter x:Key="IsLoggedInToStateConverter"/>

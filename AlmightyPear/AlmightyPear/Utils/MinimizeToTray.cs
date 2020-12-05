@@ -11,7 +11,7 @@ namespace AlmightyPear.Utils
     public static class MinimizeToTray
     {
 
-        public static void Enable(Window window)
+        public static void Register(Window window)
         {
             new MinimizeToTrayInstance(window);
         }

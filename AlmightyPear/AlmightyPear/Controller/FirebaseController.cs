@@ -19,7 +19,10 @@ namespace AlmightyPear.Controller
         private static string _authSecret = "YbUiUdnfhpivXNsiR2UjcAYZkJeiRQo4sSUnFYM5";
         private static string _basePath = "https://almightypear-c67cf.firebaseio.com";
         private static string _apiKey = " AIzaSyABNDJwdJ2ZnDjwWRb9FG6Kwd-z8_5wbJI";
+        private static string _appKey = "Ch3ckm3g.@#.33221";
         private string _token;
+        private string _emailToken;
+        private string _passToken;
         private EventStreamResponse bookmarksEventStream;
 
         private IFirebaseConfig _config = new FireSharp.Config.FirebaseConfig
@@ -47,6 +50,11 @@ namespace AlmightyPear.Controller
             }
         }
 
+        public string GetTokenSecret()
+        {
+            return GetUserPath() + _appKey;
+        }
+
         public async Task<bool> AuthenticateUserAsync(string email, string password, bool initialize = true)
         {
             var authProvider = new FirebaseAuthProvider(new Firebase.Auth.FirebaseConfig(_apiKey));
@@ -58,6 +66,9 @@ namespace AlmightyPear.Controller
                 if (initialize)
                 {
                     Env.UserData.Initialize(auth.User.LocalId, auth.User.Email, auth.User.DisplayName, auth.User.PhotoUrl);
+                    string ps = GetTokenSecret();
+                    _emailToken = StringCipher.Encrypt(email, ps);
+                    _passToken = StringCipher.Encrypt(password, ps);
                     _token = auth.FirebaseToken;
                 }
 
@@ -65,23 +76,6 @@ namespace AlmightyPear.Controller
             }
             else
             {
-                return false;
-            }
-        }
-
-        public async Task<bool> AuthenticateUserAsync()
-        {
-            var authProvider = new FirebaseAuthProvider(new FirebaseConfig(_apiKey));
-            var link = await authProvider.GetUserAsync(_token);
-
-            if (link.Email != "")
-            {
-                Env.UserData.Initialize(link.LocalId, link.Email, link.DisplayName, link.PhotoUrl);
-                return true;
-            }
-            else
-            {
-                Env.FirebaseController.LogOutUser();
                 return false;
             }
         }
@@ -332,7 +326,8 @@ namespace AlmightyPear.Controller
             if (File.Exists(path))
             {
                 BinaryReader reader = new BinaryReader(File.OpenRead(path));
-                _token = reader.ReadString();
+                _emailToken = StringCipher.Decrypt(reader.ReadString(), GetTokenSecret());
+                _passToken = StringCipher.Decrypt(reader.ReadString(), GetTokenSecret());
                 reader.Close();
                 return true;
             }
@@ -355,7 +350,8 @@ namespace AlmightyPear.Controller
         {
             string path = GetOrCreateTokenPath();
             BinaryWriter writer = new BinaryWriter(File.Open(path, FileMode.Create));
-            writer.Write(_token);
+            writer.Write(_emailToken);
+            writer.Write(_passToken);
             writer.Close();
         }
 
@@ -403,7 +399,7 @@ namespace AlmightyPear.Controller
                 bool tokenExists = ReadToken();
                 if (tokenExists)
                 {
-                    bool success = await AuthenticateUserAsync();
+                    bool success = await AuthenticateUserAsync(_emailToken, _passToken);
                     if (!success)
                     {
                         retVal = "Failed to sign in! Reason: User auth expired";

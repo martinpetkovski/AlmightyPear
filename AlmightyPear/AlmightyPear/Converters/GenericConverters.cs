@@ -159,7 +159,7 @@ namespace AlmightyPear.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if(value is bool)
+            if (value is bool)
             {
                 bool invert = false;
                 if (parameter != null && parameter is string)
@@ -191,7 +191,7 @@ namespace AlmightyPear.Converters
             if (values.Length >= 2 && values[0] is bool && values[1] is bool)
             {
                 bool add = true;
-                if(values.Length >=3 && values[2] is bool)
+                if (values.Length >= 3 && values[2] is bool)
                 {
                     add = (bool)values[2];
                 }
@@ -211,7 +211,7 @@ namespace AlmightyPear.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if(value is double)
+            if (value is double)
             {
                 double animValue = (double)value;
                 if (animValue == 0)
@@ -234,7 +234,7 @@ namespace AlmightyPear.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if(value is int && parameter is string)
+            if (value is int && parameter is string)
             {
                 int level = (int)value;
                 int expectedLevel = int.Parse((string)parameter);
@@ -257,7 +257,7 @@ namespace AlmightyPear.Converters
             {
                 string themeName = (string)value;
 
-                if(Env.UserData.Themes.ContainsKey(themeName))
+                if (Env.UserData.Themes.ContainsKey(themeName))
                     return Env.UserData.Themes[themeName];
             }
 
@@ -268,7 +268,7 @@ namespace AlmightyPear.Converters
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if(value is ThemeManager.Theme)
+            if (value is ThemeManager.Theme)
             {
                 return ((ThemeManager.Theme)value).Name;
             }
@@ -281,17 +281,20 @@ namespace AlmightyPear.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if(value is string)
+            if (value is string)
             {
                 string url = ((string)value).Trim(' ');
                 string youtubeAddressRegex = "^(?:https?\\:\\/\\/)?(?:www\\.)?(?:youtu\\.be\\/|youtube\\.com\\/(?:embed\\/|v\\/|watch\\?v\\=))([\\w-]{10,12})(?:$|\\&|\\?\\#).*";
                 if (Regex.IsMatch(url, youtubeAddressRegex))
                 {
                     Match match = Regex.Match(url, youtubeAddressRegex);
-                    return "https://www.youtube.com/embed/" + match.Groups[1] + "/?autoplay=1";
+                    return "https://img.youtube.com/vi/" + match.Groups[1] + "/maxresdefault.jpg";
                 }
                 else
-                    return value;
+                {
+                    return Env.GetHeaderImageFromUrl(url);
+                }
+
             }
 
             return value;
@@ -307,7 +310,7 @@ namespace AlmightyPear.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if(value is string)
+            if (value is string)
             {
                 string type = (string)value;
                 if (type == "link")

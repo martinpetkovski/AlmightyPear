@@ -4,8 +4,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
-        xmlns:wpf="clr-namespace:CefSharp.Wpf;assembly=CefSharp.Wpf"
-        xmlns:cef="clr-namespace:CefSharp;assembly=CefSharp.Core"
         xmlns:utils="clr-namespace:AlmightyPear.Utils"
         xmlns:converters="clr-namespace:AlmightyPear.Converters"
         mc:Ignorable="d"
@@ -45,14 +43,8 @@
                 <Border Padding="10">
                     <StackPanel>
                         <TextBlock Text="{Binding Path=Path}" Foreground="{DynamicResource mg.solid.100}" HorizontalAlignment="Center" Padding="0,0,0,10"></TextBlock>
-                        <!--<TextBlock Text="{Binding Path=Content}" Padding="10" FontSize="18" Foreground="{DynamicResource mg.solid.100}"/>-->
-                        <wpf:ChromiumWebBrowser x:Name="Browser"
-                                    ScrollViewer.CanContentScroll="False"
-                                    ScrollViewer.HorizontalScrollBarVisibility="Hidden"
-                                    ScrollViewer.VerticalScrollBarVisibility="Hidden"
-                                    Height="400" Width="400"
-                                    Address="{Binding Path=Content, Converter={StaticResource YoutubeToAddressAutoplayConverter}}">
-                        </wpf:ChromiumWebBrowser>
+                        <TextBlock Text="{Binding Path=Caption}" Foreground="{DynamicResource mg.solid.100}" ></TextBlock>
+                        <Image Source="{Binding Path=Content, Converter={StaticResource YoutubeToAddressAutoplayConverter}}" />
                     </StackPanel>
                 </Border>
             </DataTemplate>

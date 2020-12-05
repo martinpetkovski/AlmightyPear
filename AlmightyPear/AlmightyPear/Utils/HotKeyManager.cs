@@ -5,11 +5,11 @@ using System.Threading;
 
 namespace AlmightyPear.Utils
 {
-    public static class HotKeyManager
+    public class HotKeyManager
     {
-        public static event EventHandler<HotKeyEventArgs> HotKeyPressed;
+        public event EventHandler<HotKeyEventArgs> HotKeyPressed;
 
-        public static int RegisterHotKey(Keys key, KeyModifiers modifiers)
+        public int RegisterHotKey(Keys key, KeyModifiers modifiers)
         {
             _windowReadyEvent.WaitOne();
             int id = System.Threading.Interlocked.Increment(ref _id);
@@ -17,7 +17,7 @@ namespace AlmightyPear.Utils
             return id;
         }
 
-        public static void UnregisterHotKey(int id)
+        public void UnregisterHotKey(int id)
         {
             _wnd.Invoke(new UnRegisterHotKeyDelegate(UnRegisterHotKeyInternal), _hwnd, id);
         }
@@ -25,32 +25,32 @@ namespace AlmightyPear.Utils
         delegate void RegisterHotKeyDelegate(IntPtr hwnd, int id, uint modifiers, uint key);
         delegate void UnRegisterHotKeyDelegate(IntPtr hwnd, int id);
 
-        private static void RegisterHotKeyInternal(IntPtr hwnd, int id, uint modifiers, uint key)
+        private void RegisterHotKeyInternal(IntPtr hwnd, int id, uint modifiers, uint key)
         {
             RegisterHotKey(hwnd, id, modifiers, key);
         }
 
-        private static void UnRegisterHotKeyInternal(IntPtr hwnd, int id)
+        private void UnRegisterHotKeyInternal(IntPtr hwnd, int id)
         {
             UnregisterHotKey(_hwnd, id);
         }
 
-        private static void OnHotKeyPressed(HotKeyEventArgs e)
+        private void OnHotKeyPressed(HotKeyEventArgs e)
         {
-            if (HotKeyManager.HotKeyPressed != null)
+            if (HotKeyPressed != null)
             {
-                HotKeyManager.HotKeyPressed(null, e);
+                HotKeyPressed(null, e);
             }
         }
 
-        private static volatile MessageWindow _wnd;
-        private static volatile IntPtr _hwnd;
-        private static ManualResetEvent _windowReadyEvent = new ManualResetEvent(false);
-        static HotKeyManager()
+        private volatile MessageWindow _wnd;
+        private volatile IntPtr _hwnd;
+        private ManualResetEvent _windowReadyEvent = new ManualResetEvent(false);
+        public HotKeyManager()
         {
             Thread messageLoop = new Thread(delegate ()
             {
-                Application.Run(new MessageWindow());
+                Application.Run(new MessageWindow(this));
             });
             messageLoop.Name = "MessageLoopThread";
             messageLoop.IsBackground = true;
@@ -59,11 +59,13 @@ namespace AlmightyPear.Utils
 
         private class MessageWindow : Form
         {
-            public MessageWindow()
+            private HotKeyManager _parent;
+            public MessageWindow(HotKeyManager hkm)
             {
-                _wnd = this;
-                _hwnd = this.Handle;
-                _windowReadyEvent.Set();
+                hkm._wnd = this;
+                hkm._hwnd = this.Handle;
+                hkm._windowReadyEvent.Set();
+                _parent = hkm;
             }
 
             protected override void WndProc(ref Message m)
@@ -71,7 +73,7 @@ namespace AlmightyPear.Utils
                 if (m.Msg == WM_HOTKEY)
                 {
                     HotKeyEventArgs e = new HotKeyEventArgs(m.LParam);
-                    HotKeyManager.OnHotKeyPressed(e);
+                    _parent.OnHotKeyPressed(e);
                 }
 
                 base.WndProc(ref m);

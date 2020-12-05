@@ -8,10 +8,13 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Threading;
+using WindowsInput;
+using WindowsInput.Native;
 using MessageBox = AlmightyPear.View.MessageBox;
 
 namespace AlmightyPear
@@ -43,6 +46,7 @@ namespace AlmightyPear
         private bool _flip = false;
 
         public Dictionary<Type, Window> ChildWindows { get; set; }
+        public Dictionary<string, HotKeyManager> HotKeyManagers { get; set; }
 
         public static bool IsApplicationActivated()
         {
@@ -59,47 +63,32 @@ namespace AlmightyPear
             return activeProcId == procId;
         }
 
-        private void ToggleHotWnd(object sender, HotKeyEventArgs e)
+        private void ShowHotWndCreateBookmark(object sender, HotKeyEventArgs e)
         {
             CreateBookmarkWnd createBookmarkWnd = (CreateBookmarkWnd)ChildWindows[typeof(CreateBookmarkWnd)];
+
+            InputSimulator inputSim = new InputSimulator();
+
+            inputSim.Keyboard.KeyUp(VirtualKeyCode.LWIN);
+            Thread.Sleep(20);
+            inputSim.Keyboard.ModifiedKeyStroke(VirtualKeyCode.CONTROL, VirtualKeyCode.VK_C);
+
+            Dispatcher.Invoke(DispatcherPriority.SystemIdle, new Action(() =>
+            {
+                createBookmarkWnd.Fire();
+            }));
+        }
+
+        private void ShowHotWndFindBookmark(object sender, HotKeyEventArgs e)
+        {
             FindBookmarkWnd findBookmarkWnd = (FindBookmarkWnd)ChildWindows[typeof(FindBookmarkWnd)];
-
-            if ((!createBookmarkWnd.IsVisible && !findBookmarkWnd.IsVisible)
-                || !IsApplicationActivated())
+            if (!findBookmarkWnd.IsVisible)
             {
-                CurrentHotWnd = (int)EHotWnd.CreateBookmark;
-                _flip = false;
-            }
-
-
-            Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
-            {
-                foreach (KeyValuePair<Type, Window> wnd in ChildWindows)
+                Dispatcher.Invoke(DispatcherPriority.Normal, new Action(() =>
                 {
-                    if (wnd.Value.IsVisible)
-                    {
-                        wnd.Value.Hide();
-                    }
-                }
-            }));
-
-            string clipboardText = Env.GetClipboardText();
-
-            if (clipboardText != "" && !_flip)
-            {
-                CurrentHotWnd = (int)EHotWnd.CreateBookmark;
-                _flip = true;
+                    findBookmarkWnd.Fire();
+                }));
             }
-            else
-            {
-                IncrementHotWnd();
-            }
-
-            Dispatcher.Invoke(DispatcherPriority.Normal, new Action(() =>
-            {
-                if (CurrentHotWnd == (int)EHotWnd.CreateBookmark) createBookmarkWnd.Fire();
-                else if (CurrentHotWnd == (int)EHotWnd.FindBookmark) findBookmarkWnd.Fire();
-            }));
         }
 
         public async Task OnSuccessfulSignInAsync()
@@ -139,8 +128,15 @@ namespace AlmightyPear
 
             MinimizeToTray.Enable(this);
 
-            HotKeyManager.RegisterHotKey(Keys.None, KeyModifiers.Windows | KeyModifiers.Control);
-            HotKeyManager.HotKeyPressed += new EventHandler<HotKeyEventArgs>(ToggleHotWnd);
+            HotKeyManagers = new Dictionary<string, HotKeyManager>();
+
+            HotKeyManagers["win+ctrl"] = new HotKeyManager();
+            HotKeyManagers["win+ctrl"].RegisterHotKey(Keys.None, KeyModifiers.Windows | KeyModifiers.Control);
+            HotKeyManagers["win+ctrl"].HotKeyPressed += new EventHandler<HotKeyEventArgs>(ShowHotWndFindBookmark);
+
+            HotKeyManagers["win+alt"] = new HotKeyManager();
+            HotKeyManagers["win+alt"].RegisterHotKey(Keys.None, KeyModifiers.Windows | KeyModifiers.Alt);
+            HotKeyManagers["win+alt"].HotKeyPressed += new EventHandler<HotKeyEventArgs>(ShowHotWndCreateBookmark);
 
             ChildWindows = new Dictionary<Type, Window>();
             ChildWindows[typeof(CreateBookmarkWnd)] = new CreateBookmarkWnd();

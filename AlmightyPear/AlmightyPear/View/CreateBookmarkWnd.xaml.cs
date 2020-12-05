@@ -2,12 +2,9 @@
 using MahApps.Metro.Controls;
 using System;
 using System.Runtime.InteropServices;
-using System.Threading;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
-using WindowsInput;
-using WindowsInput.Native;
 
 namespace AlmightyPear.View
 {
@@ -30,7 +27,7 @@ namespace AlmightyPear.View
             GetCursorPos(ref w32Mouse);
 
             return new Point(w32Mouse.X, w32Mouse.Y);
-        } 
+        }
 
         public CreateBookmarkWnd()
         {
@@ -43,11 +40,6 @@ namespace AlmightyPear.View
         {
             if (!Env.UserData.IsLoggedIn)
                 return;
-
-            InputSimulator inputSim = new InputSimulator();
-
-            inputSim.Keyboard.KeyUp(VirtualKeyCode.LWIN);
-            inputSim.Keyboard.ModifiedKeyStroke(VirtualKeyCode.CONTROL, VirtualKeyCode.VK_C);
 
             ctrl_bookmarkCreate.Initialize(initPath);
 

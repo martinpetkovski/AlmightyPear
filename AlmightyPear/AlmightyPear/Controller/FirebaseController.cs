@@ -20,7 +20,17 @@ namespace AlmightyPear.Controller
         private static string _basePath = "https://almightypear-c67cf.firebaseio.com";
         private static string _apiKey = " AIzaSyABNDJwdJ2ZnDjwWRb9FG6Kwd-z8_5wbJI";
         private static string _appKey = "Ch3ckm3g.@#.33221";
-        private string _token;
+        private FirebaseAuth _token;
+        private async Task<FirebaseAuth> RefreshTokenAsync()
+        {
+            if (_token.IsExpired())
+            {
+                var authProvider = new FirebaseAuthProvider(new Firebase.Auth.FirebaseConfig(_apiKey));
+                _token = await authProvider.RefreshAuthAsync(_token);
+            }
+
+            return _token;
+        }
         private string _emailToken;
         private string _passToken;
         private EventStreamResponse bookmarksEventStream;
@@ -69,7 +79,7 @@ namespace AlmightyPear.Controller
                     string ps = GetTokenSecret();
                     _emailToken = StringCipher.Encrypt(email, ps);
                     _passToken = StringCipher.Encrypt(password, ps);
-                    _token = auth.FirebaseToken;
+                    _token = auth;
                 }
 
                 return true;
@@ -116,7 +126,8 @@ namespace AlmightyPear.Controller
             }
 
             var authProvider = new FirebaseAuthProvider(new FirebaseConfig(_apiKey));
-            var link = authProvider.ChangeUserPassword(_token, password);
+            await RefreshTokenAsync();
+            var link = authProvider.ChangeUserPassword(_token.FirebaseToken, password);
 
             if (link.Status == TaskStatus.WaitingForActivation)
             {
@@ -135,7 +146,8 @@ namespace AlmightyPear.Controller
         public async void UpdateProfileAsync(string displayName, string photoUrl) // needs validation
         {
             var authProvider = new FirebaseAuthProvider(new Firebase.Auth.FirebaseConfig(_apiKey));
-            FirebaseAuthLink link = await authProvider.UpdateProfileAsync(_token, displayName, photoUrl);
+            await RefreshTokenAsync();
+            FirebaseAuthLink link = await authProvider.UpdateProfileAsync(_token.FirebaseToken, displayName, photoUrl);
             Env.UserData.DisplayName = link.User.DisplayName;
             Env.UserData.PhotoUrl = link.User.PhotoUrl;
 

@@ -212,7 +212,7 @@ namespace AlmightyPear
         protected override void OnClosing(CancelEventArgs e)
         {
             e.Cancel = true;
-            WindowState = WindowState.Minimized;
+            System.Windows.Application.Current.Shutdown();
         }
     }
 }

@@ -1,8 +1,8 @@
-﻿using AlmightyPear.Controller;
+﻿using Checkmeg.WPF.Controller;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace AlmightyPear.Model
+namespace Checkmeg.WPF.Model
 {
     class MainWindowModel : INotifyPropertyChanged
     {

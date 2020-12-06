@@ -1,12 +1,12 @@
-﻿using AlmightyPear.Controller;
-using AlmightyPear.Model;
-using AlmightyPear.Utils;
+﻿using Checkmeg.WPF.Controller;
+using Checkmeg.WPF.Model;
+using Checkmeg.WPF.Utils;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace AlmightyPear.Controls
+namespace Checkmeg.WPF.Controls
 {
     public partial class MainViewControl : UserControl
     {
@@ -30,7 +30,7 @@ namespace AlmightyPear.Controls
 
         private void Btn_updateProfile_Click(object sender, RoutedEventArgs e)
         {
-            Env.FirebaseController.UpdateProfileAsync(tb_displayName.Text, "");
+            Engine.Env.FirebaseController.UpdateProfileAsync(tb_displayName.Text, "");
         }
 
         private void Btn_clearTempBin_Click(object sender, RoutedEventArgs e)
@@ -45,7 +45,7 @@ namespace AlmightyPear.Controls
 
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if(Env.UserData.CustomModel.AnimationsLevel >= 1)
+            if(Engine.Env.UserData.CustomModel.AnimationsLevel >= 1)
             {
                 mah_bookmarksViewContentControl.TransitionsEnabled = true;
                 mah_createBookmarkContentControl.TransitionsEnabled = true;

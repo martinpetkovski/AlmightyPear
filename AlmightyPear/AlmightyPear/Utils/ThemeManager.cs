@@ -1,25 +1,14 @@
-﻿using AlmightyPear.Controller;
+﻿using Checkmeg.WPF.Controller;
+using Engine;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 
-namespace AlmightyPear.Utils
+namespace Checkmeg.WPF.Utils
 {
-    public class ThemeManager
+    public class XAMLThemeController : Engine.IThemeController
     {
-        public class Theme
-        {
-            public string Name { get; set; }
-            public string OwnerUser { get; set; }
-            public string Mono0 { get; set; }
-            public string Mono10 { get; set; }
-            public string Mono20 { get; set; }
-            public string Mono40 { get; set; }
-            public string Mono70 { get; set; }
-            public string Mono100 { get; set; }
-        }
-
-        private static void SetColor(ResourceDictionary rd, string key, string color)
+        private void SetColor(ResourceDictionary rd, string key, string color)
         {
 
             if (rd.Contains(key))
@@ -35,7 +24,7 @@ namespace AlmightyPear.Utils
             }
         }
 
-        private static void UpdateGradient(ResourceDictionary rd, string key, Theme theme)
+        private void UpdateGradient(ResourceDictionary rd, string key, ThemeModel theme)
         {
             if (rd.Contains(key) && rd[key] is LinearGradientBrush)
             {
@@ -73,15 +62,15 @@ namespace AlmightyPear.Utils
             }
         }
 
-        public static void SetTheme(string name )
+        public void SetTheme(string name )
         {
-            if (Env.UserData.Themes.ContainsKey(name))
+            if (Engine.Env.UserData.Themes.ContainsKey(name))
             {
-                SetTheme(Env.UserData.Themes[name]);
+                SetTheme(Engine.Env.UserData.Themes[name]);
             }
         }
 
-        public static void SetTheme(Theme theme)
+        public void SetTheme(ThemeModel theme)
         {
             foreach (ResourceDictionary rd in Application.Current.Resources.MergedDictionaries)
             {
@@ -121,9 +110,9 @@ namespace AlmightyPear.Utils
             }
         }
 
-        public static Theme GetBasicDarkTheme()
+        public ThemeModel GetBasicDarkTheme()
         {
-            Theme t = new Theme();
+            ThemeModel t = new ThemeModel();
             t.Name = "BasicDark";
             t.OwnerUser = "deeeeelay@gmail.com";
             t.Mono0 = "#FF000000";
@@ -136,9 +125,9 @@ namespace AlmightyPear.Utils
             return t;
         }
 
-        public static Theme GetBasicRedTheme()
+        public ThemeModel GetBasicRedTheme()
         {
-            Theme t = new Theme();
+            ThemeModel t = new ThemeModel();
             t.Name = "BasicRed";
             t.OwnerUser = "deeeeelay@gmail.com";
             t.Mono0 = "#FF000000";
@@ -151,9 +140,9 @@ namespace AlmightyPear.Utils
             return t;
         }
 
-        public static Theme GetBasicBlueTheme()
+        public ThemeModel GetBasicBlueTheme()
         {
-            Theme t = new Theme();
+            ThemeModel t = new ThemeModel();
             t.Name = "BasicBlue";
             t.OwnerUser = "deeeeelay@gmail.com";
             t.Mono0 = "#FF000000";
@@ -166,9 +155,9 @@ namespace AlmightyPear.Utils
             return t;
         }
 
-        public static Theme GetBasicLightTheme()
+        public ThemeModel GetBasicLightTheme()
         {
-            Theme t = new Theme();
+            ThemeModel t = new ThemeModel();
             t.Name = "BasicLight";
             t.OwnerUser = "deeeeelay@gmail.com";
             t.Mono0 = "#FFFFFFFF";
@@ -181,14 +170,14 @@ namespace AlmightyPear.Utils
             return t;
         }
 
-        public static async Task CreateBasicThemesAsync()
+        public async Task CreateBasicThemesAsync()
         {
             
 
-            await Env.FirebaseController.CreateOrUpdateTheme(GetBasicDarkTheme());
-            await Env.FirebaseController.CreateOrUpdateTheme(GetBasicLightTheme());
-            await Env.FirebaseController.CreateOrUpdateTheme(GetBasicRedTheme());
-            await Env.FirebaseController.CreateOrUpdateTheme(GetBasicBlueTheme());
+            await Engine.Env.FirebaseController.CreateOrUpdateTheme(GetBasicDarkTheme());
+            await Engine.Env.FirebaseController.CreateOrUpdateTheme(GetBasicLightTheme());
+            await Engine.Env.FirebaseController.CreateOrUpdateTheme(GetBasicRedTheme());
+            await Engine.Env.FirebaseController.CreateOrUpdateTheme(GetBasicBlueTheme());
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Data;
 
-namespace AlmightyPear.Converters
+namespace Checkmeg.WPF.Converters
 {
     class TreeViewLineConverter : IValueConverter
     {

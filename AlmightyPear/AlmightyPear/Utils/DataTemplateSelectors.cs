@@ -1,9 +1,9 @@
-﻿using AlmightyPear.Model;
-using AlmightyPear.View;
+﻿using Checkmeg.WPF.Model;
+using Checkmeg.WPF.View;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace AlmightyPear.Utils
+namespace Checkmeg.WPF.Utils
 {
     public class BinItemPreviewDataTemplateSelector : DataTemplateSelector
     {

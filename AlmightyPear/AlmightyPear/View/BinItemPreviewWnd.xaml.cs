@@ -1,9 +1,9 @@
-﻿using AlmightyPear.Model;
+﻿using Engine;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 
-namespace AlmightyPear.View
+namespace Checkmeg.WPF.View
 {
 
 
@@ -64,7 +64,7 @@ namespace AlmightyPear.View
 
         public void SetBinItem(IBinItem binItem)
         {
-            if(Model == null)
+            if (Model == null)
                 Model = new BinItemPreviewWndModel();
 
             Model.BinItem = binItem;

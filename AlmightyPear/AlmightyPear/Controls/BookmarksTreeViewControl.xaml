@@ -1,12 +1,13 @@
-﻿<UserControl x:Class="AlmightyPear.Controls.BookmarksTreeViewControl"
+﻿<UserControl x:Class="Checkmeg.WPF.Controls.BookmarksTreeViewControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:AlmightyPear.Controls"
-             xmlns:model="clr-namespace:AlmightyPear.Model"
-             xmlns:controller="clr-namespace:AlmightyPear.Controller"
-             xmlns:converters="clr-namespace:AlmightyPear.Converters"
+             xmlns:local="clr-namespace:Checkmeg.WPF.Controls"
+             xmlns:model="clr-namespace:Checkmeg.WPF.Model"
+             xmlns:engine="clr-namespace:Engine;assembly=Engine"
+             xmlns:controller="clr-namespace:Checkmeg.WPF.Controller"
+             xmlns:converters="clr-namespace:Checkmeg.WPF.Converters"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:fa="http://schemas.fontawesome.io/icons/"
              xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
@@ -328,7 +329,7 @@
                     </MultiBinding>
                 </TreeView.ItemsSource>
                 <TreeView.Resources>
-                    <HierarchicalDataTemplate DataType="{x:Type model:BinModel}">
+                    <HierarchicalDataTemplate DataType="{x:Type engine:BinModel}">
                         <HierarchicalDataTemplate.ItemsSource>
                             <MultiBinding Converter="{StaticResource FilterBinItemsConverter}">
                                 <Binding Path="BinItemsCollection"></Binding>
@@ -368,7 +369,7 @@
                             </StackPanel>
                         </Border>
                     </HierarchicalDataTemplate>
-                    <HierarchicalDataTemplate DataType="{x:Type model:BookmarkModel}">
+                    <HierarchicalDataTemplate DataType="{x:Type engine:BookmarkModel}">
                         <Button 
                         Name="btn_BookmarkAction"
                         Padding="8"

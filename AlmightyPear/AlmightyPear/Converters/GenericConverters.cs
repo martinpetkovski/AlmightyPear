@@ -1,6 +1,7 @@
-﻿using AlmightyPear.Controller;
-using AlmightyPear.Model;
-using AlmightyPear.Utils;
+﻿using Checkmeg.WPF.Controller;
+using Checkmeg.WPF.Model;
+using Checkmeg.WPF.Utils;
+using Engine;
 using FontAwesome.WPF;
 using System;
 using System.Collections.Generic;
@@ -9,8 +10,9 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
+using Env = Checkmeg.WPF.Controller.Env;
 
-namespace AlmightyPear.Converters
+namespace Checkmeg.WPF.Converters
 {
     class BookmarkCaptionConverter : IValueConverter
     {
@@ -100,10 +102,10 @@ namespace AlmightyPear.Converters
             if (value is string)
             {
                 string path = (string)value;
-                int depth = path.Split(Env.PathSeparator).Length;
-                if (Env.BinData.BinsByDepth.ContainsKey(depth))
+                int depth = path.Split(Engine.Env.PathSeparator).Length;
+                if (Engine.Env.BinData.BinsByDepth.ContainsKey(depth))
                 {
-                    return Env.BinData.BinsByDepth[depth];
+                    return Engine.Env.BinData.BinsByDepth[depth];
                 }
                 else
                     return null;
@@ -126,7 +128,7 @@ namespace AlmightyPear.Converters
             if (value is bool)
                 isLoggedIn = (bool)value;
             else
-                isLoggedIn = Env.UserData.IsLoggedIn;
+                isLoggedIn = Engine.Env.UserData.IsLoggedIn;
 
             bool invert = false;
             if (parameter != null && parameter is string)
@@ -257,20 +259,20 @@ namespace AlmightyPear.Converters
             {
                 string themeName = (string)value;
 
-                if (Env.UserData.Themes.ContainsKey(themeName))
-                    return Env.UserData.Themes[themeName];
+                if (Engine.Env.UserData.Themes.ContainsKey(themeName))
+                    return Engine.Env.UserData.Themes[themeName];
             }
 
-            if (Env.UserData.ThemesList.Count > 0)
-                return Env.UserData.ThemesList[0];
+            if (Engine.Env.UserData.ThemesList.Count > 0)
+                return Engine.Env.UserData.ThemesList[0];
             else return null;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is ThemeManager.Theme)
+            if (value is ThemeModel)
             {
-                return ((ThemeManager.Theme)value).Name;
+                return ((ThemeModel)value).Name;
             }
 
             return "BasicBlack";

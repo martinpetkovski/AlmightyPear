@@ -1,8 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:AlmightyPear.Resources.Styles"
+                    xmlns:local="clr-namespace:Checkmeg.WPF.Resources.Styles"
                     xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
-                    xmlns:converters="clr-namespace:AlmightyPear.Converters">
+                    xmlns:converters="clr-namespace:Checkmeg.WPF.Converters">
     <converters:TreeViewLineConverter x:Key="LineConverter"/>
     <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
 

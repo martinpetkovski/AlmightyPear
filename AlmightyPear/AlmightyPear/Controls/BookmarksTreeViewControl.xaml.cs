@@ -1,6 +1,7 @@
-﻿using AlmightyPear.Controller;
-using AlmightyPear.Model;
-using AlmightyPear.View;
+﻿using Checkmeg.WPF.Controller;
+using Checkmeg.WPF.Model;
+using Checkmeg.WPF.View;
+using Engine;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,8 +12,9 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using Env = Checkmeg.WPF.Controller.Env;
 
-namespace AlmightyPear.Controls
+namespace Checkmeg.WPF.Controls
 {
 
 
@@ -113,7 +115,7 @@ namespace AlmightyPear.Controls
             {
                 get
                 {
-                    return ContextedItem.Path != Env.ArchiveBinPath;
+                    return ContextedItem.Path != Engine.Env.ArchiveBinPath;
                 }
             }
 
@@ -323,7 +325,7 @@ namespace AlmightyPear.Controls
             {
                 BinModel model = ((BinModel)((TextBox)e.Source).DataContext);
 
-                if (_editTextboxAction == EEditTextboxAction.ChangePath) Env.BinController.ChangePath(model, txt);
+                if (_editTextboxAction == EEditTextboxAction.ChangePath) Engine.Env.BinController.ChangePath(model, txt);
             }
         }
 
@@ -345,7 +347,7 @@ namespace AlmightyPear.Controls
                 new List<string>() { "Yes", "No" });
                 if (result == 0)
                 {
-                    Env.BinController.DeleteBin((BinModel)dataContextedElement);
+                    Engine.Env.BinController.DeleteBin((BinModel)dataContextedElement);
                 }
             }
             else if (dataContextedElement is BookmarkModel)
@@ -357,7 +359,7 @@ namespace AlmightyPear.Controls
                 new List<string>() { "Yes", "No" });
                 if (result == 0)
                 {
-                    Env.BinController.DeleteBookmark(((BookmarkModel)dataContextedElement).ID);
+                    Engine.Env.BinController.DeleteBookmark(((BookmarkModel)dataContextedElement).ID);
                 }
             }
         }
@@ -430,7 +432,7 @@ namespace AlmightyPear.Controls
 
             if (result == 0)
             {
-                Env.FirebaseController.DeleteBookmark(bookmark);
+                Engine.Env.FirebaseController.DeleteBookmark(bookmark);
             }
         }
 
@@ -464,7 +466,7 @@ namespace AlmightyPear.Controls
             {
                 foreach (IBinItem item in Model.SelectedBinItems)
                 {
-                    Env.BinController.ChangePath(item, path);
+                    Engine.Env.BinController.ChangePath(item, path);
                 }
             }
         }
@@ -510,7 +512,7 @@ namespace AlmightyPear.Controls
             }
             else
             {
-                OpenLink(param + binItem.Path.Replace(Env.PathSeparator, ' '));
+                OpenLink(param + binItem.Path.Replace(Engine.Env.PathSeparator, ' '));
             }
         }
 
@@ -547,12 +549,12 @@ namespace AlmightyPear.Controls
             {
                 if (sourceBin is BookmarkModel)
                 {
-                    sourceBin = Env.BinController.GetBin(sourceBin.Path);
+                    sourceBin = Engine.Env.BinController.GetBin(sourceBin.Path);
                 }
 
                 if (sourceBin is BinModel)
                 {
-                    var pathChildren = Env.BinController.GetItemsAndChildren((BinModel)sourceBin);
+                    var pathChildren = Engine.Env.BinController.GetItemsAndChildren((BinModel)sourceBin);
                     foreach (var item in pathChildren)
                     {
                         Model.SelectItem(item.Value);
@@ -634,14 +636,14 @@ namespace AlmightyPear.Controls
         }
         public void ExecAnim()
         {
-            if (Env.UserData.CustomModel.AnimationsLevel == 2) mah_contentControl.Reload();
+            if (Engine.Env.UserData.CustomModel.AnimationsLevel == 2) mah_contentControl.Reload();
         }
 
         private void Mi_Archive_Click(object sender, RoutedEventArgs e)
         {
             foreach (IBinItem sourceBin in Model.SelectedBinItems)
             {
-                Env.BinController.ChangePath(sourceBin, Env.ArchiveBinPath);
+                Engine.Env.BinController.ChangePath(sourceBin, Engine.Env.ArchiveBinPath);
             }
         }
 
@@ -694,12 +696,12 @@ namespace AlmightyPear.Controls
             {
                 if (sourceBin is BookmarkModel)
                 {
-                    sourceBin = Env.BinController.GetBin(sourceBin.Path);
+                    sourceBin = Engine.Env.BinController.GetBin(sourceBin.Path);
                 }
 
                 if (sourceBin is BinModel)
                 {
-                    var pathChildren = Env.BinController.GetItemsAndChildren((BinModel)sourceBin);
+                    var pathChildren = Engine.Env.BinController.GetItemsAndChildren((BinModel)sourceBin);
                     foreach (var item in pathChildren)
                     {
                         Model.SelectItem(item.Value);

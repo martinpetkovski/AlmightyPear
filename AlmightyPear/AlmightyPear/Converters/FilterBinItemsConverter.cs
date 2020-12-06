@@ -1,4 +1,5 @@
-﻿using AlmightyPear.Model;
+﻿using Checkmeg.WPF.Model;
+using Engine;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -8,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 
-namespace AlmightyPear.Converters
+namespace Checkmeg.WPF.Converters
 {
     class FilterBinItemsConverter : IMultiValueConverter
     {

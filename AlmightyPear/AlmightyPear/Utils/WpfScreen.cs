@@ -8,7 +8,7 @@ using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Interop;
 
-namespace AlmightyPear.Utils
+namespace Checkmeg.WPF.Utils
 {
     public class WpfScreen
     {

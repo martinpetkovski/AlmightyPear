@@ -1,5 +1,5 @@
-﻿using AlmightyPear.Controller;
-using AlmightyPear.Utils;
+﻿using Checkmeg.WPF.Controller;
+using Checkmeg.WPF.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,7 +8,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AlmightyPear.Model
+namespace Checkmeg.WPF.Model
 {
     class EnvModel : INotifyPropertyChanged
     {

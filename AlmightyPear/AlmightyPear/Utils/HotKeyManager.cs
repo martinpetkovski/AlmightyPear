@@ -3,7 +3,7 @@ using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.Threading;
 
-namespace AlmightyPear.Utils
+namespace Checkmeg.WPF.Utils
 {
     public class HotKeyManager
     {

@@ -8,7 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Forms;
 using Button = System.Windows.Controls.Button;
 
-namespace AlmightyPear.View
+namespace Checkmeg.WPF.View
 {
     /// <summary>
     /// Interaction logic for MessageBox.xaml

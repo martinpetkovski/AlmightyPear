@@ -1,0 +1,5 @@
+D:\Projects\AlmightyPear\AlmightyPear\Core\obj\Release\Core.csproj.CoreCompileInputs.cache
+D:\Projects\AlmightyPear\AlmightyPear\Core\bin\Release\Core.dll
+D:\Projects\AlmightyPear\AlmightyPear\Core\bin\Release\Core.pdb
+D:\Projects\AlmightyPear\AlmightyPear\Core\obj\Release\Core.dll
+D:\Projects\AlmightyPear\AlmightyPear\Core\obj\Release\Core.pdb

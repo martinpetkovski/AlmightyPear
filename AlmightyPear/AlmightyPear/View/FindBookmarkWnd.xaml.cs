@@ -1,4 +1,4 @@
-﻿using AlmightyPear.Controller;
+﻿using Checkmeg.WPF.Controller;
 using MahApps.Metro.Controls;
 using System;
 using System.Runtime.InteropServices;
@@ -6,7 +6,7 @@ using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
 
-namespace AlmightyPear.View
+namespace Checkmeg.WPF.View
 {
     public partial class FindBookmarkWnd : MetroWindow
     {
@@ -38,7 +38,7 @@ namespace AlmightyPear.View
 
         public void Fire()
         {
-            if (!Env.UserData.IsLoggedIn)
+            if (!Engine.Env.UserData.IsLoggedIn)
                 return;
 
             Point mousePos = GetMousePosition();
@@ -53,7 +53,7 @@ namespace AlmightyPear.View
             Left = finalX;
             Top = finalY;
 
-            if (Env.UserData.CustomModel.AnimationsLevel == 2)
+            if (Engine.Env.UserData.CustomModel.AnimationsLevel == 2)
             {
                 mah_contentControl.TransitionsEnabled = true;
             }

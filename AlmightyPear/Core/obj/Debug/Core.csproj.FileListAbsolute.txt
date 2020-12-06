@@ -1,0 +1,5 @@
+D:\Projects\AlmightyPear\AlmightyPear\Core\bin\Debug\Core.dll
+D:\Projects\AlmightyPear\AlmightyPear\Core\bin\Debug\Core.pdb
+D:\Projects\AlmightyPear\AlmightyPear\Core\obj\Debug\Core.csproj.CoreCompileInputs.cache
+D:\Projects\AlmightyPear\AlmightyPear\Core\obj\Debug\Core.dll
+D:\Projects\AlmightyPear\AlmightyPear\Core\obj\Debug\Core.pdb

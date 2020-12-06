@@ -1,11 +1,11 @@
-﻿using AlmightyPear.Controller;
-using AlmightyPear.Utils;
+﻿using Checkmeg.WPF.Controller;
+using Checkmeg.WPF.Utils;
 using Firebase.Auth;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace AlmightyPear.Controls
+namespace Checkmeg.WPF.Controls
 {
     /// <summary>
     /// Interaction logic for UserControl1.xaml
@@ -21,9 +21,9 @@ namespace AlmightyPear.Controls
         private async void Btn_signin_ClickAsync(object sender, RoutedEventArgs e)
         {
             Env.MainWindowData.WindowState = Model.MainWindowModel.EMainWindowState.Loading;
-            string msg = await Env.FirebaseController.SignInUserAsync(tb_email.Text, tb_password.Password, cb_RememberMe.IsChecked.Value);
+            string msg = await Engine.Env.FirebaseController.SignInUserAsync(tb_email.Text, tb_password.Password, cb_RememberMe.IsChecked.Value);
             if (!cb_RememberMe.IsChecked.Value)
-                Env.FirebaseController.DeleteToken();
+                Engine.Env.FirebaseController.DeleteToken();
 
             if (msg != "")
             {

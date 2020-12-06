@@ -1,15 +1,15 @@
-﻿<UserControl x:Class="AlmightyPear.Controls.MainViewControl"
+﻿<UserControl x:Class="Checkmeg.WPF.Controls.MainViewControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:AlmightyPear.Controls"
-             xmlns:controller="clr-namespace:AlmightyPear.Controller"
-             xmlns:controls="clr-namespace:AlmightyPear.Controls"
-             xmlns:converters="clr-namespace:AlmightyPear.Converters"
+             xmlns:local="clr-namespace:Checkmeg.WPF.Controls"
+             xmlns:controller="clr-namespace:Checkmeg.WPF.Controller"
+             xmlns:controls="clr-namespace:Checkmeg.WPF.Controls"
+             xmlns:converters="clr-namespace:Checkmeg.WPF.Converters"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:fa="http://schemas.fontawesome.io/icons/"
-             xmlns:model="clr-namespace:AlmightyPear.Model"
+             xmlns:model="clr-namespace:Checkmeg.WPF.Model"
              xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -66,12 +66,12 @@
                             </GroupBox.Resources>
                             <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Width="400">
                                 <TextBlock>display name</TextBlock>
-                                <TextBox Name="tb_displayName" Text="{Binding Source={StaticResource Env}, Path=UserData.DisplayName, Mode=OneWay}"></TextBox>
+                                <TextBox Name="tb_displayName" Text="{Binding Source={StaticResource EngineEnv}, Path=UserData.DisplayName, Mode=OneWay}"></TextBox>
                                 <TextBlock>theme</TextBlock>
                                 <ComboBox Name="cb_themes" 
-                                    ItemsSource="{Binding Source={StaticResource Env}, Path=UserData.ThemesList}"
+                                    ItemsSource="{Binding Source={StaticResource EngineEnv}, Path=UserData.ThemesList}"
                                     SelectedValue="{Binding 
-                                    Source={StaticResource Env}, 
+                                    Source={StaticResource EngineEnv}, 
                                     Path=UserData.CustomModel.Theme, 
                                     Converter={StaticResource ThemeNameToThemeReferenceConverter}}">
                                     <ComboBox.ItemTemplate>
@@ -92,7 +92,7 @@
                                         Orientation="Horizontal" 
                                         Minimum="0" 
                                         Maximum="2"
-                                        Value="{Binding Source={StaticResource Env}, Path=UserData.CustomModel.AnimationsLevel}"
+                                        Value="{Binding Source={StaticResource EngineEnv}, Path=UserData.CustomModel.AnimationsLevel}"
                                         IsSnapToTickEnabled="True"
                                         TickFrequency="1"></Slider>
                                 <Button HorizontalAlignment="Right" 

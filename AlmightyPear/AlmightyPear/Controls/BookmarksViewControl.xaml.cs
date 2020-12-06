@@ -1,4 +1,4 @@
-﻿using AlmightyPear.Controller;
+﻿using Checkmeg.WPF.Controller;
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -8,7 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace AlmightyPear.Controls
+namespace Checkmeg.WPF.Controls
 {
     /// <summary>
     /// Interaction logic for BookmarksViewControl.xaml

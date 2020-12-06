@@ -1,8 +1,7 @@
-﻿using AlmightyPear.Controller;
-using AlmightyPear.Controls;
-using AlmightyPear.Model;
-using AlmightyPear.Utils;
-using AlmightyPear.View;
+﻿using Checkmeg.WPF.Controller;
+using Checkmeg.WPF.Model;
+using Checkmeg.WPF.Utils;
+using Checkmeg.WPF.View;
 using MahApps.Metro.Controls;
 using System;
 using System.Collections.Generic;
@@ -13,31 +12,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
-using System.Windows.Input;
 using System.Windows.Threading;
 using WindowsInput;
 using WindowsInput.Native;
-using MessageBox = AlmightyPear.View.MessageBox;
 
-namespace AlmightyPear
+namespace Checkmeg.WPF
 {
-    public class ActivateWindowCommand : ICommand
-    {
-        public void Execute(object parameter)
-        {
-            MainWindow wnd = (MainWindow)parameter;
-            wnd.Show();
-            wnd.Activate();
-        }
-
-        public bool CanExecute(object parameter)
-        {
-            return true;
-        }
-
-        public event EventHandler CanExecuteChanged;
-    }
-
     public partial class MainWindow : MetroWindow
     {
         [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
@@ -99,7 +79,7 @@ namespace AlmightyPear
         {
             CreateBookmarkWnd createBookmarkWnd = (CreateBookmarkWnd)ChildWindows[typeof(CreateBookmarkWnd)];
 
-            if(createBookmarkWnd.IsVisible)
+            if (createBookmarkWnd.IsVisible)
             {
                 Dispatcher.Invoke(DispatcherPriority.SystemIdle, new Action(() =>
                 {
@@ -139,14 +119,14 @@ namespace AlmightyPear
 
         public async Task OnSuccessfulSignInAsync()
         {
-            await Env.FirebaseController.LoadCustomProfileDataAsync();
-            ThemeManager.SetTheme(Env.UserData.CustomModel.Theme);
+            await Engine.Env.FirebaseController.LoadCustomProfileDataAsync();
+            Engine.Env.ThemeManager.SetTheme(Engine.Env.UserData.CustomModel.Theme);
             Env.MainWindowData.WindowState = Model.MainWindowModel.EMainWindowState.BookmarksView;
         }
 
         public async Task ExecSignInAsync()
         {
-            string outstr = await Env.FirebaseController.SignInUserAsync();
+            string outstr = await Engine.Env.FirebaseController.SignInUserAsync();
             if (outstr != "")
             {
                 Env.MainWindowData.WindowState = MainWindowModel.EMainWindowState.SignIn;
@@ -156,17 +136,18 @@ namespace AlmightyPear
                 await OnSuccessfulSignInAsync();
             }
 
-            if (Env.UserData.CustomModel.AnimationsLevel == 2) mah_contentControl.Reload();
+            if (Engine.Env.UserData.CustomModel.AnimationsLevel == 2) mah_contentControl.Reload();
         }
 
         private async Task InitializeThemesAsync()
         {
-            await Env.FirebaseController.GetThemesAsync();
+            await Engine.Env.FirebaseController.GetThemesAsync();
         }
 
         public async Task InitializeAsync()
         {
             Env.Initialize(this);
+            Engine.Env.Initialize();
             Env.MainWindowData.WindowState = MainWindowModel.EMainWindowState.Loading;
             Style = (Style)FindResource(typeof(Window));
             await InitializeThemesAsync();
@@ -198,12 +179,12 @@ namespace AlmightyPear
 
         public void Mi_ClearTempBin_Click(object sender, RoutedEventArgs e)
         {
-            Env.BinController.ClearTempBin();
+            Engine.Env.BinController.ClearTempBin();
         }
 
         public void Mi_LogOut_Click(object sender, RoutedEventArgs e)
         {
-            Env.FirebaseController.LogOutUser();
+            Engine.Env.FirebaseController.LogOutUser();
             Env.MainWindowData.WindowState = MainWindowModel.EMainWindowState.SignIn;
         }
 
@@ -221,7 +202,7 @@ namespace AlmightyPear
         {
             if (mah_contentControl != null)
             {
-                if (Env.UserData.CustomModel.AnimationsLevel == 2) mah_contentControl.Reload();
+                if (Engine.Env.UserData.CustomModel.AnimationsLevel == 2) mah_contentControl.Reload();
             }
         }
 
@@ -258,7 +239,7 @@ namespace AlmightyPear
 
         private void Mi_TraySignOut_Click(object sender, RoutedEventArgs e)
         {
-            Env.FirebaseController.LogOutUser();
+            Engine.Env.FirebaseController.LogOutUser();
             Env.MainWindowData.WindowState = MainWindowModel.EMainWindowState.SignIn;
         }
 

@@ -1,10 +1,10 @@
-﻿using AlmightyPear.Controller;
+﻿using Checkmeg.WPF.Controller;
 using Firebase.Auth;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace AlmightyPear.Controls
+namespace Checkmeg.WPF.Controls
 {
     /// <summary>
     /// Interaction logic for UserControl1.xaml

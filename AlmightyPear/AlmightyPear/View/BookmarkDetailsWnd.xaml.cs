@@ -1,5 +1,6 @@
-﻿using AlmightyPear.Controller;
-using AlmightyPear.Model;
+﻿using Checkmeg.WPF.Controller;
+using Checkmeg.WPF.Model;
+using Engine;
 using MahApps.Metro.Controls;
 using System;
 using System.Collections.Generic;
@@ -17,8 +18,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Env = Checkmeg.WPF.Controller.Env;
 
-namespace AlmightyPear.View
+namespace Checkmeg.WPF.View
 {
     /// <summary>
     /// Interaction logic for BookmarkDetailsWnd.xaml
@@ -75,7 +77,7 @@ namespace AlmightyPear.View
 
         private void Accept()
         {
-            Env.BinController.ChangePath(Bookmark, tb_path.Text);
+            Engine.Env.BinController.ChangePath(Bookmark, tb_path.Text);
             Bookmark.Content = tb_content.Text;
             Close();
         }
@@ -103,21 +105,21 @@ namespace AlmightyPear.View
 
         private void Tb_content_TextChanged(object sender, EventArgs e)
         {
-            if (tb_content.Text.Length > Env.CharacterLimit)
+            if (tb_content.Text.Length > Engine.Env.CharacterLimit)
             {
-                tb_content.Document.Text = tb_content.Text.Substring(0, Env.CharacterLimit);
-                tb_content.CaretOffset = Env.CharacterLimit;
+                tb_content.Document.Text = tb_content.Text.Substring(0, Engine.Env.CharacterLimit);
+                tb_content.CaretOffset = Engine.Env.CharacterLimit;
             }
 
-            tb_characterLimit.Text = tb_content.Text.Length + "/" + Env.CharacterLimit;
+            tb_characterLimit.Text = tb_content.Text.Length + "/" + Engine.Env.CharacterLimit;
         }
 
         private void Tb_path_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (tb_path.Text.Length > Env.BinPathCharacterLimit)
+            if (tb_path.Text.Length > Engine.Env.BinPathCharacterLimit)
             {
-                tb_path.Text = tb_path.Text.Substring(0, Env.BinPathCharacterLimit);
-                tb_path.CaretIndex = Env.BinPathCharacterLimit;
+                tb_path.Text = tb_path.Text.Substring(0, Engine.Env.BinPathCharacterLimit);
+                tb_path.CaretIndex = Engine.Env.BinPathCharacterLimit;
             }
         }
     }

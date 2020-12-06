@@ -1,4 +1,4 @@
-﻿using AlmightyPear.Model;
+﻿using Checkmeg.WPF.Model;
 using HtmlAgilityPack;
 using MahApps.Metro.Controls;
 using System;
@@ -9,41 +9,29 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
+using Engine;
+using Checkmeg.WPF.Utils;
 
-namespace AlmightyPear.Controller
+namespace Checkmeg.WPF.Controller
 {
     class Env
     {
         // global
-        public static char PathSeparator = ':';
-        public static string TempBinPath = "_TEMP";
-        public static string ArchiveBinPath = "_ARCHIVE";
-        public static int CharacterLimit = 5000;
-        public static int BinPathCharacterLimit = 100;
         public static WindowState StartupState = WindowState.Normal;
         // data
         public static EnvModel EnvModel { get; private set; }
         public static MainWindowModel MainWindowData { get; private set; }
-        public static UserModel UserData { get; private set; }
-        public static BinMetaModel BinData { get; private set; }
+        
         // functional
-        public static FirebaseController FirebaseController { get; private set; }
         public static MainWindow MainWindow { get; private set; }
         public static MetroWindow MetroMainWindow { get { return (MetroWindow)MainWindow; } }
-        public static BinController BinController { get; private set; }
+        
 
         public static void Initialize(MainWindow mainWindow)
         {
             //initialize data
-
+            Engine.Env.ThemeManager = new XAMLThemeController();
             MainWindowData = new MainWindowModel();
-            UserData = new UserModel();
-            BinData = new BinMetaModel();
-
-            //initialize func
-            FirebaseController = new FirebaseController();
-            FirebaseController.Initialize();
-            BinController = new BinController();
 
             EnvModel = new EnvModel();
 

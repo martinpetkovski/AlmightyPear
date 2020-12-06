@@ -6,7 +6,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AlmightyPear.Utils
+namespace Checkmeg.WPF.Utils
 {
     public static class StringCipher
     {

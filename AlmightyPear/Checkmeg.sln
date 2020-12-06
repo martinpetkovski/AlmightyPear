@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.1267
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Checkmeg.WPF", "AlmightyPear\Checkmeg.WPF.csproj", "{36FD5928-B1F7-4785-A7EE-A8465A774B21}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Checkmeg.WPF", "Checkmeg.WPF\Checkmeg.WPF.csproj", "{36FD5928-B1F7-4785-A7EE-A8465A774B21}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engine", "Engine\Engine.csproj", "{9644CDC2-F43B-412A-A766-D17380C61FAA}"
 EndProject

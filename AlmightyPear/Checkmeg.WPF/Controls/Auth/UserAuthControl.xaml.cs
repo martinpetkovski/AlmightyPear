@@ -1,6 +1,4 @@
 ﻿using Checkmeg.WPF.Controller;
-using Checkmeg.WPF.Utils;
-using Firebase.Auth;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;

@@ -1,8 +1,5 @@
-﻿using Checkmeg.WPF.Controller;
-using Firebase.Auth;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 
 namespace Checkmeg.WPF.Controls
 {
@@ -14,7 +11,7 @@ namespace Checkmeg.WPF.Controls
         public UserRegisterControl()
         {
             InitializeComponent();
-            
+
         }
 
         private void Btn_register_Click(object sender, RoutedEventArgs e)

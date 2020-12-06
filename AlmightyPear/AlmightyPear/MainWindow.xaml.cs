@@ -13,6 +13,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
+using System.Windows.Input;
 using System.Windows.Threading;
 using WindowsInput;
 using WindowsInput.Native;
@@ -20,6 +21,23 @@ using MessageBox = AlmightyPear.View.MessageBox;
 
 namespace AlmightyPear
 {
+    public class ActivateWindowCommand : ICommand
+    {
+        public void Execute(object parameter)
+        {
+            MainWindow wnd = (MainWindow)parameter;
+            wnd.Show();
+            wnd.Activate();
+        }
+
+        public bool CanExecute(object parameter)
+        {
+            return true;
+        }
+
+        public event EventHandler CanExecuteChanged;
+    }
+
     public partial class MainWindow : MetroWindow
     {
         [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
@@ -154,7 +172,7 @@ namespace AlmightyPear
             await InitializeThemesAsync();
             InitializeComponent();
 
-            MinimizeToTray.Register(this);
+            //MinimizeToTray.Register(this);
 
             HotKeyManagers = new Dictionary<string, HotKeyManager>();
 
@@ -213,6 +231,52 @@ namespace AlmightyPear
         {
             e.Cancel = true;
             System.Windows.Application.Current.Shutdown();
+        }
+
+        private void ShowWindow()
+        {
+            ShowInTaskbar = true;
+            WindowState = WindowState.Normal;
+            Show();
+            Activate();
+            Focus();
+        }
+
+        private void TaskbarIcon_TrayLeftMouseDown(object sender, RoutedEventArgs e)
+        {
+            ShowWindow();
+        }
+
+        private void RootWnd_StateChanged(object sender, EventArgs e)
+        {
+            var minimized = (WindowState == WindowState.Minimized);
+            ShowInTaskbar = !minimized;
+        }
+
+        private void Mi_TrayQuit_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Application.Current.Shutdown();
+        }
+
+        private void Mi_TraySignOut_Click(object sender, RoutedEventArgs e)
+        {
+            Env.FirebaseController.LogOutUser();
+            Env.MainWindowData.WindowState = MainWindowModel.EMainWindowState.SignIn;
+        }
+
+        private void Mi_ShowCheckmeg_Click(object sender, RoutedEventArgs e)
+        {
+            ShowWindow();
+        }
+
+        private void Mi_TrayFind_Click(object sender, RoutedEventArgs e)
+        {
+            ShowHotWndFindBookmark(sender, null);
+        }
+
+        private void Mi_TrayCreate_Click(object sender, RoutedEventArgs e)
+        {
+            ShowHotWndCreateBookmarkAsync(sender, null);
         }
     }
 }

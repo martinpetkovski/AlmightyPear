@@ -9,7 +9,9 @@
         xmlns:fa="http://schemas.fontawesome.io/icons/"
         xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:tb="http://www.hardcodet.net/taskbar"
         mc:Ignorable="d"
+                 x:Name="rootWnd"
         Title="Checkmeg PRE-ALPHA"
         Background="{DynamicResource mg.solid.10}"
         BorderThickness="1"
@@ -17,6 +19,7 @@
         MinHeight="800"
         MinWidth="800"
         SaveWindowPosition="True"
+                 StateChanged="RootWnd_StateChanged"
         >
     <mah:MetroWindow.Resources>
         <ResourceDictionary>
@@ -89,63 +92,131 @@
             </StackPanel>
         </mah:WindowCommands>
     </mah:MetroWindow.RightWindowCommands>
+    <Grid>
+        <tb:TaskbarIcon
+              IconSource="logo_icon.ico"
+              MenuActivation="RightClick"
+              TrayLeftMouseDown="TaskbarIcon_TrayLeftMouseDown"
+              ToolTipText="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=Title}" >
+            <tb:TaskbarIcon.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Name="mi_ShowCheckmeg"
+                              Click="Mi_ShowCheckmeg_Click"
+                              Foreground="{DynamicResource mg.solid.100}">
+                        <MenuItem.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <fa:ImageAwesome Icon="Television" Foreground="{DynamicResource mg.solid.100}" Height="12"/>
+                                <TextBlock Text="Show" VerticalAlignment="Center" Margin="5,0,0,0"></TextBlock>
+                            </StackPanel>
+                        </MenuItem.Header>
+                    </MenuItem>
+                    <MenuItem Name="mi_TrayCreate"
+                              Visibility="{Binding Source={StaticResource Env}, Path=UserData.IsLoggedIn, Converter={StaticResource IsLoggedInToStateConverter}, ConverterParameter=False}"
+                              Click="Mi_TrayCreate_Click"
+                              Foreground="{DynamicResource mg.solid.100}">
+                        <MenuItem.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <fa:ImageAwesome Icon="Plus" Height="12" Foreground="Green"/>
+                                <TextBlock Text="Create..." VerticalAlignment="Center" Margin="5,0,0,0"></TextBlock>
+                            </StackPanel>
+                        </MenuItem.Header>
+                    </MenuItem>
+                    <MenuItem Name="mi_TrayFind"
+                              Visibility="{Binding Source={StaticResource Env}, Path=UserData.IsLoggedIn, Converter={StaticResource IsLoggedInToStateConverter}, ConverterParameter=False}"
+                              Click="Mi_TrayFind_Click"
+                              Foreground="{DynamicResource mg.solid.100}">
+                        <MenuItem.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <fa:ImageAwesome Icon="Search" Foreground="{DynamicResource mg.solid.100}" Height="12" />
+                                <TextBlock Text="Find..." VerticalAlignment="Center" Margin="5,0,0,0"></TextBlock>
+                            </StackPanel>
+                        </MenuItem.Header>
+                    </MenuItem>
+                    <Separator></Separator>
+                    <MenuItem Name="mi_TraySignOut"
+                              Visibility="{Binding Source={StaticResource Env}, Path=UserData.IsLoggedIn, Converter={StaticResource IsLoggedInToStateConverter}, ConverterParameter=False}"
+                              Click="Mi_TraySignOut_Click"
+                              Foreground="{DynamicResource mg.solid.100}">
+                        <MenuItem.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <fa:ImageAwesome Icon="SignOut" Foreground="{DynamicResource mg.solid.100}" Height="12"/>
+                                <TextBlock Text="Log Out" VerticalAlignment="Center" Margin="5,0,0,0"></TextBlock>
+                            </StackPanel>
+                        </MenuItem.Header>
+                    </MenuItem>
+                    <MenuItem Name="mi_TrayQuit" 
+                              Click="Mi_TrayQuit_Click" 
+                              Foreground="{DynamicResource mg.solid.100}">
+                        <MenuItem.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <fa:ImageAwesome Icon="Times" Foreground="Red" Height="12"/>
+                                <TextBlock Text="Quit" VerticalAlignment="Center" Margin="5,0,0,0"></TextBlock>
+                            </StackPanel>
+                        </MenuItem.Header>
+                    </MenuItem>
+                </ContextMenu>
+            </tb:TaskbarIcon.ContextMenu>
+        </tb:TaskbarIcon>
 
-    <mah:MetroContentControl Name="mah_contentControl">
-        <ContentControl.Style>
-            <Style TargetType="{x:Type ContentControl}">
-                <Style.Triggers>
 
-                    <!-- SIGN IN VIEW -->
-                    <DataTrigger Binding="{Binding  Source={StaticResource Env},
+        <mah:MetroContentControl Name="mah_contentControl">
+            <ContentControl.Style>
+                <Style TargetType="{x:Type ContentControl}">
+                    <Style.Triggers>
+
+                        <!-- SIGN IN VIEW -->
+                        <DataTrigger Binding="{Binding  Source={StaticResource Env},
                                                         Path=MainWindowData.WindowState}" Value="SignIn">
-                        <Setter Property="Content">
-                            <Setter.Value>
-                                <controls:UserAuthControl></controls:UserAuthControl>
-                            </Setter.Value>
-                        </Setter>
-                    </DataTrigger>
+                            <Setter Property="Content">
+                                <Setter.Value>
+                                    <controls:UserAuthControl></controls:UserAuthControl>
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
 
-                    <!-- PASSWORD RESET VIEW -->
-                    <DataTrigger Binding="{Binding  Source={StaticResource Env},
+                        <!-- PASSWORD RESET VIEW -->
+                        <DataTrigger Binding="{Binding  Source={StaticResource Env},
                                                         Path=MainWindowData.WindowState}" Value="ChangePw">
-                        <Setter Property="Content">
-                            <Setter.Value>
-                                <controls:ResetPasswordControl></controls:ResetPasswordControl>
-                            </Setter.Value>
-                        </Setter>
-                    </DataTrigger>
+                            <Setter Property="Content">
+                                <Setter.Value>
+                                    <controls:ResetPasswordControl></controls:ResetPasswordControl>
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
 
-                    <!-- REGISTER VIEW -->
-                    <DataTrigger Binding="{Binding  Source={StaticResource Env},
+                        <!-- REGISTER VIEW -->
+                        <DataTrigger Binding="{Binding  Source={StaticResource Env},
                                                         Path=MainWindowData.WindowState}" Value="Register">
-                        <Setter Property="Content">
-                            <Setter.Value>
-                                <controls:UserRegisterControl></controls:UserRegisterControl>
-                            </Setter.Value>
-                        </Setter>
-                    </DataTrigger>
+                            <Setter Property="Content">
+                                <Setter.Value>
+                                    <controls:UserRegisterControl></controls:UserRegisterControl>
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
 
-                    <!-- MAIN VIEW -->
-                    <DataTrigger Binding="{Binding  Source={StaticResource Env},
+                        <!-- MAIN VIEW -->
+                        <DataTrigger Binding="{Binding  Source={StaticResource Env},
                                                         Path=MainWindowData.WindowState}" Value="BookmarksView">
-                        <Setter Property="Content">
-                            <Setter.Value>
-                                <controls:MainViewControl x:Name="ctrl_mainView"></controls:MainViewControl>
-                            </Setter.Value>
-                        </Setter>
-                    </DataTrigger>
+                            <Setter Property="Content">
+                                <Setter.Value>
+                                    <controls:MainViewControl x:Name="ctrl_mainView"></controls:MainViewControl>
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
 
-                    <!-- LOADING VIEW -->
-                    <DataTrigger Binding="{Binding  Source={StaticResource Env},
+                        <!-- LOADING VIEW -->
+                        <DataTrigger Binding="{Binding  Source={StaticResource Env},
                                                         Path=MainWindowData.WindowState}" Value="Loading">
-                        <Setter Property="Content">
-                            <Setter.Value>
-                                <controls:LoadingControl x:Name="ctrl_Loading"></controls:LoadingControl>
-                            </Setter.Value>
-                        </Setter>
-                    </DataTrigger>
-                </Style.Triggers>
-            </Style>
-        </ContentControl.Style>
-    </mah:MetroContentControl>
+                            <Setter Property="Content">
+                                <Setter.Value>
+                                    <controls:LoadingControl x:Name="ctrl_Loading"></controls:LoadingControl>
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ContentControl.Style>
+        </mah:MetroContentControl>
+    </Grid>
+
 </mah:MetroWindow>

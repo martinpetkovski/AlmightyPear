@@ -172,8 +172,6 @@ namespace AlmightyPear
             await InitializeThemesAsync();
             InitializeComponent();
 
-            //MinimizeToTray.Register(this);
-
             HotKeyManagers = new Dictionary<string, HotKeyManager>();
 
             HotKeyManagers["win+alt"] = new HotKeyManager();
@@ -189,7 +187,7 @@ namespace AlmightyPear
             ChildWindows[typeof(FindBookmarkWnd)] = new FindBookmarkWnd();
 
             await ExecSignInAsync();
-
+            WindowState = Env.StartupState;
 
         }
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AlmightyPear.Controller;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -19,7 +20,7 @@ namespace AlmightyPear
             {
                 if(e.Args[0] == "-s")
                 {
-                    MainWindow.WindowState = WindowState.Minimized;
+                    Env.StartupState = WindowState.Minimized;
                 }
             }
         }

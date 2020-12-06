@@ -20,6 +20,7 @@ namespace AlmightyPear.Controller
         public static string ArchiveBinPath = "_ARCHIVE";
         public static int CharacterLimit = 5000;
         public static int BinPathCharacterLimit = 100;
+        public static WindowState StartupState = WindowState.Normal;
         // data
         public static EnvModel EnvModel { get; private set; }
         public static MainWindowModel MainWindowData { get; private set; }

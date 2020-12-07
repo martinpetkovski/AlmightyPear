@@ -2,6 +2,8 @@
 using Checkmeg.WPF.Model;
 using Checkmeg.WPF.Utils;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.IO;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
@@ -59,6 +61,29 @@ namespace Checkmeg.WPF.Controls
             mah_bookmarksViewContentControl.Reload();
             mah_createBookmarkContentControl.Reload();
 
+        }
+
+        public void StartWscProc(string arg)
+        {
+            Process proc = new Process();
+            if (System.Environment.OSVersion.Version.Major >= 6)
+            {
+                proc.StartInfo.Verb = "runas";
+            }
+            proc.StartInfo.FileName = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\" + Env.CheckmegWSCEXE;
+            proc.StartInfo.UseShellExecute = true;
+            proc.StartInfo.Arguments = arg;
+            proc.Start();
+        }
+
+        private void Btn_wndContextMenu_Click(object sender, RoutedEventArgs e)
+        {
+            StartWscProc("-c");
+        }
+
+        private void Btn_wndContextMenuRemove_Click(object sender, RoutedEventArgs e)
+        {
+            StartWscProc("-d");
         }
     }
 }

@@ -17,6 +17,7 @@ namespace Checkmeg.WPF.Controller
     class Env
     {
         // global
+        public static string CheckmegWSCEXE = "CheckmegWSC.exe";
         public static WindowState StartupState = WindowState.Normal;
         // data
         public static EnvModel EnvModel { get; private set; }

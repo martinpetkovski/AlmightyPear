@@ -4,3 +4,4 @@ D:\Projects\AlmightyPear\AlmightyPear\CheckmegWSC\bin\Debug\CheckmegWSC.pdb
 D:\Projects\AlmightyPear\AlmightyPear\CheckmegWSC\obj\Debug\CheckmegWSC.csproj.CoreCompileInputs.cache
 D:\Projects\AlmightyPear\AlmightyPear\CheckmegWSC\obj\Debug\CheckmegWSC.exe
 D:\Projects\AlmightyPear\AlmightyPear\CheckmegWSC\obj\Debug\CheckmegWSC.pdb
+D:\Projects\AlmightyPear\AlmightyPear\CheckmegWSC\obj\Debug\CheckmegWSC.csprojAssemblyReference.cache

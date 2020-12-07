@@ -102,6 +102,12 @@
                                     BorderBrush="#333">Update Profile</Button>
                             </StackPanel>
                         </GroupBox>
+                        <GroupBox Header="Actions">
+                            <StackPanel Orientation="Vertical" HorizontalAlignment="Left" MaxWidth="500">
+                                <Button Padding="10" Content="Add to Windows context menu" Name="btn_wndContextMenu" Click="Btn_wndContextMenu_Click"></Button>
+                                <Button Padding="10" Content="Remove from Windows context menu" Name="btn_wndContextMenuRemove" Click="Btn_wndContextMenuRemove_Click"></Button>
+                            </StackPanel>
+                        </GroupBox>
                         <GroupBox Header="Password Reset">
                             <controls:ResetPasswordControl HorizontalAlignment="Left"></controls:ResetPasswordControl>
                         </GroupBox>

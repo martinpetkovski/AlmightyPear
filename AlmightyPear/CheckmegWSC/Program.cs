@@ -205,8 +205,6 @@ namespace CheckmegWSC
                     Console.WriteLine(args[1]);
                 }
             }
-
-            Console.ReadLine();
         }
     }
 }

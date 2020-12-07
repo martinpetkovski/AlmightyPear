@@ -1,4 +1,5 @@
 ﻿using Checkmeg.WPF.Controller;
+using Core;
 using MahApps.Metro.Controls;
 using System;
 using System.Runtime.InteropServices;
@@ -36,7 +37,7 @@ namespace Checkmeg.WPF.View
             Loaded += (sender, e) => MoveFocus(new TraversalRequest(FocusNavigationDirection.First));
         }
 
-        public void Fire()
+        public void Fire(string filter = "")
         {
             if (!Engine.Env.UserData.IsLoggedIn)
                 return;
@@ -52,6 +53,8 @@ namespace Checkmeg.WPF.View
             Width = finalW;
             Left = finalX;
             Top = finalY;
+
+            ctrl_filter.tb_filter.Text = filter;
 
             if (Engine.Env.UserData.CustomModel.AnimationsLevel == 2)
             {
@@ -72,7 +75,7 @@ namespace Checkmeg.WPF.View
 
             if (ea.Key == Key.Escape)
             {
-                Env.ClearClipboard();
+                ClipboardManager.ClearClipboard();
                 Hide();
             }
         }

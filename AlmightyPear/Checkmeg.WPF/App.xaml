@@ -5,7 +5,8 @@
              xmlns:engine="clr-namespace:Engine;assembly=Engine"
              xmlns:controller="clr-namespace:Checkmeg.WPF.Controller"
              StartupUri="MainWindow.xaml"
-             Startup="Application_Startup">
+             Startup="Application_Startup"
+             ShutdownMode="OnMainWindowClose">
     <Application.Resources>
         <ResourceDictionary>
             <FontFamily x:Key="Montserrat">pack://application:,,,/Fonts/#Montserrat</FontFamily>

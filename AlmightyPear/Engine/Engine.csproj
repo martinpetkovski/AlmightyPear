@@ -140,9 +140,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Core\Core.csproj">
+    <ProjectReference Include="..\Core\Core.WPF.csproj">
       <Project>{29072d37-927e-4792-9810-fab2a4da790e}</Project>
-      <Name>Core</Name>
+      <Name>Core.WPF</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

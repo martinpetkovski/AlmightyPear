@@ -20,6 +20,7 @@
         MinWidth="800"
         SaveWindowPosition="True"
                  StateChanged="RootWnd_StateChanged"
+                 Closed="RootWnd_Closed"
         >
     <mah:MetroWindow.Resources>
         <ResourceDictionary>

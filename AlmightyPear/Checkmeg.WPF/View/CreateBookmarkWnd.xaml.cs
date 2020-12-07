@@ -36,12 +36,12 @@ namespace Checkmeg.WPF.View
             Loaded += (sender, e) => MoveFocus(new TraversalRequest(FocusNavigationDirection.First));
         }
 
-        public void Fire(string initPath = "")
+        public void Fire(string initPath = "", string initContent = "")
         {
             if (!Engine.Env.UserData.IsLoggedIn)
                 return;
 
-            ctrl_bookmarkCreate.Initialize(initPath);
+            ctrl_bookmarkCreate.Initialize(initPath, initContent);
 
             Point mousePos = GetMousePosition();
             Screen screen = Screen.FromPoint(new System.Drawing.Point((int)mousePos.X, (int)mousePos.Y));

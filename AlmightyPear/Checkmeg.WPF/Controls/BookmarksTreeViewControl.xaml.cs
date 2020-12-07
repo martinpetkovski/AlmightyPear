@@ -1,6 +1,7 @@
 ﻿using Checkmeg.WPF.Controller;
 using Checkmeg.WPF.Model;
 using Checkmeg.WPF.View;
+using Core;
 using Engine;
 using System;
 using System.Collections.Generic;
@@ -387,18 +388,18 @@ namespace Checkmeg.WPF.Controls
             {
                 if (bookmark.Type == "text")
                 {
-                    Env.CopyToClipboard(Env.GetClipboardText() + " " + bookmark.Content);
+                    ClipboardManager.CopyToClipboard(ClipboardManager.GetClipboardText() + " " + bookmark.Content);
                 }
                 else if (bookmark.Type == "link")
                 {
-                    Env.CopyToClipboard(bookmark.Content);
+                    ClipboardManager.CopyToClipboard(bookmark.Content);
                 }
             }
             else
             {
                 if (bookmark.Type == "text")
                 {
-                    Env.CopyToClipboard(bookmark.Content);
+                    ClipboardManager.CopyToClipboard(bookmark.Content);
                 }
                 else if (bookmark.Type == "link")
                 {
@@ -410,7 +411,7 @@ namespace Checkmeg.WPF.Controls
         private void Mi_ExecuteBookmarkAction_Click(object sender, RoutedEventArgs e)
         {
             BookmarkModel bookmark = (BookmarkModel)((MenuItem)sender).DataContext;
-            Env.CopyToClipboard(bookmark.Content);
+            ClipboardManager.CopyToClipboard(bookmark.Content);
         }
 
         private void Mi_BookmarkDetails_Click(object sender, RoutedEventArgs e)
@@ -438,7 +439,7 @@ namespace Checkmeg.WPF.Controls
 
         private void Mi_copyPath_Click(object sender, RoutedEventArgs e)
         {
-            Env.CopyToClipboard(((IBinItem)((MenuItem)sender).DataContext).Path);
+            ClipboardManager.CopyToClipboard(((IBinItem)((MenuItem)sender).DataContext).Path);
         }
 
         private void Mi_CopyAdditive_Click(object sender, RoutedEventArgs e)
@@ -446,7 +447,7 @@ namespace Checkmeg.WPF.Controls
             if (Model.HasOneSelected)
             {
                 BookmarkModel bookmark = (BookmarkModel)((MenuItem)sender).DataContext;
-                Env.CopyToClipboard(Env.GetClipboardText() + " " + bookmark.Content);
+                ClipboardManager.CopyToClipboard(ClipboardManager.GetClipboardText() + " " + bookmark.Content);
             }
             else
             {
@@ -456,7 +457,7 @@ namespace Checkmeg.WPF.Controls
                     if (item is BookmarkModel) toCopy += " " + ((BookmarkModel)item).Content;
                     else if (item is BinModel) toCopy += " " + ((BinModel)item).Name;
                 }
-                Env.CopyToClipboard(toCopy);
+                ClipboardManager.CopyToClipboard(toCopy);
             }
         }
 

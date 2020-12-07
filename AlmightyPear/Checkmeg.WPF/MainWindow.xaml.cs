@@ -2,11 +2,13 @@
 using Checkmeg.WPF.Model;
 using Checkmeg.WPF.Utils;
 using Checkmeg.WPF.View;
+using Core;
 using MahApps.Metro.Controls;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -64,18 +66,18 @@ namespace Checkmeg.WPF
         {
             await Task.Factory.StartNew(() =>
             {
-                string a = Env.GetClipboardText();
+                string a = ClipboardManager.GetClipboardText();
                 while (inputValue == a)
                 {
                     Thread.Sleep(10);
-                    a = Env.GetClipboardText();
+                    a = ClipboardManager.GetClipboardText();
                 }
             });
         }
 
         private string _prevClipboardText = "";
 
-        private async void ShowHotWndCreateBookmarkAsync(object sender, HotKeyEventArgs e)
+        public async void ShowHotWndCreateBookmarkAsync(object sender, HotKeyEventArgs e)
         {
             CreateBookmarkWnd createBookmarkWnd = (CreateBookmarkWnd)ChildWindows[typeof(CreateBookmarkWnd)];
 
@@ -88,7 +90,7 @@ namespace Checkmeg.WPF
             }
 
             InputSimulator inputSim = new InputSimulator();
-            string clipboardText = Env.GetClipboardText();
+            string clipboardText = ClipboardManager.GetClipboardText();
             inputSim.Keyboard.KeyUp(VirtualKeyCode.LWIN);
             inputSim.Keyboard.ModifiedKeyStroke(VirtualKeyCode.CONTROL, VirtualKeyCode.VK_C);
 
@@ -97,22 +99,22 @@ namespace Checkmeg.WPF
                 await ClipboardChanged(clipboardText);
             }
 
-            _prevClipboardText = Env.GetClipboardText();
+            _prevClipboardText = ClipboardManager.GetClipboardText();
 
             Dispatcher.Invoke(DispatcherPriority.SystemIdle, new Action(() =>
             {
-                createBookmarkWnd.Fire();
+                createBookmarkWnd.Fire("", e.AdditionalPath);
             }));
         }
 
-        private void ShowHotWndFindBookmark(object sender, HotKeyEventArgs e)
+        public void ShowHotWndFindBookmark(object sender, HotKeyEventArgs e)
         {
             FindBookmarkWnd findBookmarkWnd = (FindBookmarkWnd)ChildWindows[typeof(FindBookmarkWnd)];
             if (!findBookmarkWnd.IsVisible)
             {
                 Dispatcher.Invoke(DispatcherPriority.Normal, new Action(() =>
                 {
-                    findBookmarkWnd.Fire();
+                    findBookmarkWnd.Fire(Path.GetFileNameWithoutExtension(e.AdditionalPath));
                 }));
             }
         }
@@ -169,7 +171,11 @@ namespace Checkmeg.WPF
 
             await ExecSignInAsync();
             WindowState = Env.StartupState;
+        }
 
+        private void ProcessOutput(object sender, DataReceivedEventArgs e)
+        {
+            Debug.WriteLine(e.Data);
         }
 
         public MainWindow()
@@ -256,6 +262,10 @@ namespace Checkmeg.WPF
         private void Mi_TrayCreate_Click(object sender, RoutedEventArgs e)
         {
             ShowHotWndCreateBookmarkAsync(sender, null);
+        }
+
+        private void RootWnd_Closed(object sender, EventArgs e)
+        {
         }
     }
 }

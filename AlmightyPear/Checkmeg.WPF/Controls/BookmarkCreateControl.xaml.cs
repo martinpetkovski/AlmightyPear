@@ -1,4 +1,5 @@
 ﻿using Checkmeg.WPF.Controller;
+using Core;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -43,19 +44,19 @@ namespace Checkmeg.WPF.Controls
                 bin = Engine.Env.TempBinPath;
 
             await Engine.Env.FirebaseController.CreateBookmarkAsync(bin, txt_selection.Text);
-            Env.ClearClipboard();
+            ClipboardManager.ClearClipboard();
         }
 
         public void Cancel()
         {
             txt_selection.Text = "";
             tb_category.Clear();
-            Env.ClearClipboard();
+            ClipboardManager.ClearClipboard();
         }
 
-        public void Initialize(string initPath = "")
+        public void Initialize(string initPath = "", string initContent = "")
         {
-            string selectedText = Env.GetClipboardText();
+            string selectedText = initContent == "" ? ClipboardManager.GetClipboardText() : initContent;
 
             tb_category.Text = initPath;
             txt_selection.Text = selectedText;

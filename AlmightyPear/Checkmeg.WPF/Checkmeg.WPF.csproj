@@ -103,6 +103,9 @@
   <PropertyGroup>
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>AlmightyPear.EntryPoint</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="ControlzEx, Version=4.0.0.0, Culture=neutral, PublicKeyToken=69f1c32f803d307e, processorArchitecture=MSIL">
       <HintPath>..\packages\ControlzEx.4.4.0\lib\net45\ControlzEx.dll</HintPath>
@@ -125,6 +128,7 @@
     <Reference Include="MahApps.Metro, Version=2.0.0.0, Culture=neutral, PublicKeyToken=51482d6f650b2b3f, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.2.4.2\lib\net47\MahApps.Metro.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Microsoft.Xaml.Behaviors, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Xaml.Behaviors.Wpf.1.1.19\lib\net45\Microsoft.Xaml.Behaviors.dll</HintPath>
     </Reference>
@@ -190,6 +194,7 @@
     <Compile Include="Converters\FilterBinItemsConverter.cs" />
     <Compile Include="Converters\GenericConverters.cs" />
     <Compile Include="Converters\TreeViewLineConverter.cs" />
+    <Compile Include="EntryPoint.cs" />
     <Compile Include="Model\EnvModel.cs" />
     <Compile Include="Utils\DataTemplateSelectors.cs" />
     <Compile Include="Utils\HotKeyManager.cs" />
@@ -325,7 +330,6 @@
     <Resource Include="Fonts\Quicksand.ttf" />
     <Resource Include="Fonts\ProximaNova.ttf" />
     <None Include="Checkmeg.WPF_Key.pfx" />
-    <None Include="Checkmeg.WPF_TemporaryKey.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
@@ -334,10 +338,14 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Textures\logo_icon.ico" />
+    <Resource Include="Resources\Textures\logo_icon.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Textures\logo.png" />
@@ -349,6 +357,14 @@
     <Resource Include="Resources\Textures\background_monochromatic.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CheckmegWSC\CheckmegWSC.csproj">
+      <Project>{f595bedc-d9e0-4baa-a81d-8eab28d51988}</Project>
+      <Name>CheckmegWSC</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Core\Core.WPF.csproj">
+      <Project>{29072D37-927E-4792-9810-FAB2A4DA790E}</Project>
+      <Name>Core.WPF</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Engine\Engine.csproj">
       <Project>{9644cdc2-f43b-412a-a766-d17380c61faa}</Project>
       <Name>Engine</Name>
@@ -373,5 +389,8 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets'))" />
+  </Target>
+  <Target Name="copyIcon" AfterTargets="AfterBuild">
+    <Copy SourceFiles="resources\Textures\logo_icon.ico" DestinationFolder="$(OutDir)" />
   </Target>
 </Project>

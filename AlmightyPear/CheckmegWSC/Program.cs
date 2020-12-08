@@ -120,7 +120,7 @@ namespace CheckmegWSC
                     if (reg != null)
                     {
                         reg.Close();
-                        Registry.ClassesRoot.DeleteSubKey(GetFullPath());
+                        Registry.ClassesRoot.DeleteSubKeyTree(GetFullPath());
                     }
                 }
                 else
@@ -129,8 +129,8 @@ namespace CheckmegWSC
                     if (reg != null)
                     {
                         reg.Close();
-                        Registry.ClassesRoot.DeleteSubKey(GetFullPath() + "\\command");
-                        Registry.ClassesRoot.DeleteSubKey(GetFullPath());
+                        Registry.ClassesRoot.DeleteSubKeyTree(GetFullPath() + "\\command");
+                        Registry.ClassesRoot.DeleteSubKeyTree(GetFullPath());
                     }
                 }
             }
@@ -162,7 +162,7 @@ namespace CheckmegWSC
         public static void DestroyContextMenu()
         {
             RegistryEntry Root = new RegistryEntry(true, rootClass + "\\Checkmeg", "Checkmeg", "Checkmeg.AddBookmark");
-            Root.Delete();
+            
 
             RegistryEntry AddBookmark = new RegistryEntry(rootClass + "\\Checkmeg\\shell", "Checkmeg.AddBookmark", "Add Bookmark", "-a");
             AddBookmark.Delete();
@@ -175,6 +175,7 @@ namespace CheckmegWSC
 
             RegistryEntry CopyParentDirPath = new RegistryEntry(rootClass + "\\Checkmeg\\shell", "Checkmeg.zzCopyParentDirPath", "Copy Dir Path", "-cp");
             CopyParentDirPath.Delete();
+            Root.Delete();
         }
 
         static void Configure()

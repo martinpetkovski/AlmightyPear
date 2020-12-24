@@ -1,21 +1,11 @@
-﻿using Checkmeg.WPF.Controller;
-using Core;
+﻿using Core;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Checkmeg.WPF.Controls
 {
@@ -34,7 +24,7 @@ namespace Checkmeg.WPF.Controls
             InitializeComponent();
         }
 
-        public async Task CreateAsync()
+        public async Task CreateAsync(bool msg)
         {
             if (txt_selection.Text.Length == 0)
                 return;
@@ -43,8 +33,12 @@ namespace Checkmeg.WPF.Controls
             if (bin.Length == 0)
                 bin = Engine.Env.TempBinPath;
 
-            await Engine.Env.FirebaseController.CreateBookmarkAsync(bin, txt_selection.Text);
+            bool success = await Engine.Env.FirebaseController.CreateBookmarkAsync(bin, txt_selection.Text);
             ClipboardManager.ClearClipboard();
+            if (success && msg)
+            {
+                await View.MessageBox.FireAsync("Create Bookmark", "Successfully created bookmark.", new List<string>() { "Ok" });
+            }
         }
 
         public void Cancel()
@@ -66,7 +60,7 @@ namespace Checkmeg.WPF.Controls
         private void Tb_category_KeyDown(object sender, KeyEventArgs e)
         {
             InputEvent?.Invoke(sender, e);
-            if(e.Key == Key.Tab)
+            if (e.Key == Key.Tab)
             {
                 tb_category.CaretIndex = tb_category.Text.Length;
                 e.Handled = true;
@@ -96,6 +90,11 @@ namespace Checkmeg.WPF.Controls
                 tb_category.Text = tb_category.Text.Substring(0, Engine.Env.BinPathCharacterLimit);
                 tb_category.CaretIndex = Engine.Env.BinPathCharacterLimit;
             }
+        }
+
+        private async void Btn_SaveBookmark_ClickAsync(object sender, RoutedEventArgs e)
+        {
+            await CreateAsync(true);
         }
     }
 }

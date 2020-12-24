@@ -79,7 +79,7 @@ namespace Checkmeg.WPF.View
             {
                 if (ea.Key == Key.Enter)
                 {
-                    await ctrl_bookmarkCreate.CreateAsync();
+                    await ctrl_bookmarkCreate.CreateAsync(false);
                     Hide();
                 }
                 if (ea.Key == Key.Escape)
@@ -92,7 +92,7 @@ namespace Checkmeg.WPF.View
             {
                 if (ea.Key == Key.S && Keyboard.Modifiers == ModifierKeys.Control)
                 {
-                    await ctrl_bookmarkCreate.CreateAsync();
+                    await ctrl_bookmarkCreate.CreateAsync(true);
                     Hide();
                 }
             }

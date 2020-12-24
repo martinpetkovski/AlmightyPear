@@ -344,7 +344,7 @@
                                 </MultiBinding>
                             </Border.BorderBrush>
                             <StackPanel Name="rt_bin" 
-                                ContextMenu="{DynamicResource BinItemContextMenu}"
+                                ContextMenu="{StaticResource BinItemContextMenu}"
                                 VirtualizingPanel.IsVirtualizing="True"
                                 VirtualizingPanel.VirtualizationMode="Standard"
                                 SnapsToDevicePixels="True"
@@ -374,7 +374,7 @@
                         Name="btn_BookmarkAction"
                         Padding="8"
                         Margin="0"
-                        ContextMenu="{DynamicResource BinItemContextMenu}"
+                        ContextMenu="{StaticResource BinItemContextMenu}"
                         FontSize="{Binding RelativeSource={RelativeSource AncestorType=local:BookmarksTreeViewControl}, Path=FontSize}"
                         MaxWidth="220" 
                         MaxHeight="72"

@@ -12,7 +12,7 @@
         xmlns:behaviors="clr-namespace:WPFTextBoxAutoComplete;assembly=WPFTextBoxAutoComplete"
         xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
         mc:Ignorable="d"
-        Title="{Binding Source={StaticResource EngineEnv}, Path=BinData.BookmarksViewCaption}" 
+        Title="Find Bookmark" 
         WindowStyle="None"
         TitleBarHeight="0"
         Background="{DynamicResource mg.solid.10}"

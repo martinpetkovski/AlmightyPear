@@ -21,6 +21,7 @@
         SaveWindowPosition="True"
                  StateChanged="RootWnd_StateChanged"
                  Closed="RootWnd_Closed"
+                 Loaded="RootWnd_LoadedAsync"
         >
     <mah:MetroWindow.Resources>
         <ResourceDictionary>

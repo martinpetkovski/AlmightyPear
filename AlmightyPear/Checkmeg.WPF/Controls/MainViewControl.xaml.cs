@@ -85,5 +85,15 @@ namespace Checkmeg.WPF.Controls
         {
             StartWscProc("-d");
         }
+
+        private void Btn_wndAddToStartup_Click(object sender, RoutedEventArgs e)
+        {
+            StartWscProc("-s|1|" + System.Reflection.Assembly.GetExecutingAssembly().Location);
+        }
+
+        private void Btn_wndRemoveFromStartup_Click(object sender, RoutedEventArgs e)
+        {
+            StartWscProc("-s|0|" + System.Reflection.Assembly.GetExecutingAssembly().Location);
+        }
     }
 }

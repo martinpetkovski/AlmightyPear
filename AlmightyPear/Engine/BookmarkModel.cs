@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Net;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
@@ -36,7 +37,6 @@ namespace Engine
 
         private void RefreshType()
         {
-            // check for link
             Uri uriResult;
             bool result = Uri.TryCreate(Content, UriKind.Absolute, out uriResult)
                 && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
@@ -52,6 +52,14 @@ namespace Engine
                     Type = "link";
                     Caption = GetWebsiteTitle(Content);
                 }
+            }
+            else if(Directory.Exists(Content))
+            {
+                Type = "dir";
+            }
+            else if(File.Exists(Content))
+            {
+                Type = "file";
             }
             else
             {

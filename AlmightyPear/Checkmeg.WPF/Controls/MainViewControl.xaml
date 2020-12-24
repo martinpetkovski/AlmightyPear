@@ -102,10 +102,20 @@
                                     BorderBrush="#333">Update Profile</Button>
                             </StackPanel>
                         </GroupBox>
-                        <GroupBox Header="Actions">
-                            <StackPanel Orientation="Vertical" HorizontalAlignment="Left" MaxWidth="500">
-                                <Button Padding="10" Content="Add to Windows context menu" Name="btn_wndContextMenu" Click="Btn_wndContextMenu_Click"></Button>
-                                <Button Padding="10" Content="Remove from Windows context menu" Name="btn_wndContextMenuRemove" Click="Btn_wndContextMenuRemove_Click"></Button>
+                        <GroupBox Header="Shell Actions">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                                <GroupBox Header="Add">
+                                    <StackPanel Orientation="Vertical">
+                                        <Button BorderBrush="#333" Padding="10" Content="Add to Windows context menu" Name="btn_wndContextMenu" Click="Btn_wndContextMenu_Click"></Button>
+                                        <Button BorderBrush="#333" Padding="10" Content="Add to Startup" Name="btn_wndAddToStartup" Click="Btn_wndAddToStartup_Click"></Button>
+                                    </StackPanel>
+                                </GroupBox>
+                                <GroupBox Header="Remove">
+                                    <StackPanel Orientation="Vertical">
+                                        <Button BorderBrush="#333" Padding="10" Content="Remove from Windows context menu" Name="btn_wndContextMenuRemove" Click="Btn_wndContextMenuRemove_Click"></Button>
+                                        <Button BorderBrush="#333" Padding="10" Content="Remove from Startup" Name="btn_wndRemoveFromStartup" Click="Btn_wndRemoveFromStartup_Click"></Button>
+                                    </StackPanel>
+                                </GroupBox>
                             </StackPanel>
                         </GroupBox>
                         <GroupBox Header="Password Reset">

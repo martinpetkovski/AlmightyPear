@@ -27,6 +27,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="auto"></ColumnDefinition>
+                <ColumnDefinition Width="auto"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <TextBox  
                 Grid.Column="0" 
@@ -35,6 +36,7 @@
                 AcceptsTab="False"
                 TextChanged="Tb_category_TextChanged"
                 TabIndex="0"
+                VerticalContentAlignment="Center"
                 behaviors:AutoCompleteBehavior.AutoCompleteItemsSource="{Binding  
                 ElementName=tb_category,
                 Path=Text, 
@@ -42,6 +44,13 @@
                 behaviors:AutoCompleteBehavior.AutoCompleteStringComparison="InvariantCultureIgnoreCase"
                 ></TextBox>
             <fa:ImageAwesome Grid.Column="1" Icon="FolderOpen" Foreground="#333" Height="32" Width="32" Margin="20,3" />
+            <Button HorizontalAlignment="Right" 
+                    Grid.Column="2" 
+                    Padding="30,5"
+                    Margin="10,0"
+                    Name="btn_SaveBookmark"
+                    ToolTip="Ctrl+Click will save all entries separated by a space as separate bookmarks"
+                    Click="Btn_SaveBookmark_ClickAsync">Save</Button>
         </Grid>
         <avalonEdit:TextEditor 
             Grid.Row="1" 
@@ -56,7 +65,8 @@
             LineNumbersForeground="#555"
             TextChanged="Txt_selection_TextChanged"
             ></avalonEdit:TextEditor>
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Left">
+
+        <StackPanel Orientation="Horizontal" Grid.Row="2" VerticalAlignment="Center">
             <TextBlock Text="Character Limit: "></TextBlock>
             <TextBlock Name="tb_characterLimit"></TextBlock>
         </StackPanel>

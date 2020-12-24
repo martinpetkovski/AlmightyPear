@@ -64,10 +64,7 @@ namespace CheckmegWSC
                         }
 
                     }
-                    catch (Exception ex)
-                    {
-
-                    }
+                    catch (Exception) { }
                     finally
                     {
                         if (regmenu != null)
@@ -98,10 +95,7 @@ namespace CheckmegWSC
                             regcmd.SetValue("", checkmegExePath + " " + command + " %1");
                         }
                     }
-                    catch (Exception ex)
-                    {
-
-                    }
+                    catch (Exception) { }
                     finally
                     {
                         if (regmenu != null)
@@ -140,8 +134,7 @@ namespace CheckmegWSC
         //private const string MenuName = "*\\shell\\Checkmeg";
         //private const string Command = "*\\shell\\Checkmeg\\command";
 
-        private static string rootClass = @"*\shell";
-        public static void CreateContextMenu()
+        public static void CreateContextMenu(string rootClass)
         {
             RegistryEntry Root = new RegistryEntry(true, rootClass + "\\Checkmeg", "Checkmeg", "Checkmeg.AddBookmark", "", 0);
             Root.Create();
@@ -159,7 +152,7 @@ namespace CheckmegWSC
             CopyParentDirPath.Create();
         }
 
-        public static void DestroyContextMenu()
+        public static void DestroyContextMenu(string rootClass)
         {
             RegistryEntry Root = new RegistryEntry(true, rootClass + "\\Checkmeg", "Checkmeg", "Checkmeg.AddBookmark");
             
@@ -178,32 +171,55 @@ namespace CheckmegWSC
             Root.Delete();
         }
 
+        public static void SetStartup(bool set, string path)
+        {
+            RegistryKey rk = Registry.CurrentUser.OpenSubKey
+                ("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+
+            if (set)
+                rk.SetValue("Checkmeg", path);
+            else
+                rk.DeleteValue("Checkmeg", false);
+
+        }
+
         static void Configure()
         {
-            CreateContextMenu();
+            CreateContextMenu(@"*\shell"); // files
+            CreateContextMenu(@"Directory\shell"); // directories
+            CreateContextMenu(@"Directory\Background\shell"); // directories empty space
         }
 
         static void Deconfigure()
         {
-            DestroyContextMenu();
+            DestroyContextMenu(@"*\shell"); // files
+            DestroyContextMenu(@"Directory\shell"); // directories
+            DestroyContextMenu(@"Directory\Background\shell"); // directories empty space
         }
 
         static void Main(string[] args)
         {
-            if (args[0] == "-c")
+            foreach (string arg in args)
             {
-                Configure();
-            }
-            else if (args[0] == "-d")
-            {
-                Deconfigure();
-            }
-            else if (args[0] == "-t")
-            {
-                Console.WriteLine("Checkmeg (c) - Martin Petkovski, 2020 - 2021");
-                if (args.Length > 1)
+                if (arg == "-c")
                 {
-                    Console.WriteLine(args[1]);
+                    Configure();
+                }
+                else if (arg == "-d")
+                {
+                    Deconfigure();
+                }
+                else if(arg.StartsWith("-s"))
+                {
+                    string[] tokens = arg.Split('|');
+                    bool isSet = tokens[1] == "1" ? true : false;
+                    string path = tokens[2];
+
+                    SetStartup(isSet, path);
+                }
+                else if (arg == "-t")
+                {
+                    Console.WriteLine("Checkmeg (c) - Martin Petkovski, 2020 - 2021");
                 }
             }
         }

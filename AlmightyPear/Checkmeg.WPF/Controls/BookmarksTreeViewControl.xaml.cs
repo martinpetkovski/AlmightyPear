@@ -116,7 +116,10 @@ namespace Checkmeg.WPF.Controls
             {
                 get
                 {
-                    return ContextedItem.Path != Engine.Env.ArchiveBinPath;
+                    if (ContextedItem != null && Engine.Env.ArchiveBinPath != null)
+                        return ContextedItem.Path != Engine.Env.ArchiveBinPath;
+                    else
+                        return false;
                 }
             }
 
@@ -390,7 +393,10 @@ namespace Checkmeg.WPF.Controls
                 {
                     ClipboardManager.CopyToClipboard(ClipboardManager.GetClipboardText() + " " + bookmark.Content);
                 }
-                else if (bookmark.Type == "link")
+                else if (bookmark.Type == "link" || 
+                         bookmark.Type == "image" ||
+                         bookmark.Type == "dir" ||
+                         bookmark.Type == "file")
                 {
                     ClipboardManager.CopyToClipboard(bookmark.Content);
                 }
@@ -401,9 +407,15 @@ namespace Checkmeg.WPF.Controls
                 {
                     ClipboardManager.CopyToClipboard(bookmark.Content);
                 }
-                else if (bookmark.Type == "link")
+                else if (bookmark.Type == "link" || 
+                         bookmark.Type == "image")
                 {
                     OpenLink(bookmark.Content);
+                }
+                else if(bookmark.Type == "dir" || 
+                        bookmark.Type == "file")
+                {
+                    Process.Start(bookmark.Content);
                 }
             }
         }

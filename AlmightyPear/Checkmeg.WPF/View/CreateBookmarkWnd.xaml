@@ -10,7 +10,7 @@
         xmlns:converters="clr-namespace:Checkmeg.WPF.Converters"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:behaviors="clr-namespace:WPFTextBoxAutoComplete;assembly=WPFTextBoxAutoComplete"
-        Title="{Binding Source={StaticResource EngineEnv}, Path=BinData.BookmarksViewCaption}" 
+        Title="Create Bookmark" 
         mc:Ignorable="d"
         Height="200" Width="800"
         WindowStyle="None"

@@ -13,20 +13,26 @@ namespace Engine
         {
             get
             {
+                if(_childBinItems == null)
+                    _childBinItems = new Dictionary<string, IBinItem>();
                 return _childBinItems;
             }
             set
             {
                 _childBinItems = value;
                 OnPropertyChanged();
+                OnPropertyChanged("BinItemsCollection");
             }
         }
 
+        ObservableCollection<IBinItem> _binItemsCollection;
         public ObservableCollection<IBinItem> BinItemsCollection
         {
             get
             {
-                return new ObservableCollection<IBinItem>(_childBinItems.Values);
+                if (_binItemsCollection == null)
+                    _binItemsCollection = new ObservableCollection<IBinItem>(BinItems.Values);
+                return _binItemsCollection;
             }
         }
 
@@ -51,6 +57,7 @@ namespace Engine
                 {
                     _childBinItems.Add(key, value);
                     OnPropertyChanged("BinItems");
+                    _binItemsCollection = null; // force regenerate next time it's needed
                     OnPropertyChanged("BinItemsCollection");
                 }
             }
@@ -60,6 +67,7 @@ namespace Engine
         {
             _childBinItems.Clear();
             OnPropertyChanged("BinItems");
+            _binItemsCollection = null; // force regenerate next time it's needed
             OnPropertyChanged("BinItemsCollection");
         }
 
@@ -196,7 +204,6 @@ namespace Engine
 
         public BinModel(string name, string path)
         {
-            _childBinItems = new Dictionary<string, IBinItem>();
             Name = name;
             Path = path;
 

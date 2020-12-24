@@ -11,6 +11,8 @@ namespace Checkmeg.WPF.Utils
         public DataTemplate TextDataTemplate { get; set; }
         public DataTemplate LinkDataTemplate { get; set; }
         public DataTemplate ImageDataTemplate { get; set; }
+        public DataTemplate DirDataTemplate { get; set; }
+        public DataTemplate FileDataTemplate { get; set; }
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
@@ -29,6 +31,10 @@ namespace Checkmeg.WPF.Utils
                 return LinkDataTemplate;
             else if (type == "image")
                 return ImageDataTemplate;
+            else if (type == "dir")
+                return DirDataTemplate;
+            else if (type == "file")
+                return FileDataTemplate;
             else return TextDataTemplate;
 
         }

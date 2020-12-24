@@ -321,6 +321,10 @@ namespace Checkmeg.WPF.Converters
                     return FontAwesomeIcon.FileText;
                 else if (type == "image")
                     return FontAwesomeIcon.Image;
+                else if (type == "dir")
+                    return FontAwesomeIcon.Folder;
+                else if (type == "file")
+                    return FontAwesomeIcon.File;
             }
 
             return FontAwesomeIcon.None;

@@ -62,7 +62,9 @@
                                                   BinDataTemplate="{StaticResource binTemplate}"
                                                   TextDataTemplate="{StaticResource textTemplate}"
                                                   LinkDataTemplate="{StaticResource linkTemplate}"
-                                                  ImageDataTemplate="{StaticResource imageTemplate}"/>
+                                                  ImageDataTemplate="{StaticResource imageTemplate}"
+                                                  DirDataTemplate="{StaticResource textTemplate}"
+                                                  FileDataTemplate="{StaticResource textTemplate}"/>
         </ResourceDictionary>
     </Window.Resources>
     <StackPanel>

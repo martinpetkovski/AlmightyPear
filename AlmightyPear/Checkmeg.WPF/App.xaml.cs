@@ -3,19 +3,42 @@ using Checkmeg.WPF.View;
 using Core;
 using Microsoft.VisualBasic.ApplicationServices;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Text;
 using System.Threading;
 using System.Windows;
 
 namespace Checkmeg.WPF
 {
-    
+    [Serializable]
+    public class SerializableException
+    {
+        public byte[] Serialize()
+        {
+            BinaryFormatter bf = new BinaryFormatter();
+            using (var ms = new MemoryStream())
+            {
+                bf.Serialize(ms, this);
+                return ms.ToArray();
+            }
+        }
+
+        public List<Exception> Exc;
+        public SerializableException()
+        {
+            Exc = new List<Exception>();
+        }
+    }
 
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
     public partial class App : Application
     {
+        public static string CrashDumpPath = System.AppDomain.CurrentDomain.BaseDirectory + "crashdump.ccm";
+
         private void Application_Startup(object sender, System.Windows.StartupEventArgs e)
         {
             if (e.Args.Length == 1)
@@ -25,11 +48,6 @@ namespace Checkmeg.WPF
                     Env.StartupState = WindowState.Minimized;
                 }
             }
-            AppDomain.CurrentDomain.ProcessExit += (s, ex) => ExitHandler(s, ex);
-        }
-
-        private void ExitHandler(object sender, EventArgs e)
-        {
         }
     }
 
@@ -51,6 +69,8 @@ namespace Checkmeg.WPF
 
     public class SingleInstanceManager : WindowsFormsApplicationBase
     {
+        public static SerializableException SerializableException;
+
         private SingleInstanceApplication _application;
         private System.Collections.ObjectModel.ReadOnlyCollection<string> _commandLine;
 
@@ -61,10 +81,31 @@ namespace Checkmeg.WPF
 
         protected override bool OnStartup(Microsoft.VisualBasic.ApplicationServices.StartupEventArgs eventArgs)
         {
+            SerializableException = new SerializableException();
+
+            if (File.Exists(App.CrashDumpPath))
+                File.Delete(App.CrashDumpPath);
+
+            AppDomain.CurrentDomain.UnhandledException += (sender, e) =>
+            {
+                SerializableException.Exc.Add((Exception)e.ExceptionObject);
+            };
+
+            AppDomain.CurrentDomain.ProcessExit += (sender, e) =>
+            {
+                BinaryWriter writer = new BinaryWriter(File.Open(App.CrashDumpPath, FileMode.Append));
+                writer.Write(SingleInstanceManager.SerializableException.Serialize());
+                writer.Close();
+            };
+
             // First time _application is launched
             _commandLine = eventArgs.CommandLine;
             _application = new SingleInstanceApplication();
-            _application.Run();
+            try
+            {
+                _application.Run();
+            }
+            catch(Exception){}
 
             return false;
         }

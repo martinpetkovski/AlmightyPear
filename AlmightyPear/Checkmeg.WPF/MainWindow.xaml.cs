@@ -148,12 +148,7 @@ namespace Checkmeg.WPF
 
         public async Task InitializeAsync()
         {
-            Env.Initialize(this);
-            Engine.Env.Initialize();
-            Env.MainWindowData.WindowState = MainWindowModel.EMainWindowState.Loading;
-            Style = (Style)FindResource(typeof(Window));
             await InitializeThemesAsync();
-            InitializeComponent();
 
             HotKeyManagers = new Dictionary<string, HotKeyManager>();
 
@@ -180,7 +175,12 @@ namespace Checkmeg.WPF
 
         public MainWindow()
         {
-            InitializeAsync();
+            Env.Initialize(this);
+            Engine.Env.Initialize();
+            Env.MainWindowData.WindowState = MainWindowModel.EMainWindowState.Loading;
+            Style = (Style)FindResource(typeof(Window));
+            
+            InitializeComponent();
         }
 
         public void Mi_ClearTempBin_Click(object sender, RoutedEventArgs e)
@@ -266,6 +266,11 @@ namespace Checkmeg.WPF
 
         private void RootWnd_Closed(object sender, EventArgs e)
         {
+        }
+
+        private async void RootWnd_LoadedAsync(object sender, RoutedEventArgs e)
+        {
+            await InitializeAsync();
         }
     }
 }

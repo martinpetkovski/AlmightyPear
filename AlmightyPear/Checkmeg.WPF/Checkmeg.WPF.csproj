@@ -107,7 +107,7 @@
     <StartupObject>AlmightyPear.EntryPoint</StartupObject>
   </PropertyGroup>
   <ItemGroup>
-  <Reference Include="ControlzEx, Version=4.0.0.0, Culture=neutral, PublicKeyToken=69f1c32f803d307e, processorArchitecture=MSIL">
+    <Reference Include="ControlzEx, Version=4.0.0.0, Culture=neutral, PublicKeyToken=69f1c32f803d307e, processorArchitecture=MSIL">
       <HintPath>..\packages\ControlzEx.4.4.0\lib\net45\ControlzEx.dll</HintPath>
     </Reference>
     <Reference Include="FontAwesome.WPF, Version=4.7.0.37774, Culture=neutral, PublicKeyToken=0758b07a11a4f466, processorArchitecture=MSIL">
@@ -196,8 +196,14 @@
     <Compile Include="Converters\TreeViewLineConverter.cs" />
     <Compile Include="EntryPoint.cs" />
     <Compile Include="Model\EnvModel.cs" />
+    <Compile Include="Resources\Strings\strings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>strings.resx</DependentUpon>
+    </Compile>
     <Compile Include="Utils\DataTemplateSelectors.cs" />
     <Compile Include="Utils\HotKeyManager.cs" />
+    <Compile Include="Utils\Localization.cs" />
     <Compile Include="Utils\StringCypher.cs" />
     <Compile Include="Utils\ThemeManager.cs" />
     <Compile Include="Utils\WpfScreen.cs" />
@@ -372,6 +378,14 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Strings\strings.en-US.resx" />
+    <EmbeddedResource Include="Resources\Strings\strings.mk-MK.resx" />
+    <EmbeddedResource Include="Resources\Strings\strings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>strings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />

@@ -8,7 +8,7 @@
              xmlns:converters="clr-namespace:Checkmeg.WPF.Converters"
              xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
              xmlns:behaviors="clr-namespace:WPFTextBoxAutoComplete;assembly=WPFTextBoxAutoComplete"
-             xmlns:resx="clr-namespace:Checkmeg.WPF.Properties"
+             xmlns:utils="clr-namespace:Checkmeg.WPF.Utils"
              Icon="..\Resources\Textures\logo_icon.ico"
              mc:Ignorable="d" 
              Name="rootControl"
@@ -71,7 +71,7 @@
                 Text="{Binding ElementName=rootControl, Path=Bookmark.Type, Mode=OneWay}"></TextBlock>
 
             <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="1">
-                <TextBlock Text="Created"></TextBlock>
+                <TextBlock Text="{utils:Localization Created}"></TextBlock>
                 <TextBlock 
                     Padding="5,0"
                     Text="{Binding ElementName=rootControl, Path=Bookmark.TimeCreated, Mode=OneWay, Converter={StaticResource UnixTimeConverter}}"></TextBlock>

@@ -1,4 +1,6 @@
-﻿namespace Engine
+﻿using System.Collections.Generic;
+
+namespace Engine
 {
     public class Env
     {
@@ -8,6 +10,14 @@
         public static string ArchiveBinPath = "_ARCHIVE";
         public static int CharacterLimit = 5000;
         public static int BinPathCharacterLimit = 100;
+
+        public List<string> AvailableLanguages
+        {
+            get
+            {
+                return new List<string>() { "en-US", "mk-MK" };
+            }
+        }
 
         // data
         public static IThemeController ThemeManager { get; set; }

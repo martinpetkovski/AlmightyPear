@@ -31,6 +31,22 @@ namespace Engine
                 }
             }
 
+            private string _language;
+            public string Language
+            {
+                get
+                {
+                    if (_language == null || _language == "")
+                        _language = "en-US";
+                    return _language;
+                }
+                set
+                {
+                    _language = value;
+                    OnPropertyChanged();
+                }
+            }
+
             private int _animationsLevel;
             public int AnimationsLevel
             {

@@ -209,24 +209,24 @@ namespace Checkmeg.WPF.Converters
         }
     }
 
-    class AnimationValueToNameConverter : IValueConverter
+    class AnimationValueToNameConverter : IMultiValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is double)
+            if (values[0] is double)
             {
-                double animValue = (double)value;
+                double animValue = (double)values[0];
                 if (animValue == 0)
-                    return "off";
+                    return TranslationSource.Instance["Off"];
                 else if (animValue == 1)
-                    return "non-distracting";
+                    return TranslationSource.Instance["NonDistracting"];
                 else if (animValue == 2)
-                    return "beautiful";
+                    return TranslationSource.Instance["Beautiful"];
             }
             return "off the scale";
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }
@@ -333,6 +333,57 @@ namespace Checkmeg.WPF.Converters
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
+        }
+    }
+
+    class LanguageShorthandToFullName : IValueConverter
+    {
+        private static Dictionary<string, string> Langs = new Dictionary<string, string>();
+
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is string)
+            {
+                string lang = (string)value;
+                string nativeName = new CultureInfo(lang).NativeName;
+                Langs[nativeName] = lang;
+                return nativeName;
+            }
+            else if(value is List<string>)
+            {
+                List<string> retVal = new List<string>();
+                foreach(string lang in (List<string>)value)
+                {
+                    string nativeName = new CultureInfo(lang).NativeName;
+                    if (nativeName.Contains("Северна Македонија"))
+                        nativeName = nativeName.Replace("Северна Македонија", "Македонија");
+                    Langs[nativeName] = lang;
+                    retVal.Add(nativeName);
+                }
+                return retVal;
+            }
+            else
+                return "English";
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is string)
+            {
+                string lang = (string)value;
+                return Langs[lang];
+            }
+            else if (value is List<string>)
+            {
+                List<string> retVal = new List<string>();
+                foreach (string lang in (List<string>)value)
+                {
+                    retVal.Add(Langs[lang]);
+                }
+                return retVal;
+            }
+            else
+                return "en-US";
         }
     }
 }

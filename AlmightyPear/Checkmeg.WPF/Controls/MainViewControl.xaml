@@ -11,12 +11,14 @@
              xmlns:fa="http://schemas.fontawesome.io/icons/"
              xmlns:model="clr-namespace:Checkmeg.WPF.Model"
              xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
+             xmlns:utils="clr-namespace:Checkmeg.WPF.Utils"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
         <ResourceDictionary>
             <converters:AnimationValueToNameConverter x:Key="AnimationValueToNameConverter"/>
             <converters:ThemeNameToThemeReferenceConverter x:Key="ThemeNameToThemeReferenceConverter"/>
+            <converters:LanguageShorthandToFullName x:Key="LanguageShorthandToFullName"/>
         </ResourceDictionary>
     </UserControl.Resources>
     <Border Grid.Row="1" Background="{DynamicResource GradInsetSide}">
@@ -58,16 +60,16 @@
 
                 <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                     <StackPanel Orientation="Vertical">
-                        <GroupBox Header="Profile Settings">
+                        <GroupBox Header="{utils:Localization ProfileSettings}">
                             <GroupBox.Resources>
                                 <Style TargetType="{x:Type TextBlock}">
                                     <Setter Property="Margin" Value="0,10,0,3"></Setter>
                                 </Style>
                             </GroupBox.Resources>
                             <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Width="400">
-                                <TextBlock>display name</TextBlock>
+                                <TextBlock Text="{utils:Localization DisplayName}"></TextBlock>
                                 <TextBox Name="tb_displayName" Text="{Binding Source={StaticResource EngineEnv}, Path=UserData.DisplayName, Mode=OneWay}"></TextBox>
-                                <TextBlock>theme</TextBlock>
+                                <TextBlock Text="{utils:Localization Theme}"></TextBlock>
                                 <ComboBox Name="cb_themes" 
                                     ItemsSource="{Binding Source={StaticResource EngineEnv}, Path=UserData.ThemesList}"
                                     SelectedValue="{Binding 
@@ -80,13 +82,32 @@
                                         </DataTemplate>
                                     </ComboBox.ItemTemplate>
                                 </ComboBox>
+                                <TextBlock Text="{utils:Localization Language}"></TextBlock>
+                                <ComboBox Name="cb_lang"
+                                    ItemsSource="{Binding Source={StaticResource EngineEnv}, Path=AvailableLanguages, Converter={StaticResource LanguageShorthandToFullName}}"
+                                    SelectedItem="{Binding Source={StaticResource EngineEnv}, Path=UserData.CustomModel.Language, Converter={StaticResource LanguageShorthandToFullName}}"
+                                    SelectionChanged="Cb_lang_SelectionChanged"
+                                          >
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding}"></TextBlock>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
                                 <Grid Margin="0,10,0,3">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="auto"></ColumnDefinition>
                                         <ColumnDefinition Width="*"></ColumnDefinition>
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock VerticalAlignment="Bottom">animations</TextBlock>
-                                    <TextBlock Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Text="{Binding ElementName=sld_animations, Path=Value, Converter={StaticResource AnimationValueToNameConverter}}" />
+                                    <TextBlock Text="{utils:Localization Animations}" VerticalAlignment="Bottom"></TextBlock>
+                                    <TextBlock Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                                        <TextBlock.Text>
+                                            <MultiBinding Converter="{StaticResource AnimationValueToNameConverter}">
+                                                <Binding ElementName="sld_animations" Path="Value" ></Binding>
+                                                <Binding Source="{StaticResource EngineEnv}" Path="UserData.CustomModel.Language"></Binding>
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                    </TextBlock>
                                 </Grid>
                                 <Slider x:Name="sld_animations" 
                                         Orientation="Horizontal" 
@@ -99,7 +120,8 @@
                                     Padding="20" Margin="0,20,0,0" 
                                     Name="btn_updateProfile"
                                     Click="Btn_updateProfile_Click"
-                                    BorderBrush="#333">Update Profile</Button>
+                                    BorderBrush="#333"
+                                    Content="{utils:Localization UpdateProfile}"></Button>
                             </StackPanel>
                         </GroupBox>
                         <GroupBox Header="Shell Actions">

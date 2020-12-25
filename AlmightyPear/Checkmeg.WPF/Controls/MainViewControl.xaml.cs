@@ -95,5 +95,10 @@ namespace Checkmeg.WPF.Controls
         {
             StartWscProc("-s|0|" + System.Reflection.Assembly.GetExecutingAssembly().Location);
         }
+
+        private void Cb_lang_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            TranslationSource.Instance.CurrentCulture = new System.Globalization.CultureInfo(Engine.Env.UserData.CustomModel.Language);
+        }
     }
 }

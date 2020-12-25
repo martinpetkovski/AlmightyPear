@@ -149,7 +149,6 @@ namespace Checkmeg.WPF
         public async Task InitializeAsync()
         {
             await InitializeThemesAsync();
-
             HotKeyManagers = new Dictionary<string, HotKeyManager>();
 
             HotKeyManagers["win+alt"] = new HotKeyManager();
@@ -166,6 +165,8 @@ namespace Checkmeg.WPF
 
             await ExecSignInAsync();
             WindowState = Env.StartupState;
+            TranslationSource.Instance.CurrentCulture = new System.Globalization.CultureInfo(Engine.Env.UserData.CustomModel.Language);
+
         }
 
         private void ProcessOutput(object sender, DataReceivedEventArgs e)

@@ -19,6 +19,7 @@
             <converters:AnimationValueToNameConverter x:Key="AnimationValueToNameConverter"/>
             <converters:ThemeNameToThemeReferenceConverter x:Key="ThemeNameToThemeReferenceConverter"/>
             <converters:LanguageShorthandToFullName x:Key="LanguageShorthandToFullName"/>
+            <utils:TranslationSource x:Key="TranslationSource"/>
         </ResourceDictionary>
     </UserControl.Resources>
     <Border Grid.Row="1" Background="{DynamicResource GradInsetSide}">
@@ -104,7 +105,7 @@
                                         <TextBlock.Text>
                                             <MultiBinding Converter="{StaticResource AnimationValueToNameConverter}">
                                                 <Binding ElementName="sld_animations" Path="Value" ></Binding>
-                                                <Binding Source="{StaticResource EngineEnv}" Path="UserData.CustomModel.Language"></Binding>
+                                                <Binding Source="{StaticResource TranslationSource}" Path="Instance.CurrentCulture"></Binding>
                                             </MultiBinding>
                                         </TextBlock.Text>
                                     </TextBlock>

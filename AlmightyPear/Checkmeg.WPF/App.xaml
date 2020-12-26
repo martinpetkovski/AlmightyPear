@@ -10,9 +10,9 @@
              ShutdownMode="OnMainWindowClose">
     <Application.Resources>
         <ResourceDictionary>
-            <FontFamily x:Key="Montserrat">pack://application:,,,/Fonts/#Montserrat</FontFamily>
-            <FontFamily x:Key="Quicksand">pack://application:,,,/Fonts/#Quicksand</FontFamily>
-            <FontFamily x:Key="ProximaNova">pack://application:,,,/Fonts/#ProximaNova</FontFamily>
+            <FontFamily x:Key="Montserrat">pack://application:,,,Resources/Fonts/#Montserrat</FontFamily>
+            <FontFamily x:Key="Quicksand">pack://application:,,,Resources/Fonts/#Quicksand</FontFamily>
+            <FontFamily x:Key="ProximaNova">pack://application:,,,Resources/Fonts/#ProximaNova</FontFamily>
 
             <Style TargetType="{x:Type Window}">
                 <Setter Property="Background" Value="#111"></Setter>

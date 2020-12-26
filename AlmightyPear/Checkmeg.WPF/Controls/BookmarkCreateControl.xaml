@@ -9,6 +9,7 @@
              xmlns:controller="clr-namespace:Checkmeg.WPF.Controller"
              xmlns:converters="clr-namespace:Checkmeg.WPF.Converters"
              xmlns:behaviors="clr-namespace:WPFTextBoxAutoComplete;assembly=WPFTextBoxAutoComplete"
+             xmlns:utils="clr-namespace:Checkmeg.WPF.Utils"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
@@ -50,7 +51,8 @@
                     Margin="10,0"
                     Name="btn_SaveBookmark"
                     ToolTip="Ctrl+Click will save all entries separated by a space as separate bookmarks"
-                    Click="Btn_SaveBookmark_ClickAsync">Save</Button>
+                    Click="Btn_SaveBookmark_ClickAsync"
+                    Content="{utils:Localization Create}"></Button>
         </Grid>
         <avalonEdit:TextEditor 
             Grid.Row="1" 
@@ -67,7 +69,7 @@
             ></avalonEdit:TextEditor>
 
         <StackPanel Orientation="Horizontal" Grid.Row="2" VerticalAlignment="Center">
-            <TextBlock Text="Character Limit: "></TextBlock>
+            <TextBlock Text="{utils:Localization CharacterLimitColon}"></TextBlock>
             <TextBlock Name="tb_characterLimit"></TextBlock>
         </StackPanel>
     </Grid>

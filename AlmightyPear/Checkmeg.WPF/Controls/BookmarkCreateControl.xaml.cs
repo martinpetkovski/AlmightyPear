@@ -1,4 +1,5 @@
-﻿using Core;
+﻿using Checkmeg.WPF.Utils;
+using Core;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -37,7 +38,10 @@ namespace Checkmeg.WPF.Controls
             ClipboardManager.ClearClipboard();
             if (success && msg)
             {
-                await View.MessageBox.FireAsync("Create Bookmark", "Successfully created bookmark.", new List<string>() { "Ok" });
+                await View.MessageBox.FireAsync(
+                    TranslationSource.Instance["CreateBookmark"],
+                    TranslationSource.Instance["SuccessfullyCreatedBookmarkDot"], 
+                    new List<string>() { TranslationSource.Instance["Ok"] });
             }
         }
 

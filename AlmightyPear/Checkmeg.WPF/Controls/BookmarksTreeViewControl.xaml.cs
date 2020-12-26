@@ -1,5 +1,6 @@
 ﻿using Checkmeg.WPF.Controller;
 using Checkmeg.WPF.Model;
+using Checkmeg.WPF.Utils;
 using Checkmeg.WPF.View;
 using Core;
 using Engine;
@@ -344,11 +345,15 @@ namespace Checkmeg.WPF.Controls
             object dataContextedElement = ((MenuItem)sender).DataContext;
             if (dataContextedElement is BinModel)
             {
-                int result = await View.MessageBox.FireAsync("Delete Bin",
-                "You are about to delete this bin along with all containing bookmarks. " +
-                "\nThis action is irreversible. " +
-                "\nAre you sure you want to continue?",
-                new List<string>() { "Yes", "No" });
+                int result = await View.MessageBox.FireAsync(
+                    TranslationSource.Instance["DeleteBin"],
+                    TranslationSource.Instance["DeleteBinQuestion"],
+                    new List<string>()
+                    {
+                        TranslationSource.Instance["Yes"],
+                        TranslationSource.Instance["No"]
+                    }
+                );
                 if (result == 0)
                 {
                     Engine.Env.BinController.DeleteBin((BinModel)dataContextedElement);
@@ -356,11 +361,14 @@ namespace Checkmeg.WPF.Controls
             }
             else if (dataContextedElement is BookmarkModel)
             {
-                int result = await View.MessageBox.FireAsync("Delete Bin",
-                "You are about to delete this bookmark. " +
-                "\nThis action is irreversible. " +
-                "\nAre you sure you want to continue?",
-                new List<string>() { "Yes", "No" });
+                int result = await View.MessageBox.FireAsync(
+                    TranslationSource.Instance["DeleteBookmark"],
+                    TranslationSource.Instance["DeleteBookmarkQuestion"],
+                new List<string>()
+                {
+                    TranslationSource.Instance["Yes"],
+                    TranslationSource.Instance["No"]
+                });
                 if (result == 0)
                 {
                     Engine.Env.BinController.DeleteBookmark(((BookmarkModel)dataContextedElement).ID);
@@ -437,11 +445,13 @@ namespace Checkmeg.WPF.Controls
             BookmarkModel bookmark = (BookmarkModel)((MenuItem)sender).DataContext;
 
             int result = await View.MessageBox.FireAsync(
-                "Delete Bookmark",
-                "You are about to delete this bookmark. " +
-                "\nThis action is irreversible. " +
-                "\nAre you sure you want to continue?",
-                new List<string>() { "Yes", "No" });
+                TranslationSource.Instance["DeleteBookmark"],
+                TranslationSource.Instance["DeleteBookmarkQuestion"],
+                new List<string>()
+                {
+                    TranslationSource.Instance["Yes"],
+                    TranslationSource.Instance["No"]
+                });
 
             if (result == 0)
             {

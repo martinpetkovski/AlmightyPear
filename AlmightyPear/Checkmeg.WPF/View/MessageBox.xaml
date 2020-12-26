@@ -12,7 +12,7 @@
         Background="#111"
         BorderBrush="#333"
         BorderThickness="1"
-        Title="MessageBox" Height="200" Width="400">
+        Title="MessageBox" Height="250" Width="400">
     <Border Background="{DynamicResource mg.solid.20}" Padding="20">
         <Grid>
             <Grid.RowDefinitions>

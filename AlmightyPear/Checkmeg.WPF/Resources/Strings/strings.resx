@@ -117,20 +117,144 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Accept" xml:space="preserve">
+    <value>Accept</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="AddToStartup" xml:space="preserve">
+    <value>Start when Windows starts</value>
+  </data>
+  <data name="AddToWindowsContextMenu" xml:space="preserve">
+    <value>Add to Windows context menu</value>
+  </data>
   <data name="Animations" xml:space="preserve">
     <value>Animations</value>
+  </data>
+  <data name="Archive" xml:space="preserve">
+    <value>Archive</value>
   </data>
   <data name="Beautiful" xml:space="preserve">
     <value>beautiful</value>
   </data>
-  <data name="Created" xml:space="preserve">
-    <value>Created</value>
+  <data name="BookmarkDetails" xml:space="preserve">
+    <value>Bookmark Details</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>Change Password</value>
+  </data>
+  <data name="ChangePath3Dots" xml:space="preserve">
+    <value>Change Path...</value>
+  </data>
+  <data name="CharacterLimitColon" xml:space="preserve">
+    <value>Character Limit: </value>
+  </data>
+  <data name="Checkmeg" xml:space="preserve">
+    <value>Checkmeg</value>
+  </data>
+  <data name="ClearTempBin" xml:space="preserve">
+    <value>Clear TEMP bin</value>
+  </data>
+  <data name="CopyAdd" xml:space="preserve">
+    <value>Copy Add</value>
+  </data>
+  <data name="CopyContent" xml:space="preserve">
+    <value>Copy Content</value>
+  </data>
+  <data name="CopyPath" xml:space="preserve">
+    <value>Copy Path</value>
+  </data>
+  <data name="Create" xml:space="preserve">
+    <value>Create</value>
+  </data>
+  <data name="Create3Dots" xml:space="preserve">
+    <value>Create...</value>
+  </data>
+  <data name="CreateBookmark" xml:space="preserve">
+    <value>Create Bookmark</value>
+  </data>
+  <data name="CreatedOn" xml:space="preserve">
+    <value>Created on</value>
+  </data>
+  <data name="Delete3Dots" xml:space="preserve">
+    <value>Delete...</value>
+  </data>
+  <data name="DeleteBin" xml:space="preserve">
+    <value>Delete Bin</value>
+  </data>
+  <data name="DeleteBinQuestion" xml:space="preserve">
+    <value>You are about to delete this bin along with all containing bookmarks.
+This action is irreversible.
+Are you sure you want to continue?</value>
+  </data>
+  <data name="DeleteBookmark" xml:space="preserve">
+    <value>Delete Bookmark</value>
+  </data>
+  <data name="DeleteBookmarkQuestion" xml:space="preserve">
+    <value>You are about to delete this bookmark.
+This action is irreversible.
+Are you sure you want to continue?</value>
+  </data>
+  <data name="DeselectAll" xml:space="preserve">
+    <value>Deselect All</value>
+  </data>
+  <data name="Details3Dots" xml:space="preserve">
+    <value>Details...</value>
+  </data>
+  <data name="dir" xml:space="preserve">
+    <value>Directory</value>
   </data>
   <data name="DisplayName" xml:space="preserve">
     <value>Display Name</value>
   </data>
+  <data name="Email" xml:space="preserve">
+    <value>e-mail</value>
+  </data>
+  <data name="file" xml:space="preserve">
+    <value>File</value>
+  </data>
+  <data name="Find3Dots" xml:space="preserve">
+    <value>Find...</value>
+  </data>
+  <data name="FindBookmark" xml:space="preserve">
+    <value>Find Bookmark</value>
+  </data>
+  <data name="image" xml:space="preserve">
+    <value>Image</value>
+  </data>
   <data name="Language" xml:space="preserve">
     <value>Language</value>
+  </data>
+  <data name="link" xml:space="preserve">
+    <value>Link</value>
+  </data>
+  <data name="Loading3Dots" xml:space="preserve">
+    <value>Loading...</value>
+  </data>
+  <data name="LogOut" xml:space="preserve">
+    <value>Log out</value>
+  </data>
+  <data name="MinimizeToTray" xml:space="preserve">
+    <value>Minimize to Tray</value>
+  </data>
+  <data name="ModifiedOn" xml:space="preserve">
+    <value>Modified on</value>
+  </data>
+  <data name="MoveSelectedHere" xml:space="preserve">
+    <value>Move Selected Here</value>
+  </data>
+  <data name="NewHere" xml:space="preserve">
+    <value>New Here</value>
+  </data>
+  <data name="NewPassword" xml:space="preserve">
+    <value>New Password</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
   </data>
   <data name="NonDistracting" xml:space="preserve">
     <value>non-distracting</value>
@@ -138,13 +262,91 @@
   <data name="Off" xml:space="preserve">
     <value>off</value>
   </data>
+  <data name="Ok" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="OldPassword" xml:space="preserve">
+    <value>Old Password</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="PasswordReset" xml:space="preserve">
+    <value>Password Reset</value>
+  </data>
+  <data name="Profile" xml:space="preserve">
+    <value>Profile</value>
+  </data>
   <data name="ProfileSettings" xml:space="preserve">
     <value>Profile Settings</value>
+  </data>
+  <data name="ProfileUpdate" xml:space="preserve">
+    <value>Profile Update</value>
+  </data>
+  <data name="ProfileUpdatedSuccessfully" xml:space="preserve">
+    <value>Profile updated successfully.</value>
+  </data>
+  <data name="Quit" xml:space="preserve">
+    <value>Quit</value>
+  </data>
+  <data name="RememberMe" xml:space="preserve">
+    <value>Remember Me</value>
+  </data>
+  <data name="Remove" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="RemoveFromStartup" xml:space="preserve">
+    <value>Don't start when Windows starts</value>
+  </data>
+  <data name="RemoveFromWindowsContextMenu" xml:space="preserve">
+    <value>Remove from Windows context menu</value>
+  </data>
+  <data name="RepeatNewPassword" xml:space="preserve">
+    <value>Repeat New Password</value>
+  </data>
+  <data name="ResetPassword" xml:space="preserve">
+    <value>Reset Password</value>
+  </data>
+  <data name="Return" xml:space="preserve">
+    <value>Return</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>Select</value>
+  </data>
+  <data name="SelectAdd" xml:space="preserve">
+    <value>Select Add</value>
+  </data>
+  <data name="SelectAddAllInBin" xml:space="preserve">
+    <value>Select Add All in Bin</value>
+  </data>
+  <data name="SelectAllInBin" xml:space="preserve">
+    <value>Select All in Bin</value>
+  </data>
+  <data name="SettingUpThingsForYou" xml:space="preserve">
+    <value>Setting up things for you</value>
+  </data>
+  <data name="ShellActions" xml:space="preserve">
+    <value>Actions</value>
+  </data>
+  <data name="Show" xml:space="preserve">
+    <value>Show</value>
+  </data>
+  <data name="SignIn" xml:space="preserve">
+    <value>Sign in</value>
+  </data>
+  <data name="SuccessfullyCreatedBookmarkDot" xml:space="preserve">
+    <value>Successfully created bookmark.</value>
+  </data>
+  <data name="text" xml:space="preserve">
+    <value>Text</value>
   </data>
   <data name="Theme" xml:space="preserve">
     <value>Theme</value>
   </data>
   <data name="UpdateProfile" xml:space="preserve">
     <value>Update Profile</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
   </data>
 </root>

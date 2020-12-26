@@ -28,7 +28,7 @@
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
                         <fa:ImageAwesome Icon="Bookmark" Foreground="{DynamicResource mg.solid.100}" Height="16"></fa:ImageAwesome>
-                        <TextBlock Text="Bookmarks View"
+                        <TextBlock Text="{utils:Localization FindBookmark}"
                                    VerticalAlignment="Center" Margin="15,0,0,0"></TextBlock>
                     </StackPanel>
                 </TabItem.Header>
@@ -42,7 +42,7 @@
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
                         <fa:ImageAwesome Icon="Plus" Foreground="{DynamicResource mg.solid.100}" Height="16"></fa:ImageAwesome>
-                        <TextBlock Text="Create Bookmark"
+                        <TextBlock Text="{utils:Localization CreateBookmark}"
                                    VerticalAlignment="Center" Margin="15,0,0,0"></TextBlock>
                     </StackPanel>
                 </TabItem.Header>
@@ -54,7 +54,7 @@
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
                         <fa:ImageAwesome Icon="UserCircle" Foreground="{DynamicResource mg.solid.100}" Height="16"></fa:ImageAwesome>
-                        <TextBlock Text="Profile"
+                        <TextBlock Text="{utils:Localization Profile}"
                                    VerticalAlignment="Center" Margin="15,0,0,0"></TextBlock>
                     </StackPanel>
                 </TabItem.Header>
@@ -86,7 +86,7 @@
                                 <TextBlock Text="{utils:Localization Language}"></TextBlock>
                                 <ComboBox Name="cb_lang"
                                     ItemsSource="{Binding Source={StaticResource EngineEnv}, Path=AvailableLanguages, Converter={StaticResource LanguageShorthandToFullName}}"
-                                    SelectedItem="{Binding Source={StaticResource EngineEnv}, Path=UserData.CustomModel.Language, Converter={StaticResource LanguageShorthandToFullName}}"
+                                    SelectedItem="{Binding Source={StaticResource TranslationSource}, Path=Instance.CurrentCulture, Converter={StaticResource LanguageShorthandToFullName}}"
                                     SelectionChanged="Cb_lang_SelectionChanged"
                                           >
                                     <ComboBox.ItemTemplate>
@@ -120,28 +120,28 @@
                                 <Button HorizontalAlignment="Right" 
                                     Padding="20" Margin="0,20,0,0" 
                                     Name="btn_updateProfile"
-                                    Click="Btn_updateProfile_Click"
+                                    Click="Btn_updateProfile_ClickAsync"
                                     BorderBrush="#333"
                                     Content="{utils:Localization UpdateProfile}"></Button>
                             </StackPanel>
                         </GroupBox>
-                        <GroupBox Header="Shell Actions">
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                                <GroupBox Header="Add">
+                        <GroupBox Header="{utils:Localization ShellActions}">
+                            <WrapPanel>
+                                <GroupBox Header="{utils:Localization Add}">
                                     <StackPanel Orientation="Vertical">
-                                        <Button BorderBrush="#333" Padding="10" Content="Add to Windows context menu" Name="btn_wndContextMenu" Click="Btn_wndContextMenu_Click"></Button>
-                                        <Button BorderBrush="#333" Padding="10" Content="Add to Startup" Name="btn_wndAddToStartup" Click="Btn_wndAddToStartup_Click"></Button>
+                                        <Button BorderBrush="#333" Padding="10" Content="{utils:Localization AddToWindowsContextMenu}" Name="btn_wndContextMenu" Click="Btn_wndContextMenu_Click"></Button>
+                                        <Button BorderBrush="#333" Padding="10" Content="{utils:Localization AddToStartup}" Name="btn_wndAddToStartup" Click="Btn_wndAddToStartup_Click"></Button>
                                     </StackPanel>
                                 </GroupBox>
-                                <GroupBox Header="Remove">
+                                <GroupBox Header="{utils:Localization Remove}">
                                     <StackPanel Orientation="Vertical">
-                                        <Button BorderBrush="#333" Padding="10" Content="Remove from Windows context menu" Name="btn_wndContextMenuRemove" Click="Btn_wndContextMenuRemove_Click"></Button>
-                                        <Button BorderBrush="#333" Padding="10" Content="Remove from Startup" Name="btn_wndRemoveFromStartup" Click="Btn_wndRemoveFromStartup_Click"></Button>
+                                        <Button BorderBrush="#333" Padding="10" Content="{utils:Localization RemoveFromWindowsContextMenu}" Name="btn_wndContextMenuRemove" Click="Btn_wndContextMenuRemove_Click"></Button>
+                                        <Button BorderBrush="#333" Padding="10" Content="{utils:Localization RemoveFromStartup}" Name="btn_wndRemoveFromStartup" Click="Btn_wndRemoveFromStartup_Click"></Button>
                                     </StackPanel>
                                 </GroupBox>
-                            </StackPanel>
+                            </WrapPanel>
                         </GroupBox>
-                        <GroupBox Header="Password Reset">
+                        <GroupBox Header="{utils:Localization PasswordReset}">
                             <controls:ResetPasswordControl HorizontalAlignment="Left"></controls:ResetPasswordControl>
                         </GroupBox>
                     </StackPanel>

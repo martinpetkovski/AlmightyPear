@@ -124,6 +124,8 @@ namespace Checkmeg.WPF
             await Engine.Env.FirebaseController.LoadCustomProfileDataAsync();
             Engine.Env.ThemeManager.SetTheme(Engine.Env.UserData.CustomModel.Theme);
             Env.MainWindowData.WindowState = Model.MainWindowModel.EMainWindowState.BookmarksView;
+            TranslationSource.Instance.CurrentCulture = new System.Globalization.CultureInfo(Engine.Env.UserData.CustomModel.Language);
+
         }
 
         public async Task ExecSignInAsync()
@@ -165,7 +167,6 @@ namespace Checkmeg.WPF
 
             await ExecSignInAsync();
             WindowState = Env.StartupState;
-            TranslationSource.Instance.CurrentCulture = new System.Globalization.CultureInfo(Engine.Env.UserData.CustomModel.Language);
 
         }
 
@@ -272,6 +273,11 @@ namespace Checkmeg.WPF
         private async void RootWnd_LoadedAsync(object sender, RoutedEventArgs e)
         {
             await InitializeAsync();
+        }
+
+        private void Cb_lang_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            TranslationSource.Instance.CurrentCulture = new System.Globalization.CultureInfo(Engine.Env.UserData.CustomModel.Language);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Checkmeg.WPF.Controller;
 using Checkmeg.WPF.Model;
 using Checkmeg.WPF.Utils;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
@@ -30,9 +31,16 @@ namespace Checkmeg.WPF.Controls
             InitializeComponent();
         }
 
-        private void Btn_updateProfile_Click(object sender, RoutedEventArgs e)
+        private async void Btn_updateProfile_ClickAsync(object sender, RoutedEventArgs e)
         {
             Engine.Env.FirebaseController.UpdateProfileAsync(tb_displayName.Text, "");
+            int result = await View.MessageBox.FireAsync(
+                TranslationSource.Instance["ProfileUpdate"],
+                TranslationSource.Instance["ProfileUpdatedSuccessfully"],
+                new List<string>()
+                {
+                    TranslationSource.Instance["Ok"]
+                });
         }
 
         private void Btn_clearTempBin_Click(object sender, RoutedEventArgs e)

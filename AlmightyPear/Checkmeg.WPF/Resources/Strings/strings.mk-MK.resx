@@ -117,20 +117,144 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Accept" xml:space="preserve">
+    <value>Прифати</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Додај</value>
+  </data>
+  <data name="AddToStartup" xml:space="preserve">
+    <value>Стартувај при вклучување на Windows</value>
+  </data>
+  <data name="AddToWindowsContextMenu" xml:space="preserve">
+    <value>Додај во контекстуалното мени на Windows</value>
+  </data>
   <data name="Animations" xml:space="preserve">
     <value>Анимации</value>
+  </data>
+  <data name="Archive" xml:space="preserve">
+    <value>Архивирај</value>
   </data>
   <data name="Beautiful" xml:space="preserve">
     <value>прекрасни</value>
   </data>
-  <data name="Created" xml:space="preserve">
-    <value>Создадено</value>
+  <data name="BookmarkDetails" xml:space="preserve">
+    <value>Детали за обележувачот</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Откажи</value>
+  </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>Промени лозинка</value>
+  </data>
+  <data name="ChangePath3Dots" xml:space="preserve">
+    <value>Измени го патот...</value>
+  </data>
+  <data name="CharacterLimitColon" xml:space="preserve">
+    <value>Ограничување на карактери: </value>
+  </data>
+  <data name="Checkmeg" xml:space="preserve">
+    <value>Checkmeg</value>
+  </data>
+  <data name="ClearTempBin" xml:space="preserve">
+    <value>Избриши го TEMP чекмеџето</value>
+  </data>
+  <data name="CopyAdd" xml:space="preserve">
+    <value>Копирај со додавање</value>
+  </data>
+  <data name="CopyContent" xml:space="preserve">
+    <value>Копирај ја содржината</value>
+  </data>
+  <data name="CopyPath" xml:space="preserve">
+    <value>Копирај го патот</value>
+  </data>
+  <data name="Create" xml:space="preserve">
+    <value>Создај</value>
+  </data>
+  <data name="Create3Dots" xml:space="preserve">
+    <value>Создај...</value>
+  </data>
+  <data name="CreateBookmark" xml:space="preserve">
+    <value>Создај обележувач</value>
+  </data>
+  <data name="CreatedOn" xml:space="preserve">
+    <value>Создадено на</value>
+  </data>
+  <data name="Delete3Dots" xml:space="preserve">
+    <value>Избриши...</value>
+  </data>
+  <data name="DeleteBin" xml:space="preserve">
+    <value>Избриши чекмеџе</value>
+  </data>
+  <data name="DeleteBinQuestion" xml:space="preserve">
+    <value>Ова чекмеџе би било избришано заедно со сите обележувачи кои ги содржи.
+Ова дејство е неповратно.
+Дали сте сигурни дека сакате да продолжите?</value>
+  </data>
+  <data name="DeleteBookmark" xml:space="preserve">
+    <value>Избриши обележувач</value>
+  </data>
+  <data name="DeleteBookmarkQuestion" xml:space="preserve">
+    <value>Овој обележувач би бил избришан.
+Ова дејство е неповратно.
+Дали сте сигурни дека сакате да продолжите?</value>
+  </data>
+  <data name="DeselectAll" xml:space="preserve">
+    <value>Деселектирај ги сите</value>
+  </data>
+  <data name="Details3Dots" xml:space="preserve">
+    <value>Детали...</value>
+  </data>
+  <data name="dir" xml:space="preserve">
+    <value>Фолдер</value>
   </data>
   <data name="DisplayName" xml:space="preserve">
     <value>Име</value>
   </data>
+  <data name="Email" xml:space="preserve">
+    <value>е-пошта</value>
+  </data>
+  <data name="file" xml:space="preserve">
+    <value>Фајл</value>
+  </data>
+  <data name="Find3Dots" xml:space="preserve">
+    <value>Најди...</value>
+  </data>
+  <data name="FindBookmark" xml:space="preserve">
+    <value>Најди обележувач</value>
+  </data>
+  <data name="image" xml:space="preserve">
+    <value>Слика</value>
+  </data>
   <data name="Language" xml:space="preserve">
     <value>Јазик</value>
+  </data>
+  <data name="link" xml:space="preserve">
+    <value>Линк</value>
+  </data>
+  <data name="Loading3Dots" xml:space="preserve">
+    <value>Вчитување...</value>
+  </data>
+  <data name="LogOut" xml:space="preserve">
+    <value>Одјава</value>
+  </data>
+  <data name="MinimizeToTray" xml:space="preserve">
+    <value>Минимизирај во системска лента</value>
+  </data>
+  <data name="ModifiedOn" xml:space="preserve">
+    <value>Променето на </value>
+  </data>
+  <data name="MoveSelectedHere" xml:space="preserve">
+    <value>Премести ги селектираните овде</value>
+  </data>
+  <data name="NewHere" xml:space="preserve">
+    <value>Ново овде</value>
+  </data>
+  <data name="NewPassword" xml:space="preserve">
+    <value>Нова лозинка</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>Не</value>
   </data>
   <data name="NonDistracting" xml:space="preserve">
     <value>не оттргнувачки</value>
@@ -138,13 +262,91 @@
   <data name="Off" xml:space="preserve">
     <value>исклучени</value>
   </data>
+  <data name="Ok" xml:space="preserve">
+    <value>Океј</value>
+  </data>
+  <data name="OldPassword" xml:space="preserve">
+    <value>Стара лозинка</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Лозинка</value>
+  </data>
+  <data name="PasswordReset" xml:space="preserve">
+    <value>Ресетирање на лозинка</value>
+  </data>
+  <data name="Profile" xml:space="preserve">
+    <value>Профил</value>
+  </data>
   <data name="ProfileSettings" xml:space="preserve">
     <value>Поставки на профилот</value>
+  </data>
+  <data name="ProfileUpdate" xml:space="preserve">
+    <value>Ажурирање на профил</value>
+  </data>
+  <data name="ProfileUpdatedSuccessfully" xml:space="preserve">
+    <value>Ажурирањето на профилот беше успешно.</value>
+  </data>
+  <data name="Quit" xml:space="preserve">
+    <value>Излез</value>
+  </data>
+  <data name="RememberMe" xml:space="preserve">
+    <value>Запомни ме</value>
+  </data>
+  <data name="Remove" xml:space="preserve">
+    <value>Отстрани</value>
+  </data>
+  <data name="RemoveFromStartup" xml:space="preserve">
+    <value>Не стартувај при вклучување на Windows</value>
+  </data>
+  <data name="RemoveFromWindowsContextMenu" xml:space="preserve">
+    <value>Отстрани од контекстуалното мени на Windows</value>
+  </data>
+  <data name="RepeatNewPassword" xml:space="preserve">
+    <value>Повтори нова лозинка</value>
+  </data>
+  <data name="ResetPassword" xml:space="preserve">
+    <value>Ресетирај ја лозинката</value>
+  </data>
+  <data name="Return" xml:space="preserve">
+    <value>Назад</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>Селектирај</value>
+  </data>
+  <data name="SelectAdd" xml:space="preserve">
+    <value>Селектирај со додавање</value>
+  </data>
+  <data name="SelectAddAllInBin" xml:space="preserve">
+    <value>Селектирај ги сите во ова чекмеџе со додавање</value>
+  </data>
+  <data name="SelectAllInBin" xml:space="preserve">
+    <value>Селектирај ги сите во ова чекмеџе</value>
+  </data>
+  <data name="SettingUpThingsForYou" xml:space="preserve">
+    <value>Ги пополнуваме вашите чекмеџиња</value>
+  </data>
+  <data name="ShellActions" xml:space="preserve">
+    <value>Акции</value>
+  </data>
+  <data name="Show" xml:space="preserve">
+    <value>Прикажи</value>
+  </data>
+  <data name="SignIn" xml:space="preserve">
+    <value>Најава</value>
+  </data>
+  <data name="SuccessfullyCreatedBookmarkDot" xml:space="preserve">
+    <value>Успешно создаден обележувач.</value>
+  </data>
+  <data name="text" xml:space="preserve">
+    <value>Текст</value>
   </data>
   <data name="Theme" xml:space="preserve">
     <value>Тема</value>
   </data>
   <data name="UpdateProfile" xml:space="preserve">
     <value>Ажурирај го профилот</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Да</value>
   </data>
 </root>

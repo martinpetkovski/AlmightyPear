@@ -6,6 +6,7 @@
              xmlns:fa="http://schemas.fontawesome.io/icons/"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:local="clr-namespace:Checkmeg.WPF.Controls"
+             xmlns:utils="clr-namespace:Checkmeg.WPF.Utils"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Background>
@@ -16,8 +17,8 @@
     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
         <fa:ImageAwesome Icon="Spinner" Spin="True" SpinDuration="2" Foreground="{DynamicResource mg.solid.100}" Height="60" Width="60" Margin="40,0" />
         <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <TextBlock FontSize="60">Loading...</TextBlock>
-            <TextBlock FontSize="12">Setting up things for you</TextBlock>
+            <TextBlock FontSize="60" Text="{utils:Localization Loading3Dots}"></TextBlock>
+            <TextBlock FontSize="12" Text="{utils:Localization SettingUpThingsForYou}"></TextBlock>
         </StackPanel>
     </StackPanel>
 </UserControl>

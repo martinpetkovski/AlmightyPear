@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Checkmeg.WPF.Controls"
+             xmlns:utils="clr-namespace:Checkmeg.WPF.Utils"
              mc:Ignorable="d" 
              FocusManager.FocusedElement="{x:Reference Name=tb_email}" >
     <Grid VerticalAlignment="Stretch">
@@ -18,30 +19,30 @@
                     <TextBlock FontSize="60" 
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
-                            Margin="0,50,0,50">Checkmeg</TextBlock>
+                            Margin="0,50,0,50" Text="{utils:Localization Checkmeg}"></TextBlock>
 
-                    <TextBlock Margin="0,0,0,10">e-mail</TextBlock>
+                    <TextBlock Margin="0,0,0,10" Text="{utils:Localization Email}"></TextBlock>
                     <TextBox x:Name="tb_email" TabIndex="1" KeyDown="Tb_email_KeyDown"></TextBox>
-                    <TextBlock Margin="0,30,30,10">password</TextBlock>
+                    <TextBlock Margin="0,30,30,10" Text="{utils:Localization Password}"></TextBlock>
                     <PasswordBox x:Name="tb_password" TabIndex="2" KeyDown="Tb_password_KeyDown"></PasswordBox>
                     <StackPanel Orientation="Horizontal" Margin="0,20">
                         <CheckBox Name="cb_RememberMe"></CheckBox>
-                        <TextBlock Margin="10,0">remember me</TextBlock>
+                        <TextBlock Margin="10,0" Text="{utils:Localization RememberMe}"></TextBlock>
                     </StackPanel>
                     <WrapPanel Orientation="Horizontal" Margin="0,0" HorizontalAlignment="Center">
                         <Button Name="btn_signin" 
                             Click="Btn_signin_ClickAsync" 
                             IsDefault="True"  
                             Padding="10" 
-                            BorderBrush="#333" >SIGN-IN</Button>
+                            BorderBrush="#333" Content="{utils:Localization SignIn}"></Button>
                         <Button Name="btn_passwordReset" 
                             Click="Btn_passwordReset_Click" 
                             Padding="10" 
-                            BorderBrush="#333" >RESET PASSWORD</Button>
+                            BorderBrush="#333" Content="{utils:Localization ResetPassword}" ></Button>
                         <Button Name="btn_quit" 
                             Click="Btn_quit_Click"  
                             Padding="10" 
-                            BorderBrush="#333" >QUIT</Button>
+                            BorderBrush="#333" Content="{utils:Localization Quit}"></Button>
                     </WrapPanel>
                     <TextBlock Name="txt_messagebox" HorizontalAlignment="Center"></TextBlock>
                 </StackPanel>

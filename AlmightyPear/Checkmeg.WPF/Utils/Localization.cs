@@ -39,6 +39,7 @@ namespace Checkmeg.WPF.Utils
                 if (this.currentCulture != value)
                 {
                     this.currentCulture = value;
+                    Engine.Env.UserData.CustomModel.Language = value.Name;
                     var @event = this.PropertyChanged;
                     if (@event != null)
                     {

@@ -10,9 +10,10 @@
         xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:tb="http://www.hardcodet.net/taskbar"
+        xmlns:utils="clr-namespace:Checkmeg.WPF.Utils"
         mc:Ignorable="d"
                  x:Name="rootWnd"
-        Title="Checkmeg PRE-ALPHA"
+        Title="{utils:Localization Checkmeg}"
         Background="{DynamicResource mg.solid.10}"
         BorderThickness="1"
         TitleBarHeight="48"
@@ -27,6 +28,8 @@
         <ResourceDictionary>
             <converters:IsLoggedInToStateConverter x:Key="IsLoggedInToStateConverter"/>
             <converters:AnimationLevelToBoolenConverter x:Key="AnimationLevelToBoolenConverter"/>
+            <converters:LanguageShorthandToFullName x:Key="LanguageShorthandToFullName"/>
+            <utils:TranslationSource x:Key="TranslationSource"/>
         </ResourceDictionary>
     </mah:MetroWindow.Resources>
     <mah:MetroWindow.WindowTransitionsEnabled>
@@ -46,7 +49,7 @@
                         <MenuItem.Header>
                             <StackPanel Orientation="Horizontal">
                                 <fa:ImageAwesome Icon="TimesCircleOutline" Foreground="{DynamicResource mg.solid.100}" Height="12"/>
-                                <TextBlock Text="Clear TEMP bin" VerticalAlignment="Center" Margin="5,0,0,0"></TextBlock>
+                                <TextBlock Text="{utils:Localization ClearTempBin}" VerticalAlignment="Center" Margin="5,0,0,0"></TextBlock>
                             </StackPanel>
                         </MenuItem.Header>
                     </MenuItem>
@@ -55,7 +58,7 @@
                         <MenuItem.Header>
                             <StackPanel Orientation="Horizontal">
                                 <fa:ImageAwesome Icon="WindowMinimize" Foreground="{DynamicResource mg.solid.100}" Height="12" Width="12"/>
-                                <TextBlock Text="Minimize to tray" VerticalAlignment="Center" Margin="5,0,0,0"></TextBlock>
+                                <TextBlock Text="{utils:Localization MinimizeToTray}" VerticalAlignment="Center" Margin="5,0,0,0"></TextBlock>
                             </StackPanel>
                         </MenuItem.Header>
                     </MenuItem>
@@ -63,7 +66,7 @@
                         <MenuItem.Header>
                             <StackPanel Orientation="Horizontal">
                                 <fa:ImageAwesome Icon="SignOut" Foreground="{DynamicResource mg.solid.100}" Height="12"/>
-                                <TextBlock Text="Log out" VerticalAlignment="Center" Margin="5,0,0,0"></TextBlock>
+                                <TextBlock Text="{utils:Localization LogOut}" VerticalAlignment="Center" Margin="5,0,0,0"></TextBlock>
                             </StackPanel>
                         </MenuItem.Header>
                     </MenuItem>
@@ -71,7 +74,7 @@
                         <MenuItem.Header>
                             <StackPanel Orientation="Horizontal">
                                 <fa:ImageAwesome Icon="Times" Foreground="Red" Height="12"/>
-                                <TextBlock Text="Quit" VerticalAlignment="Center" Margin="5,0,0,0"></TextBlock>
+                                <TextBlock Text="{utils:Localization Quit}" VerticalAlignment="Center" Margin="5,0,0,0"></TextBlock>
                             </StackPanel>
                         </MenuItem.Header>
                     </MenuItem>
@@ -81,8 +84,9 @@
     </mah:MetroWindow.LeftWindowCommands>
 
     <mah:MetroWindow.RightWindowCommands>
-        <mah:WindowCommands Visibility="{Binding Source={StaticResource EngineEnv}, Path=UserData.IsLoggedIn, Converter={StaticResource IsLoggedInToStateConverter}, ConverterParameter=False}">
+        <mah:WindowCommands>
             <StackPanel 
+                Visibility="{Binding Source={StaticResource EngineEnv}, Path=UserData.IsLoggedIn, Converter={StaticResource IsLoggedInToStateConverter}, ConverterParameter=False}"
                 Orientation="Horizontal"  
                 HorizontalAlignment="Left" 
                 VerticalAlignment="Center" 
@@ -91,6 +95,25 @@
                 <TextBlock Text="{Binding Source={StaticResource EngineEnv}, Path=UserData.DisplayName}" VerticalAlignment="Center"></TextBlock>
                 <TextBlock Text="  ●  " VerticalAlignment="Center"></TextBlock>
                 <TextBlock Text="{Binding Source={StaticResource EngineEnv}, Path=UserData.Email}" VerticalAlignment="Center"></TextBlock>
+            </StackPanel>
+            <StackPanel
+                Visibility="{Binding Source={StaticResource EngineEnv}, Path=UserData.IsLoggedIn, Converter={StaticResource IsLoggedInToStateConverter}, ConverterParameter=True}"
+                Orientation="Horizontal"  
+                HorizontalAlignment="Left" 
+                VerticalAlignment="Center" 
+                Margin="0,0,30,0"
+                >
+                <ComboBox Name="cb_lang"
+                                    ItemsSource="{Binding Source={StaticResource EngineEnv}, Path=AvailableLanguages, Converter={StaticResource LanguageShorthandToFullName}}"
+                                    SelectedItem="{Binding Source={StaticResource TranslationSource}, Path=Instance.CurrentCulture, Converter={StaticResource LanguageShorthandToFullName}}"
+                                    SelectionChanged="Cb_lang_SelectionChanged"
+                                          >
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding}"></TextBlock>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
             </StackPanel>
         </mah:WindowCommands>
     </mah:MetroWindow.RightWindowCommands>
@@ -108,7 +131,7 @@
                         <MenuItem.Header>
                             <StackPanel Orientation="Horizontal">
                                 <fa:ImageAwesome Icon="Television" Foreground="{DynamicResource mg.solid.100}" Height="12"/>
-                                <TextBlock Text="Show" VerticalAlignment="Center" Margin="5,0,0,0"></TextBlock>
+                                <TextBlock Text="{utils:Localization Show}" VerticalAlignment="Center" Margin="5,0,0,0"></TextBlock>
                             </StackPanel>
                         </MenuItem.Header>
                     </MenuItem>
@@ -119,7 +142,7 @@
                         <MenuItem.Header>
                             <StackPanel Orientation="Horizontal">
                                 <fa:ImageAwesome Icon="Plus" Height="12" Foreground="Green"/>
-                                <TextBlock Text="Create..." VerticalAlignment="Center" Margin="5,0,0,0"></TextBlock>
+                                <TextBlock Text="{utils:Localization Create3Dots}" VerticalAlignment="Center" Margin="5,0,0,0"></TextBlock>
                             </StackPanel>
                         </MenuItem.Header>
                     </MenuItem>
@@ -130,7 +153,7 @@
                         <MenuItem.Header>
                             <StackPanel Orientation="Horizontal">
                                 <fa:ImageAwesome Icon="Search" Foreground="{DynamicResource mg.solid.100}" Height="12" />
-                                <TextBlock Text="Find..." VerticalAlignment="Center" Margin="5,0,0,0"></TextBlock>
+                                <TextBlock Text="{utils:Localization Find3Dots}" VerticalAlignment="Center" Margin="5,0,0,0"></TextBlock>
                             </StackPanel>
                         </MenuItem.Header>
                     </MenuItem>
@@ -142,7 +165,7 @@
                         <MenuItem.Header>
                             <StackPanel Orientation="Horizontal">
                                 <fa:ImageAwesome Icon="SignOut" Foreground="{DynamicResource mg.solid.100}" Height="12"/>
-                                <TextBlock Text="Log Out" VerticalAlignment="Center" Margin="5,0,0,0"></TextBlock>
+                                <TextBlock Text="{utils:Localization LogOut}" VerticalAlignment="Center" Margin="5,0,0,0"></TextBlock>
                             </StackPanel>
                         </MenuItem.Header>
                     </MenuItem>
@@ -152,7 +175,7 @@
                         <MenuItem.Header>
                             <StackPanel Orientation="Horizontal">
                                 <fa:ImageAwesome Icon="Times" Foreground="Red" Height="12"/>
-                                <TextBlock Text="Quit" VerticalAlignment="Center" Margin="5,0,0,0"></TextBlock>
+                                <TextBlock Text="{utils:Localization Quit}" VerticalAlignment="Center" Margin="5,0,0,0"></TextBlock>
                             </StackPanel>
                         </MenuItem.Header>
                     </MenuItem>

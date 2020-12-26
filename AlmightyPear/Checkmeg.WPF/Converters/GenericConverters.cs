@@ -53,7 +53,9 @@ namespace Checkmeg.WPF.Converters
                 DateTime epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
                 long seconds = (long)value;
                 DateTime result = epoch.AddSeconds(seconds);
-                return result.ToShortDateString() + " at " + result.ToShortTimeString();
+                return result.ToString(TranslationSource.Instance.CurrentCulture.DateTimeFormat.LongDatePattern) + 
+                    " @ " + 
+                    result.ToString(TranslationSource.Instance.CurrentCulture.DateTimeFormat.ShortTimePattern);
             }
 
             return new DateTime();
@@ -349,6 +351,14 @@ namespace Checkmeg.WPF.Converters
                 Langs[nativeName] = lang;
                 return nativeName;
             }
+            else if(value is CultureInfo)
+            {
+                string nativeName = ((CultureInfo)value).NativeName;
+                if (nativeName.Contains("Северна Македонија"))
+                    nativeName = nativeName.Replace("Северна Македонија", "Македонија");
+
+                return nativeName;
+            }
             else if(value is List<string>)
             {
                 List<string> retVal = new List<string>();
@@ -384,6 +394,24 @@ namespace Checkmeg.WPF.Converters
             }
             else
                 return "en-US";
+        }
+    }
+
+    class BinTypeToName : IMultiValueConverter
+    {
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        {
+            if(values[0] is string)
+            {
+                string type = (string)values[0];
+                    return TranslationSource.Instance[type];
+            }
+            return "Invalid Type";
+        }
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
         }
     }
 }

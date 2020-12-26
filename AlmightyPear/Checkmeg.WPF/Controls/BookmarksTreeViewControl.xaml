@@ -11,6 +11,7 @@
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:fa="http://schemas.fontawesome.io/icons/"
              xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
+             xmlns:utils="clr-namespace:Checkmeg.WPF.Utils"
              mc:Ignorable="d" 
              x:Name="rootControl"
              PreviewKeyDown="RootControl_PreviewKeyDown">
@@ -39,7 +40,7 @@
                     <MenuItem.Header>
                         <StackPanel Orientation="Horizontal">
                             <fa:ImageAwesome Icon="FileText" Foreground="{DynamicResource mg.solid.100}" Height="12" Width="12" Margin="5,0" />
-                            <TextBlock Text="Details..."></TextBlock>
+                            <TextBlock Text="{utils:Localization Details3Dots}"></TextBlock>
                         </StackPanel>
                     </MenuItem.Header>
                 </MenuItem>
@@ -59,7 +60,7 @@
                     <MenuItem.Header>
                         <StackPanel Orientation="Horizontal">
                             <fa:ImageAwesome Icon="Download" Foreground="{DynamicResource mg.solid.100}" Height="12" Width="12" Margin="5,0" />
-                            <TextBlock Text="Move Selected Here"></TextBlock>
+                            <TextBlock Text="{utils:Localization MoveSelectedHere}"></TextBlock>
                         </StackPanel>
                     </MenuItem.Header>
                 </MenuItem>
@@ -76,7 +77,7 @@
                     <MenuItem.Header>
                         <StackPanel Orientation="Horizontal">
                             <fa:ImageAwesome Icon="Plus" Foreground="{DynamicResource mg.solid.100}" Height="12" Width="12" Margin="5,0" />
-                            <TextBlock Text="New Here..."></TextBlock>
+                            <TextBlock Text="{utils:Localization NewHere}"></TextBlock>
                         </StackPanel>
                     </MenuItem.Header>
                 </MenuItem>
@@ -93,7 +94,7 @@
                     <MenuItem.Header>
                         <StackPanel Orientation="Horizontal">
                             <fa:ImageAwesome Icon="Exchange" Foreground="{DynamicResource mg.solid.100}" Height="12" Width="12" Margin="5,0" />
-                            <TextBlock Text="Change Path..."></TextBlock>
+                            <TextBlock Text="{utils:Localization ChangePath3Dots}"></TextBlock>
                         </StackPanel>
                     </MenuItem.Header>
                 </MenuItem>
@@ -112,7 +113,7 @@
                     <MenuItem.Header>
                         <StackPanel Orientation="Horizontal">
                             <fa:ImageAwesome Icon="Archive" Foreground="{DynamicResource mg.solid.100}" Height="12" Width="12" Margin="5,0" />
-                            <TextBlock Text="Archive"></TextBlock>
+                            <TextBlock Text="{utils:Localization Archive}"></TextBlock>
                         </StackPanel>
                     </MenuItem.Header>
                 </MenuItem>
@@ -131,7 +132,7 @@
                     <MenuItem.Header>
                         <StackPanel Orientation="Horizontal">
                             <fa:ImageAwesome Icon="Copy" Foreground="{DynamicResource mg.solid.100}" Height="12" Width="12" Margin="5,0" />
-                            <TextBlock Text="Copy Content"></TextBlock>
+                            <TextBlock Text="{utils:Localization CopyContent}"></TextBlock>
                         </StackPanel>
                     </MenuItem.Header>
                 </MenuItem>
@@ -148,7 +149,7 @@
                     <MenuItem.Header>
                         <StackPanel Orientation="Horizontal">
                             <fa:ImageAwesome Icon="Copy" Foreground="{DynamicResource mg.solid.100}" Height="12" Width="12" Margin="5,0" />
-                            <TextBlock Text="Copy Path"></TextBlock>
+                            <TextBlock Text="{utils:Localization CopyPath}"></TextBlock>
                         </StackPanel>
                     </MenuItem.Header>
                 </MenuItem>
@@ -157,7 +158,7 @@
                     <MenuItem.Header>
                         <StackPanel Orientation="Horizontal">
                             <fa:ImageAwesome Icon="Plus" Foreground="{DynamicResource mg.solid.100}" Height="12" Width="12" Margin="5,0" />
-                            <TextBlock Text="Copy Add"></TextBlock>
+                            <TextBlock Text="{utils:Localization CopyAdd}"></TextBlock>
                         </StackPanel>
                     </MenuItem.Header>
                 </MenuItem>
@@ -166,7 +167,7 @@
                     <MenuItem.Header>
                         <StackPanel Orientation="Horizontal">
                             <fa:ImageAwesome Icon="Xing" Foreground="Red" Height="12" Width="12" Margin="5,0" />
-                            <TextBlock Text="Delete..." Foreground="Red"></TextBlock>
+                            <TextBlock Text="{utils:Localization Delete3Dots}" Foreground="Red"></TextBlock>
                         </StackPanel>
                     </MenuItem.Header>
                 </MenuItem>
@@ -177,7 +178,7 @@
                     <MenuItem.Header>
                         <StackPanel Orientation="Horizontal">
                             <fa:ImageAwesome Icon="CircleThin" Foreground="{DynamicResource mg.solid.100}" Height="12" Width="12" Margin="5,0" />
-                            <TextBlock Text="Select"></TextBlock>
+                            <TextBlock Text="{utils:Localization Select}"></TextBlock>
                         </StackPanel>
                     </MenuItem.Header>
                 </MenuItem>
@@ -194,7 +195,7 @@
                     <MenuItem.Header>
                         <StackPanel Orientation="Horizontal">
                             <fa:ImageAwesome Icon="CircleThin" Foreground="{DynamicResource mg.solid.100}" Height="12" Width="12" Margin="5,0" />
-                            <TextBlock Text="Select All In Bin"></TextBlock>
+                            <TextBlock Text="{utils:Localization SelectAllInBin}"></TextBlock>
                         </StackPanel>
                     </MenuItem.Header>
                 </MenuItem>
@@ -213,7 +214,7 @@
                     <MenuItem.Header>
                         <StackPanel Orientation="Horizontal">
                             <fa:ImageAwesome Icon="CircleThin" Foreground="{DynamicResource mg.solid.100}" Height="12" Width="12" Margin="5,0" />
-                            <TextBlock Text="Select Add"></TextBlock>
+                            <TextBlock Text="{utils:Localization SelectAdd}"></TextBlock>
                         </StackPanel>
                     </MenuItem.Header>
                 </MenuItem>
@@ -221,7 +222,7 @@
                     <MenuItem.Header>
                         <StackPanel Orientation="Horizontal">
                             <fa:ImageAwesome Icon="CircleThin" Foreground="{DynamicResource mg.solid.100}" Height="12" Width="12" Margin="5,0" />
-                            <TextBlock Text="Select Add All In Bin"></TextBlock>
+                            <TextBlock Text="{utils:Localization SelectAddAllInBin}"></TextBlock>
                         </StackPanel>
                     </MenuItem.Header>
                 </MenuItem>
@@ -233,7 +234,7 @@
                     <MenuItem.Header>
                         <StackPanel Orientation="Horizontal">
                             <fa:ImageAwesome Icon="CircleThin" Foreground="{DynamicResource mg.solid.100}" Height="12" Width="12" Margin="5,0" />
-                            <TextBlock Text="Deselect All"></TextBlock>
+                            <TextBlock Text="{utils:Localization DeselectAll}"></TextBlock>
                         </StackPanel>
                     </MenuItem.Header>
                 </MenuItem>

@@ -41,6 +41,10 @@ namespace Checkmeg.WPF.View
             if (!Engine.Env.UserData.IsLoggedIn)
                 return;
 
+            mah_contentControl.Reload();
+            Show();
+            Activate();
+
             ctrl_bookmarkCreate.Initialize(initPath, initContent);
 
             Point mousePos = GetMousePosition();
@@ -65,9 +69,7 @@ namespace Checkmeg.WPF.View
             {
                 mah_contentControl.TransitionsEnabled = false;
             }
-            mah_contentControl.Reload();
-            Show();
-            Activate();
+            
         }
 
 

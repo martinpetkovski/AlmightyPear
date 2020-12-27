@@ -1,12 +1,45 @@
 ﻿using System;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
+using WindowsInput;
+using WindowsInput.Native;
 
 namespace Core
 {
     public class ClipboardManager
     {
-        // UTILS
+        private static string _prevClipboardText;
+        private static async Task ClipboardChanged(string inputValue)
+        {
+            await Task.Factory.StartNew(() =>
+            {
+                string a = GetClipboardText();
+                while (inputValue == a)
+                {
+                    Thread.Sleep(10);
+                    a = GetClipboardText();
+                }
+            });
+        }
+
+        public static async Task<string> ExecuteCopyAsync()
+        {
+            InputSimulator inputSim = new InputSimulator();
+            string clipboardText = GetClipboardText();
+            inputSim.Keyboard.KeyUp(VirtualKeyCode.LWIN);
+            inputSim.Keyboard.ModifiedKeyStroke(VirtualKeyCode.CONTROL, VirtualKeyCode.VK_C);
+
+            if (clipboardText != "" && clipboardText != _prevClipboardText)
+            {
+                await ClipboardChanged(clipboardText);
+            }
+
+            _prevClipboardText = GetClipboardText();
+
+            return _prevClipboardText;
+        }
+
         public static string GetClipboardText()
         {
 

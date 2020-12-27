@@ -62,21 +62,6 @@ namespace Checkmeg.WPF
             return activeProcId == procId;
         }
 
-        public async Task ClipboardChanged(string inputValue)
-        {
-            await Task.Factory.StartNew(() =>
-            {
-                string a = ClipboardManager.GetClipboardText();
-                while (inputValue == a)
-                {
-                    Thread.Sleep(10);
-                    a = ClipboardManager.GetClipboardText();
-                }
-            });
-        }
-
-        private string _prevClipboardText = "";
-
         public async void ShowHotWndCreateBookmarkAsync(object sender, HotKeyEventArgs e)
         {
             CreateBookmarkWnd createBookmarkWnd = (CreateBookmarkWnd)ChildWindows[typeof(CreateBookmarkWnd)];
@@ -89,21 +74,11 @@ namespace Checkmeg.WPF
                 }));
             }
 
-            InputSimulator inputSim = new InputSimulator();
-            string clipboardText = ClipboardManager.GetClipboardText();
-            inputSim.Keyboard.KeyUp(VirtualKeyCode.LWIN);
-            inputSim.Keyboard.ModifiedKeyStroke(VirtualKeyCode.CONTROL, VirtualKeyCode.VK_C);
-
-            if (clipboardText != "" && clipboardText != _prevClipboardText)
-            {
-                await ClipboardChanged(clipboardText);
-            }
-
-            _prevClipboardText = ClipboardManager.GetClipboardText();
+            string clipboardText = await ClipboardManager.ExecuteCopyAsync();
 
             Dispatcher.Invoke(DispatcherPriority.SystemIdle, new Action(() =>
             {
-                createBookmarkWnd.Fire("", e.AdditionalPath);
+                createBookmarkWnd.Fire("", clipboardText);
             }));
         }
 

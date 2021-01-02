@@ -177,7 +177,7 @@ namespace CheckmegWSC
                 ("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
 
             if (set)
-                rk.SetValue("Checkmeg", path);
+                rk.SetValue("Checkmeg", path + " -s");
             else
                 rk.DeleteValue("Checkmeg", false);
 

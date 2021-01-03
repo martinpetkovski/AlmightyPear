@@ -1,9 +1,8 @@
 ﻿using Checkmeg.WPF.Controller;
+using Checkmeg.WPF.Utils;
 using System.Windows;
 using System.Windows.Controls;
-using Checkmeg.WPF.View;
 using MessageBox = Checkmeg.WPF.View.MessageBox;
-using Checkmeg.WPF.Utils;
 
 namespace Checkmeg.WPF.Controls
 {
@@ -36,7 +35,7 @@ namespace Checkmeg.WPF.Controls
             tb_repeatPassword.Password = "";
 
             await MessageBox.FireAsync(TranslationSource.Instance["PasswordReset"], result.message, new System.Collections.Generic.List<string>() { "Ok" });
-            if(result.success && !Engine.Env.UserData.IsLoggedIn)
+            if (result.success && !Engine.Env.UserData.IsLoggedIn)
             {
                 Env.MainWindowData.WindowState = Model.MainWindowModel.EMainWindowState.SignIn;
             }

@@ -10,13 +10,10 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Threading;
-using WindowsInput;
-using WindowsInput.Native;
 
 namespace Checkmeg.WPF
 {
@@ -156,7 +153,7 @@ namespace Checkmeg.WPF
             Engine.Env.Initialize();
             Env.MainWindowData.WindowState = MainWindowModel.EMainWindowState.Loading;
             Style = (Style)FindResource(typeof(Window));
-            
+
             InitializeComponent();
         }
 

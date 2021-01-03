@@ -1,6 +1,4 @@
-﻿using Checkmeg.WPF.Controller;
-using Checkmeg.WPF.Model;
-using Checkmeg.WPF.Utils;
+﻿using Checkmeg.WPF.Utils;
 using Checkmeg.WPF.View;
 using Core;
 using Engine;
@@ -401,7 +399,7 @@ namespace Checkmeg.WPF.Controls
                 {
                     ClipboardManager.CopyToClipboard(ClipboardManager.GetClipboardText() + " " + bookmark.Content);
                 }
-                else if (bookmark.Type == "link" || 
+                else if (bookmark.Type == "link" ||
                          bookmark.Type == "image" ||
                          bookmark.Type == "dir" ||
                          bookmark.Type == "file")
@@ -415,12 +413,12 @@ namespace Checkmeg.WPF.Controls
                 {
                     ClipboardManager.CopyToClipboard(bookmark.Content);
                 }
-                else if (bookmark.Type == "link" || 
+                else if (bookmark.Type == "link" ||
                          bookmark.Type == "image")
                 {
                     OpenLink(bookmark.Content);
                 }
-                else if(bookmark.Type == "dir" || 
+                else if (bookmark.Type == "dir" ||
                         bookmark.Type == "file")
                 {
                     Process.Start(bookmark.Content);
@@ -628,7 +626,7 @@ namespace Checkmeg.WPF.Controls
                 Point mousePos = GetMousePosition();
                 System.Windows.Forms.Screen screen = System.Windows.Forms.Screen.FromPoint(new System.Drawing.Point((int)mousePos.X, (int)mousePos.Y));
 
-                BinItemPreviewWnd.Instance.Left  = Clamp(mousePos.X + 20, screen.Bounds.Left, screen.Bounds.Left + screen.Bounds.Width - BinItemPreviewWnd.Instance.Width);
+                BinItemPreviewWnd.Instance.Left = Clamp(mousePos.X + 20, screen.Bounds.Left, screen.Bounds.Left + screen.Bounds.Width - BinItemPreviewWnd.Instance.Width);
                 BinItemPreviewWnd.Instance.Top = Clamp(mousePos.Y + 20, screen.Bounds.Top, screen.Bounds.Top + screen.Bounds.Height - BinItemPreviewWnd.Instance.Height);
             }
         }

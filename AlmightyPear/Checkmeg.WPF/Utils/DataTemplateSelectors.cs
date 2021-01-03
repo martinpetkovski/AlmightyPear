@@ -1,5 +1,4 @@
-﻿using Checkmeg.WPF.Model;
-using Checkmeg.WPF.View;
+﻿using Checkmeg.WPF.View;
 using System.Windows;
 using System.Windows.Controls;
 

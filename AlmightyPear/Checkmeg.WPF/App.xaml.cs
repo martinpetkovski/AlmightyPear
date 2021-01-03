@@ -1,13 +1,10 @@
 ﻿using Checkmeg.WPF.Controller;
-using Checkmeg.WPF.View;
 using Core;
 using Microsoft.VisualBasic.ApplicationServices;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
-using System.Threading;
 using System.Windows;
 
 namespace Checkmeg.WPF
@@ -105,7 +102,7 @@ namespace Checkmeg.WPF
             {
                 _application.Run();
             }
-            catch(Exception){}
+            catch (Exception) { }
 
             return false;
         }
@@ -122,15 +119,15 @@ namespace Checkmeg.WPF
                 {
                     Env.MainWindow.ShowHotWndCreateBookmarkAsync(null, new Utils.HotKeyEventArgs(_commandLine[1]));
                 }
-                else if(_commandLine[0] == "-f")
+                else if (_commandLine[0] == "-f")
                 {
                     Env.MainWindow.ShowHotWndFindBookmark(null, new Utils.HotKeyEventArgs(_commandLine[1]));
                 }
-                else if(_commandLine[0] == "-c")
+                else if (_commandLine[0] == "-c")
                 {
                     ClipboardManager.CopyToClipboard(_commandLine[1]);
                 }
-                else if(_commandLine[0] == "-cp")
+                else if (_commandLine[0] == "-cp")
                 {
                     ClipboardManager.CopyToClipboard(Path.GetDirectoryName(_commandLine[1]));
                 }

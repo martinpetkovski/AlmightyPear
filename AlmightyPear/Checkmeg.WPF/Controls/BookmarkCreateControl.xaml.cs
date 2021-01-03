@@ -40,7 +40,7 @@ namespace Checkmeg.WPF.Controls
             {
                 await View.MessageBox.FireAsync(
                     TranslationSource.Instance["CreateBookmark"],
-                    TranslationSource.Instance["SuccessfullyCreatedBookmarkDot"], 
+                    TranslationSource.Instance["SuccessfullyCreatedBookmarkDot"],
                     new List<string>() { TranslationSource.Instance["Ok"] });
             }
         }

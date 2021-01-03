@@ -1,12 +1,9 @@
 ﻿using MahApps.Metro.Controls;
 using System;
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Forms;
-using Button = System.Windows.Controls.Button;
 
 namespace Checkmeg.WPF.View
 {
@@ -60,7 +57,7 @@ namespace Checkmeg.WPF.View
 
         public static async void FireAsync()
         {
-            if(Instance != null)
+            if (Instance != null)
             {
                 Instance.Hide();
                 Instance = null;

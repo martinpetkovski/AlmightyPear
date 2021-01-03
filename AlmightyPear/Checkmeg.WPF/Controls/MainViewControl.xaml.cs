@@ -1,5 +1,4 @@
 ﻿using Checkmeg.WPF.Controller;
-using Checkmeg.WPF.Model;
 using Checkmeg.WPF.Utils;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -55,7 +54,7 @@ namespace Checkmeg.WPF.Controls
 
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if(Engine.Env.UserData.CustomModel.AnimationsLevel >= 1)
+            if (Engine.Env.UserData.CustomModel.AnimationsLevel >= 1)
             {
                 mah_bookmarksViewContentControl.TransitionsEnabled = true;
                 mah_createBookmarkContentControl.TransitionsEnabled = true;

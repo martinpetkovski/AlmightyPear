@@ -1,6 +1,4 @@
-﻿using Checkmeg.WPF.Controller;
-using Checkmeg.WPF.Model;
-using Checkmeg.WPF.Utils;
+﻿using Checkmeg.WPF.Utils;
 using Engine;
 using FontAwesome.WPF;
 using System;
@@ -53,8 +51,8 @@ namespace Checkmeg.WPF.Converters
                 DateTime epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
                 long seconds = (long)value;
                 DateTime result = epoch.AddSeconds(seconds);
-                return result.ToString(TranslationSource.Instance.CurrentCulture.DateTimeFormat.LongDatePattern) + 
-                    " @ " + 
+                return result.ToString(TranslationSource.Instance.CurrentCulture.DateTimeFormat.LongDatePattern) +
+                    " @ " +
                     result.ToString(TranslationSource.Instance.CurrentCulture.DateTimeFormat.ShortTimePattern);
             }
 
@@ -351,7 +349,7 @@ namespace Checkmeg.WPF.Converters
                 Langs[nativeName] = lang;
                 return nativeName;
             }
-            else if(value is CultureInfo)
+            else if (value is CultureInfo)
             {
                 string nativeName = ((CultureInfo)value).NativeName;
                 if (nativeName.Contains("Северна Македонија"))
@@ -359,10 +357,10 @@ namespace Checkmeg.WPF.Converters
 
                 return nativeName;
             }
-            else if(value is List<string>)
+            else if (value is List<string>)
             {
                 List<string> retVal = new List<string>();
-                foreach(string lang in (List<string>)value)
+                foreach (string lang in (List<string>)value)
                 {
                     string nativeName = new CultureInfo(lang).NativeName;
                     if (nativeName.Contains("Северна Македонија"))
@@ -401,10 +399,10 @@ namespace Checkmeg.WPF.Converters
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            if(values[0] is string)
+            if (values[0] is string)
             {
                 string type = (string)values[0];
-                    return TranslationSource.Instance[type];
+                return TranslationSource.Instance[type];
             }
             return "Invalid Type";
         }

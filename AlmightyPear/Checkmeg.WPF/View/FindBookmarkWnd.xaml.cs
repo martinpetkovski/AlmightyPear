@@ -1,5 +1,4 @@
-﻿using Checkmeg.WPF.Controller;
-using Core;
+﻿using Core;
 using MahApps.Metro.Controls;
 using System;
 using System.Runtime.InteropServices;
@@ -49,7 +48,7 @@ namespace Checkmeg.WPF.View
 
             double finalX = (screen.Bounds.X + (screen.Bounds.Width / 2)) - (finalW / 2);
             double finalY = (screen.Bounds.Y + (screen.Bounds.Height / 2)) - Height / 2;
-            
+
             Width = finalW;
             Left = finalX;
             Top = finalY;

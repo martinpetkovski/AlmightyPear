@@ -1,5 +1,4 @@
-﻿using Checkmeg.WPF.Controller;
-using MahApps.Metro.Controls;
+﻿using MahApps.Metro.Controls;
 using System;
 using System.Runtime.InteropServices;
 using System.Windows;
@@ -69,7 +68,7 @@ namespace Checkmeg.WPF.View
             {
                 mah_contentControl.TransitionsEnabled = false;
             }
-            
+
         }
 
 

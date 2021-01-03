@@ -29,8 +29,8 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <SupportUrl>https://www.najjak.com/</SupportUrl>
-    <ErrorReportUrl>https://www.najjak.com/</ErrorReportUrl>
+    <SupportUrl>https://www.najjak.com/checkmeg/</SupportUrl>
+    <ErrorReportUrl>https://www.najjak.com/checkmeg/</ErrorReportUrl>
     <ProductName>Checkmeg</ProductName>
     <PublisherName>Martin Petkovski</PublisherName>
     <SuiteName>Checkmeg</SuiteName>

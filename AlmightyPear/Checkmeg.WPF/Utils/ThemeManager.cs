@@ -1,5 +1,4 @@
-﻿using Checkmeg.WPF.Controller;
-using Engine;
+﻿using Engine;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
@@ -31,9 +30,9 @@ namespace Checkmeg.WPF.Utils
                 LinearGradientBrush newLgb = new LinearGradientBrush();
                 if (key == "GradInset")
                 {
-                     newLgb = new LinearGradientBrush(
-                        (Color)ColorConverter.ConvertFromString(theme.Mono20),
-                        (Color)ColorConverter.ConvertFromString(theme.Mono40), 90);
+                    newLgb = new LinearGradientBrush(
+                       (Color)ColorConverter.ConvertFromString(theme.Mono20),
+                       (Color)ColorConverter.ConvertFromString(theme.Mono40), 90);
                 }
 
                 if (key == "GradOutset")
@@ -62,7 +61,7 @@ namespace Checkmeg.WPF.Utils
             }
         }
 
-        public void SetTheme(string name )
+        public void SetTheme(string name)
         {
             if (Engine.Env.UserData.Themes.ContainsKey(name))
             {
@@ -172,7 +171,7 @@ namespace Checkmeg.WPF.Utils
 
         public async Task CreateBasicThemesAsync()
         {
-            
+
 
             await Engine.Env.FirebaseController.CreateOrUpdateTheme(GetBasicDarkTheme());
             await Engine.Env.FirebaseController.CreateOrUpdateTheme(GetBasicLightTheme());

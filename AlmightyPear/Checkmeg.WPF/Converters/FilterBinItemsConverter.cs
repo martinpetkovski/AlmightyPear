@@ -1,21 +1,18 @@
-﻿using Checkmeg.WPF.Model;
-using Engine;
+﻿using Engine;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Data;
 
 namespace Checkmeg.WPF.Converters
 {
     class FilterBinItemsConverter : IMultiValueConverter
     {
-        public object Convert(object []values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            if (values.Count() == 2 )
+            if (values.Count() == 2)
             {
                 object oBinItems = values[0];
                 object oFilter = values[1];
@@ -34,7 +31,7 @@ namespace Checkmeg.WPF.Converters
                     List<FilterToken> tokenMods = new List<FilterToken>();
 
                     tokenMods.Add(new FilterToken(FilterToken.FilterTokenType.Any));
-                    foreach(string token in filterTokens)
+                    foreach (string token in filterTokens)
                     {
                         if (token == "-q" || token == "-p" || token == "-d" || token == "-t" || token == "-a")
                         {

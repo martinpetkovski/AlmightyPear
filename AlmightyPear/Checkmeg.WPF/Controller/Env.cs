@@ -1,16 +1,14 @@
 ﻿using Checkmeg.WPF.Model;
+using Checkmeg.WPF.Utils;
 using HtmlAgilityPack;
 using MahApps.Metro.Controls;
 using System;
 using System.Net;
 using System.Text;
-using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
-using Engine;
-using Checkmeg.WPF.Utils;
 
 namespace Checkmeg.WPF.Controller
 {
@@ -22,11 +20,11 @@ namespace Checkmeg.WPF.Controller
         // data
         public static EnvModel EnvModel { get; private set; }
         public static MainWindowModel MainWindowData { get; private set; }
-        
+
         // functional
         public static MainWindow MainWindow { get; private set; }
         public static MetroWindow MetroMainWindow { get { return (MetroWindow)MainWindow; } }
-        
+
 
         public static void Initialize(MainWindow mainWindow)
         {
